@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import BranchStrip from '../../components/BranchStrip.astro';
+import SellOutBanner from '../../components/SellOutBanner.astro';
+import MenuSection from '../../components/MenuSection.astro';
+import LocationsSection from '../../components/LocationsSection.astro';
+import AboutSection from '../../components/AboutSection.astro';
+---
+
+<BaseLayout
+  title="Bread Guy — A Brno Bakery"
+  description="Sourdough bread, focaccia, and pastries baked daily in Brno. Two locations — Královo Pole, Černovice."
+>
+  <Hero locale="en" />
+  <BranchStrip locale="en" />
+  <SellOutBanner locale="en" />
+  <MenuSection locale="en" />
+  <LocationsSection locale="en" />
+  <AboutSection locale="en" />
+</BaseLayout>

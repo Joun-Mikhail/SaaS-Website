@@ -1,0 +1,54 @@
+[
+  {
+    "id": "kralovo-pole",
+    "name": {
+      "cs": "Bread Guy — Královo Pole",
+      "en": "Bread Guy — Královo Pole"
+    },
+    "label": {
+      "cs": "Královo Pole (hlavní prodejna)",
+      "en": "Královo Pole (flagship)"
+    },
+    "address": "Husitská 8, 612 00 Brno-Královo Pole",
+    "phone": "+420601539515",
+    "phoneDisplay": "601 539 515",
+    "rating": 4.6,
+    "reviewCount": 106,
+    "mapsUrl": "https://maps.google.com/?q=Husitská+8,+612+00+Brno-Královo+Pole",
+    "hours": {
+      "mon": "08:00–18:00",
+      "tue": "08:00–18:00",
+      "wed": "08:00–18:00",
+      "thu": "08:00–18:00",
+      "fri": "08:00–18:00",
+      "sat": "08:00–12:00",
+      "sun": null
+    }
+  },
+  {
+    "id": "cernovice",
+    "name": {
+      "cs": "Bread Guy — Černovice",
+      "en": "Bread Guy — Černovice"
+    },
+    "label": {
+      "cs": "Černovice",
+      "en": "Černovice"
+    },
+    "address": "Charbulova 30, 618 00 Brno-Černovice",
+    "phone": null,
+    "phoneDisplay": null,
+    "rating": null,
+    "reviewCount": null,
+    "mapsUrl": "https://maps.google.com/?q=Charbulova+30,+618+00+Brno-Černovice",
+    "hours": {
+      "mon": "08:00–18:00",
+      "tue": "08:00–18:00",
+      "wed": "08:00–18:00",
+      "thu": "08:00–18:00",
+      "fri": "08:00–18:00",
+      "sat": "08:00–12:00",
+      "sun": null
+    }
+  }
+]

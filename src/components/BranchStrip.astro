@@ -1,0 +1,48 @@
+---
+import { t, type Locale } from '../data/i18n';
+import locations from '../data/locations.json';
+import { getStatus } from '../data/hours';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const i18n = t(locale);
+---
+
+<section class="bg-white border-b border-brand-warm/30">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      {locations.map((loc) => {
+        const status = getStatus(loc.hours);
+        return (
+          <a
+            href={loc.mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center justify-between p-3 rounded-lg hover:bg-brand-cream/50 transition-colors group"
+          >
+            <div class="flex items-center gap-3">
+              <div class={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${status.isOpen ? 'bg-green-500' : 'bg-red-400'}`} />
+              <div>
+                <p class="font-semibold text-sm">{loc.label[locale]}</p>
+                <p class="text-xs text-brand-charcoal/50">{loc.address}</p>
+              </div>
+            </div>
+            <div class="text-right flex-shrink-0">
+              <span class={`text-xs font-semibold ${status.isOpen ? 'text-green-600' : 'text-red-500'}`}>
+                {status.isOpen ? i18n.openNow.open : i18n.openNow.closed}
+              </span>
+              {status.nextChange && (
+                <p class="text-xs text-brand-charcoal/40">
+                  {status.isOpen ? i18n.openNow.closesAt : i18n.openNow.opensAt} {status.nextChange}
+                </p>
+              )}
+            </div>
+          </a>
+        );
+      })}
+    </div>
+  </div>
+</section>
