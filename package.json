@@ -6,6 +6,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "validate": "node scripts/validate-content.mjs",
+    "test": "node --test --experimental-strip-types \"src/**/*.test.ts\"",
     "astro": "astro"
   },
   "dependencies": {

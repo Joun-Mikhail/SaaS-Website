@@ -1,7 +1,7 @@
 ---
 import { t, type Locale } from '../data/i18n';
 import locations from '../data/locations.json';
-import { getStatus } from '../data/hours';
+import { getStatus, type LocationHours } from '../data/hours';
 
 interface Props {
   locale: Locale;
@@ -15,30 +15,46 @@ const i18n = t(locale);
   <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4">
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
       {locations.map((loc) => {
-        const status = getStatus(loc.hours);
+        const status = getStatus(loc.hours as LocationHours);
         return (
           <a
             href={loc.mapsUrl}
             target="_blank"
             rel="noopener noreferrer"
             class="flex items-center justify-between p-3 rounded-lg hover:bg-brand-cream/50 transition-colors group"
+            data-branch-status
+            data-hours={JSON.stringify(loc.hours)}
+            data-label-open={i18n.openNow.open}
+            data-label-closed={i18n.openNow.closed}
+            data-label-opens-at={i18n.openNow.opensAt}
+            data-label-closes-at={i18n.openNow.closesAt}
           >
             <div class="flex items-center gap-3">
-              <div class={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${status.isOpen ? 'bg-green-500' : 'bg-red-400'}`} />
+              <div
+                data-status-dot
+                class={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${status.isOpen ? 'bg-green-500' : 'bg-red-400'}`}
+              />
               <div>
                 <p class="font-semibold text-sm">{loc.label[locale]}</p>
                 <p class="text-xs text-brand-charcoal/50">{loc.address}</p>
               </div>
             </div>
             <div class="text-right flex-shrink-0">
-              <span class={`text-xs font-semibold ${status.isOpen ? 'text-green-600' : 'text-red-500'}`}>
+              <span
+                data-status-label
+                class={`text-xs font-semibold ${status.isOpen ? 'text-green-600' : 'text-red-500'}`}
+              >
                 {status.isOpen ? i18n.openNow.open : i18n.openNow.closed}
               </span>
-              {status.nextChange && (
-                <p class="text-xs text-brand-charcoal/40">
-                  {status.isOpen ? i18n.openNow.closesAt : i18n.openNow.opensAt} {status.nextChange}
-                </p>
-              )}
+              <p
+                data-status-next
+                class="text-xs text-brand-charcoal/40"
+                hidden={!status.nextChange}
+              >
+                {status.nextChange
+                  ? `${status.isOpen ? i18n.openNow.closesAt : i18n.openNow.opensAt} ${status.nextChange}`
+                  : ''}
+              </p>
             </div>
           </a>
         );
@@ -46,3 +62,58 @@ const i18n = t(locale);
     </div>
   </div>
 </section>
+
+<script>
+  import { getStatus, type LocationHours } from '../data/hours';
+
+  /*
+   * The page is static, so the status rendered at build time goes stale as soon
+   * as the clock moves past it. Recompute in the browser on load and each
+   * minute, so what a visitor reads is true when they read it.
+   */
+  function refreshBranchStatus() {
+    document.querySelectorAll<HTMLElement>('[data-branch-status]').forEach((el) => {
+      let hours: LocationHours;
+      try {
+        hours = JSON.parse(el.dataset.hours ?? '');
+      } catch {
+        return;
+      }
+
+      const status = getStatus(hours);
+      const dot = el.querySelector<HTMLElement>('[data-status-dot]');
+      const label = el.querySelector<HTMLElement>('[data-status-label]');
+      const next = el.querySelector<HTMLElement>('[data-status-next]');
+
+      if (dot) {
+        dot.classList.toggle('bg-green-500', status.isOpen);
+        dot.classList.toggle('bg-red-400', !status.isOpen);
+      }
+
+      if (label) {
+        label.textContent = status.isOpen
+          ? (el.dataset.labelOpen ?? '')
+          : (el.dataset.labelClosed ?? '');
+        label.classList.toggle('text-green-600', status.isOpen);
+        label.classList.toggle('text-red-500', !status.isOpen);
+      }
+
+      if (next) {
+        if (status.nextChange) {
+          const prefix = status.isOpen ? el.dataset.labelClosesAt : el.dataset.labelOpensAt;
+          next.textContent = `${prefix} ${status.nextChange}`;
+          next.hidden = false;
+        } else {
+          next.textContent = '';
+          next.hidden = true;
+        }
+      }
+    });
+  }
+
+  refreshBranchStatus();
+  setInterval(refreshBranchStatus, 60_000);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) refreshBranchStatus();
+  });
+</script>

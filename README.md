@@ -108,11 +108,27 @@ en dash –). Write a closed day as `null`:
 }
 ```
 
-Web podle toho **sám počítá, jestli je právě otevřeno**, v čase Europe/Prague.
-Nic dalšího není potřeba měnit.
+Web podle toho **sám počítá, jestli je právě otevřeno**, v čase Europe/Prague,
+a přepočítává to přímo v prohlížeči návštěvníka — takže údaj platí i dlouho po
+nasazení. Nic dalšího není potřeba měnit.
 
 The site **works out whether each branch is open right now** from this, in the
-Europe/Prague timezone. Nothing else needs changing.
+Europe/Prague timezone, and recomputes it in the visitor's browser — so the
+badge stays correct long after deploy. Nothing else needs changing.
+
+### Než změnu nasadíte / Before you deploy a change
+
+```bash
+npm run validate
+```
+
+Zkontroluje, že jsou soubory v pořádku — chybějící čárka, překlep v kategorii,
+cena v uvozovkách, odkaz na neexistující fotku, špatný formát otevírací doby.
+Stejná kontrola běží automaticky u každého pull requestu.
+
+Checks the content files for a missing comma, a category typo, a quoted price,
+a link to a photo that isn't there, or hours in the wrong format. The same check
+runs automatically on every pull request.
 
 ---
 
@@ -120,31 +136,40 @@ Europe/Prague timezone. Nothing else needs changing.
 
 ```bash
 npm install
-npm run dev      # http://localhost:4321
-npm run build    # -> dist/
-npm run preview  # náhled produkčního buildu
+npm run dev       # http://localhost:4321
+npm run validate  # kontrola obsahových souborů
+npm test          # testy logiky otevírací doby
+npm run build     # -> dist/
+npm run preview   # náhled produkčního buildu
 ```
+
+CI (`.github/workflows/ci.yml`) spouští `validate`, `test` a `build` u každého
+pull requestu. / CI runs all three on every pull request.
 
 ### Struktura / Structure
 
 ```
 src/
-  data/         products.json, locations.json, i18n.ts, hours.ts
+  data/         products.json, locations.json, i18n.ts,
+                hours.ts + hours.test.ts
   components/   Header, Hero, BranchStrip, SellOutBanner, Gallery,
                 MenuSection, LocationsSection, AboutSection, Footer
   layouts/      BaseLayout.astro  — meta, OG, hreflang, schema.org
-  pages/        index.astro (cs), en/index.astro (en)
+  pages/        index.astro (cs), en/index.astro (en), 404.astro
   styles/       global.css
-public/         logo.svg, favicon.svg, images/products/
+scripts/        validate-content.mjs
+public/         logo.svg, favicon.svg, robots.txt, images/products/
 ```
 
 ### Poznámky / Notes
 
 - **i18n** — cesta určuje jazyk (`/` = cs, `/en/` = en). Každý řetězec je
   v `src/data/i18n.ts` v obou jazycích; komponenty dostávají `locale` propem.
-- **Otevírací status** — `src/data/hours.ts` (`getStatus`) počítá stav v zóně
-  Europe/Prague. Renderuje se při buildu, takže po delší době je vhodné web
-  přestavět (nasazení přes CI při každém pushi to řeší samo).
+- **Otevírací status** — `src/data/hours.ts` (`getStatus`) je čistá funkce,
+  které lze předat čas, takže je testovatelná (`hours.test.ts`). Stav se
+  vykreslí při buildu (kvůli SEO a prohlížečům bez JS) a hned po načtení se
+  v prohlížeči přepočítá, aby nezastaral. Denní doba i letní/zimní čas se řeší
+  přes `Intl.DateTimeFormat`, žádný napevno zapsaný posun.
 - **SEO** — `schema.org/Bakery` JSON-LD pro každou pobočku, kanonické URL,
   `hreflang` cs/en/x-default, Open Graph a Twitter karty, sitemap.
 - **Přístupnost** — odkaz „Přejít na obsah", viditelné focus stavy,
