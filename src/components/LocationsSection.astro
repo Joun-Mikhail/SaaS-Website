@@ -24,33 +24,33 @@ const dayLabels = {
 <section id="pobocky" class="py-16 sm:py-24 bg-white">
   <div class="max-w-6xl mx-auto px-4 sm:px-6">
     <div class="text-center mb-12">
-      <h2 class="font-display font-800 text-3xl sm:text-4xl mb-3">{i18n.locations.title}</h2>
-      <p class="text-brand-charcoal/60">{i18n.locations.subtitle}</p>
+      <h2 class="font-display font-extrabold text-3xl sm:text-4xl mb-3">{i18n.locations.title}</h2>
+      <p class="text-brand-muted">{i18n.locations.subtitle}</p>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
       {locations.map((loc) => (
         <div class="bg-brand-cream rounded-xl p-6 border border-brand-warm/30">
           <div class="mb-4">
-            <h3 class="font-display font-700 text-xl mb-1">{loc.label[locale]}</h3>
-            <p class="text-sm text-brand-charcoal/60">{loc.address}</p>
+            <h3 class="font-display font-bold text-xl mb-1">{loc.label[locale]}</h3>
+            <p class="text-sm text-brand-muted">{loc.address}</p>
             {loc.rating && (
               <p class="text-sm mt-1">
-                <span class="text-brand-orange font-semibold">{loc.rating}★</span>
-                <span class="text-brand-charcoal/40 ml-1">({loc.reviewCount} {i18n.locations.reviews})</span>
+                <span class="text-brand-orange-text font-semibold">{loc.rating}★</span>
+                <span class="text-brand-muted ml-1">({loc.reviewCount} {i18n.locations.reviews})</span>
               </p>
             )}
           </div>
 
           <div class="mb-5">
-            <h4 class="text-xs uppercase tracking-wider text-brand-charcoal/40 font-semibold mb-2">{i18n.locations.hours}</h4>
+            <h4 class="text-xs uppercase tracking-wider text-brand-muted font-semibold mb-2">{i18n.locations.hours}</h4>
             <div class="space-y-1">
               {dayKeys.map((day) => {
                 const hours = loc.hours[day];
                 return (
                   <div class="flex justify-between text-sm">
-                    <span class="text-brand-charcoal/60">{dayLabels[day]}</span>
-                    <span class={hours ? 'font-medium' : 'text-brand-charcoal/30'}>
+                    <span class="text-brand-muted">{dayLabels[day]}</span>
+                    <span class={hours ? 'font-medium' : 'text-brand-muted'}>
                       {hours || (locale === 'cs' ? 'Zavřeno' : 'Closed')}
                     </span>
                   </div>
@@ -64,7 +64,7 @@ const dayLabels = {
               href={loc.mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-brand-orange text-white text-sm font-semibold rounded-lg hover:bg-brand-orange-hover transition-colors"
+              class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-brand-orange-deep text-white text-sm font-semibold rounded-lg hover:bg-brand-orange-hover transition-colors"
             >
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />

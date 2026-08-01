@@ -18,7 +18,7 @@
 
 @layer components {
   .skip-link {
-    @apply absolute left-4 -top-16 z-[100] bg-brand-orange text-white px-4 py-2 rounded-lg font-medium;
+    @apply absolute left-4 -top-16 z-[100] bg-brand-orange-deep text-white px-4 py-2 rounded-lg font-medium;
     @apply focus:top-4 transition-[top];
   }
 

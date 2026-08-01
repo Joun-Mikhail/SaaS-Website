@@ -32,23 +32,23 @@ const i18n = t(locale);
             <div class="flex items-center gap-3">
               <div
                 data-status-dot
-                class={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${status.isOpen ? 'bg-green-500' : 'bg-red-400'}`}
+                class={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${status.isOpen ? 'bg-brand-open' : 'bg-brand-closed'}`}
               />
               <div>
                 <p class="font-semibold text-sm">{loc.label[locale]}</p>
-                <p class="text-xs text-brand-charcoal/50">{loc.address}</p>
+                <p class="text-xs text-brand-muted">{loc.address}</p>
               </div>
             </div>
             <div class="text-right flex-shrink-0">
               <span
                 data-status-label
-                class={`text-xs font-semibold ${status.isOpen ? 'text-green-600' : 'text-red-500'}`}
+                class={`text-xs font-semibold ${status.isOpen ? 'text-brand-open' : 'text-brand-closed'}`}
               >
                 {status.isOpen ? i18n.openNow.open : i18n.openNow.closed}
               </span>
               <p
                 data-status-next
-                class="text-xs text-brand-charcoal/40"
+                class="text-xs text-brand-muted"
                 hidden={!status.nextChange}
               >
                 {status.nextChange
@@ -86,16 +86,16 @@ const i18n = t(locale);
       const next = el.querySelector<HTMLElement>('[data-status-next]');
 
       if (dot) {
-        dot.classList.toggle('bg-green-500', status.isOpen);
-        dot.classList.toggle('bg-red-400', !status.isOpen);
+        dot.classList.toggle('bg-brand-open', status.isOpen);
+        dot.classList.toggle('bg-brand-closed', !status.isOpen);
       }
 
       if (label) {
         label.textContent = status.isOpen
           ? (el.dataset.labelOpen ?? '')
           : (el.dataset.labelClosed ?? '');
-        label.classList.toggle('text-green-600', status.isOpen);
-        label.classList.toggle('text-red-500', !status.isOpen);
+        label.classList.toggle('text-brand-open', status.isOpen);
+        label.classList.toggle('text-brand-closed', !status.isOpen);
       }
 
       if (next) {

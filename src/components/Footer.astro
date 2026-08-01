@@ -15,8 +15,8 @@ const i18n = t(locale);
     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
       <div>
         <div class="flex items-center gap-2 mb-1">
-          <img src={withBase("/logo.svg")} alt="Bread Guy" class="h-8 w-8" />
-          <span class="font-display font-800 text-lg text-white">bread guy</span>
+          <img src={withBase("/logo.svg")} alt="" class="h-8 w-8" />
+          <span class="font-display font-extrabold text-lg text-white">bread guy</span>
         </div>
         <p class="text-sm text-white/50">{i18n.footer.tagline}</p>
       </div>
@@ -27,7 +27,7 @@ const i18n = t(locale);
           href="https://www.instagram.com/breadguybrno"
           target="_blank"
           rel="noopener noreferrer"
-          class="hover:text-brand-orange transition-colors"
+          class="hover:text-brand-orange-text transition-colors"
           aria-label="Instagram"
         >
           <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -37,7 +37,7 @@ const i18n = t(locale);
       </div>
     </div>
 
-    <div class="mt-8 pt-6 border-t border-white/10 text-xs text-white/30">
+    <div class="mt-8 pt-6 border-t border-white/10 text-xs text-white/70">
       <p>&copy; {new Date().getFullYear()} Bread Guy. Brno, Česká republika.</p>
     </div>
   </div>

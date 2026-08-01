@@ -44,8 +44,8 @@ function formatPriceDetail(product: (typeof products)[number]): string {
 <section id="nabidka" class="py-16 sm:py-24">
   <div class="max-w-6xl mx-auto px-4 sm:px-6">
     <div class="text-center mb-12">
-      <h2 class="font-display font-800 text-3xl sm:text-4xl mb-3">{i18n.menu.title}</h2>
-      <p class="text-brand-charcoal/60 max-w-lg mx-auto">{i18n.menu.subtitle}</p>
+      <h2 class="font-display font-extrabold text-3xl sm:text-4xl mb-3">{i18n.menu.title}</h2>
+      <p class="text-brand-muted max-w-lg mx-auto">{i18n.menu.subtitle}</p>
     </div>
 
     <div
@@ -61,7 +61,7 @@ function formatPriceDetail(product: (typeof products)[number]): string {
           aria-pressed={idx === 0 ? 'true' : 'false'}
           class={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${
             idx === 0
-              ? 'bg-brand-orange text-white'
+              ? 'bg-brand-orange-deep text-white'
               : 'bg-brand-warm/50 text-brand-charcoal/70 hover:bg-brand-warm'
           }`}
         >
@@ -99,18 +99,18 @@ function formatPriceDetail(product: (typeof products)[number]): string {
             <div class="p-4">
               <div class="flex items-start justify-between gap-3">
                 <div class="min-w-0">
-                  <h3 class="font-display font-700 text-lg">{product.name[locale]}</h3>
-                  <p class="text-sm text-brand-charcoal/50 mt-1">{product.description[locale]}</p>
+                  <h3 class="font-display font-bold text-lg">{product.name[locale]}</h3>
+                  <p class="text-sm text-brand-muted mt-1">{product.description[locale]}</p>
                 </div>
                 <div class="flex-shrink-0">
                   {product.available ? (
-                    <span class="inline-flex items-center gap-1 text-xs text-green-600 bg-green-50 px-2 py-0.5 rounded-full">
-                      <span class="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                    <span class="inline-flex items-center gap-1 text-xs text-brand-open bg-green-50 px-2 py-0.5 rounded-full">
+                      <span class="w-1.5 h-1.5 bg-brand-open rounded-full" />
                       {i18n.menu.available}
                     </span>
                   ) : (
-                    <span class="inline-flex items-center gap-1 text-xs text-red-500 bg-red-50 px-2 py-0.5 rounded-full">
-                      <span class="w-1.5 h-1.5 bg-red-400 rounded-full" />
+                    <span class="inline-flex items-center gap-1 text-xs text-brand-closed bg-red-50 px-2 py-0.5 rounded-full">
+                      <span class="w-1.5 h-1.5 bg-brand-closed rounded-full" />
                       {i18n.menu.soldOut}
                     </span>
                   )}
@@ -118,9 +118,9 @@ function formatPriceDetail(product: (typeof products)[number]): string {
               </div>
               {price && (
                 <div class="mt-3 pt-3 border-t border-brand-warm/20">
-                  <span class="font-semibold text-brand-orange">{price}</span>
+                  <span class="font-semibold text-brand-orange-text">{price}</span>
                   {detail && (
-                    <span class="text-xs text-brand-charcoal/40 ml-1">({detail})</span>
+                    <span class="text-xs text-brand-muted ml-1">({detail})</span>
                   )}
                 </div>
               )}
@@ -141,11 +141,11 @@ function formatPriceDetail(product: (typeof products)[number]): string {
       const category = btn.getAttribute('data-category');
 
       buttons.forEach((b) => {
-        b.classList.remove('bg-brand-orange', 'text-white');
+        b.classList.remove('bg-brand-orange-deep', 'text-white');
         b.classList.add('bg-brand-warm/50', 'text-brand-charcoal/70');
         b.setAttribute('aria-pressed', 'false');
       });
-      btn.classList.add('bg-brand-orange', 'text-white');
+      btn.classList.add('bg-brand-orange-deep', 'text-white');
       btn.classList.remove('bg-brand-warm/50', 'text-brand-charcoal/70');
       btn.setAttribute('aria-pressed', 'true');
 

@@ -21,14 +21,16 @@ const altPath = withBase(altRoute);
 <header class="sticky top-0 z-50 bg-brand-cream/95 backdrop-blur-sm border-b border-brand-warm/50">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
     <a href={withBase(`${prefix}/`)} class="flex items-center gap-2">
-      <img src={withBase("/logo.svg")} alt="Bread Guy" class="h-10 w-10" />
-      <span class="font-display font-900 text-xl text-brand-orange">bread guy</span>
+      <img src={withBase("/logo.svg")} alt="" class="h-10 w-10" />
+      {/* 20px at weight 900 counts as WCAG large text, so the logo orange
+          clears the 3:1 bar here and stays matched to the mark beside it. */}
+      <span class="font-display font-black text-xl text-brand-orange">bread guy</span>
     </a>
 
     <nav class="hidden sm:flex items-center gap-6 text-sm font-medium">
-      <a href={withBase(`${prefix}/#nabidka`)} class="hover:text-brand-orange transition-colors">{i18n.nav.menu}</a>
-      <a href={withBase(`${prefix}/#pobocky`)} class="hover:text-brand-orange transition-colors">{i18n.nav.locations}</a>
-      <a href={withBase(`${prefix}/#o-nas`)} class="hover:text-brand-orange transition-colors">{i18n.nav.about}</a>
+      <a href={withBase(`${prefix}/#nabidka`)} class="hover:text-brand-orange-text transition-colors">{i18n.nav.menu}</a>
+      <a href={withBase(`${prefix}/#pobocky`)} class="hover:text-brand-orange-text transition-colors">{i18n.nav.locations}</a>
+      <a href={withBase(`${prefix}/#o-nas`)} class="hover:text-brand-orange-text transition-colors">{i18n.nav.about}</a>
       <a
         href={altPath}
         hreflang={altLocale}
@@ -55,9 +57,9 @@ const altPath = withBase(altRoute);
 
   <nav id="mobile-menu" class="sm:hidden hidden border-t border-brand-warm/50 bg-brand-cream">
     <div class="px-4 py-3 space-y-3">
-      <a href={withBase(`${prefix}/#nabidka`)} class="block text-sm font-medium hover:text-brand-orange">{i18n.nav.menu}</a>
-      <a href={withBase(`${prefix}/#pobocky`)} class="block text-sm font-medium hover:text-brand-orange">{i18n.nav.locations}</a>
-      <a href={withBase(`${prefix}/#o-nas`)} class="block text-sm font-medium hover:text-brand-orange">{i18n.nav.about}</a>
+      <a href={withBase(`${prefix}/#nabidka`)} class="block text-sm font-medium hover:text-brand-orange-text">{i18n.nav.menu}</a>
+      <a href={withBase(`${prefix}/#pobocky`)} class="block text-sm font-medium hover:text-brand-orange-text">{i18n.nav.locations}</a>
+      <a href={withBase(`${prefix}/#o-nas`)} class="block text-sm font-medium hover:text-brand-orange-text">{i18n.nav.about}</a>
       <a
         href={altPath}
         hreflang={altLocale}
