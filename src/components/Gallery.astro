@@ -1,0 +1,77 @@
+---
+import { t, type Locale } from '../data/i18n';
+import { withBase } from '../lib/paths';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const i18n = t(locale);
+
+const images = [
+  { src: withBase('/images/products/bily.webp'), alt: i18n.gallery.bily },
+  { src: withBase('/images/products/focaccia-tomato.webp'), alt: i18n.gallery.focacciaTomato },
+  { src: withBase('/images/products/tiramisu-babka.webp'), alt: i18n.gallery.babka },
+  { src: withBase('/images/products/focaccia-sandwich.webp'), alt: i18n.gallery.sandwich },
+  { src: withBase('/images/products/makovy-uzlik.webp'), alt: i18n.gallery.makovyUzlik },
+  { src: withBase('/images/products/focaccia-prosciutto.webp'), alt: i18n.gallery.focacciaProsciutto },
+];
+---
+
+<section class="py-8 sm:py-12 overflow-hidden" aria-label={i18n.gallery.label}>
+  <div class="flex gap-3 animate-scroll">
+    {images.map((img) => (
+      <div class="flex-shrink-0 w-64 sm:w-80 aspect-[4/3] rounded-xl overflow-hidden">
+        <img
+          src={img.src}
+          alt={img.alt}
+          class="w-full h-full object-cover"
+          loading="lazy"
+          decoding="async"
+          width="800"
+          height="600"
+        />
+      </div>
+    ))}
+    {/* Duplicate set makes the marquee loop seamlessly — decorative only. */}
+    {images.map((img) => (
+      <div class="flex-shrink-0 w-64 sm:w-80 aspect-[4/3] rounded-xl overflow-hidden" aria-hidden="true">
+        <img
+          src={img.src}
+          alt=""
+          class="w-full h-full object-cover"
+          loading="lazy"
+          decoding="async"
+          width="800"
+          height="600"
+        />
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .animate-scroll {
+    animation: scroll 30s linear infinite;
+  }
+  .animate-scroll:hover {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    /* Stop the marquee and let the row be scrolled by hand instead. */
+    .animate-scroll {
+      animation: none !important;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+    }
+    .animate-scroll > * {
+      scroll-snap-align: start;
+    }
+  }
+</style>
