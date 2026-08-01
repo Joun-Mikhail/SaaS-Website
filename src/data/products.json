@@ -9,6 +9,7 @@
     },
     "priceWhole": 117,
     "priceHalf": 59,
+    "image": "/images/products/bily.jpg",
     "available": true
   },
   {
@@ -21,6 +22,7 @@
     },
     "priceWhole": 117,
     "priceHalf": 59,
+    "image": "/images/products/misenec.jpg",
     "available": true
   },
   {
@@ -33,6 +35,7 @@
     },
     "priceWhole": 147,
     "priceHalf": 74,
+    "image": "/images/products/bily.jpg",
     "available": true
   },
   {
@@ -45,6 +48,7 @@
     },
     "priceWhole": 150,
     "priceHalf": 75,
+    "image": "/images/products/misenec.jpg",
     "available": true
   },
   {
@@ -56,6 +60,7 @@
       "en": "Smaller sourdough loaf"
     },
     "price": 65,
+    "image": "/images/products/bily.jpg",
     "available": true
   },
   {
@@ -68,6 +73,7 @@
     },
     "priceFrom": 50,
     "priceTo": 125,
+    "image": "/images/products/focaccia-tomato.jpg",
     "available": true
   },
   {
@@ -79,6 +85,7 @@
       "en": "Classic cinnamon roll"
     },
     "price": 85,
+    "image": "/images/products/tiramisu-babka.jpg",
     "available": true
   },
   {
@@ -90,6 +97,7 @@
       "en": "Espresso, mascarpone, amaretto, chocolate"
     },
     "price": null,
+    "image": "/images/products/tiramisu-babka.jpg",
     "available": true
   },
   {
@@ -101,6 +109,7 @@
       "en": "Ham, cheese, tomato, lettuce on house-made focaccia"
     },
     "price": null,
+    "image": "/images/products/sandwich-crosssection.jpg",
     "available": true
   },
   {
@@ -112,6 +121,7 @@
       "en": "Poppyseed knot roll"
     },
     "price": null,
+    "image": "/images/products/makovy-uzlik.jpg",
     "available": true
   }
 ]

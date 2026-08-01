@@ -1,0 +1,40 @@
+---
+const images = [
+  { src: '/images/products/bily.jpg', alt: 'Sourdough bread' },
+  { src: '/images/products/focaccia-tomato.jpg', alt: 'Focaccia with cherry tomatoes and olives' },
+  { src: '/images/products/tiramisu-babka.jpg', alt: 'Tiramisu babka with mascarpone' },
+  { src: '/images/products/focaccia-sandwich.jpg', alt: 'Focaccia sandwiches' },
+  { src: '/images/products/makovy-uzlik.jpg', alt: 'Poppyseed knot rolls' },
+  { src: '/images/products/focaccia-prosciutto.jpg', alt: 'Focaccia with prosciutto and arugula' },
+];
+---
+
+<section class="py-8 sm:py-12 overflow-hidden">
+  <div class="flex gap-3 animate-scroll">
+    {[...images, ...images].map((img) => (
+      <div class="flex-shrink-0 w-64 sm:w-80 aspect-[4/3] rounded-xl overflow-hidden">
+        <img
+          src={img.src}
+          alt={img.alt}
+          class="w-full h-full object-cover"
+          loading="lazy"
+          width="800"
+          height="600"
+        />
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .animate-scroll {
+    animation: scroll 30s linear infinite;
+  }
+  .animate-scroll:hover {
+    animation-play-state: paused;
+  }
+</style>
