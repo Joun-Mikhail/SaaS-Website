@@ -174,8 +174,16 @@ public/         logo.svg, favicon.svg, robots.txt, images/products/
   `hreflang` cs/en/x-default, Open Graph a Twitter karty, sitemap.
 - **Přístupnost** — odkaz „Přejít na obsah", viditelné focus stavy,
   `prefers-reduced-motion` zastaví posun galerie, popisné `alt` texty.
-- **Doména** — `astro.config.mjs` má nastaveno `site: 'https://breadguy.cz'`;
-  při změně domény upravte i konstantu `SITE` v `src/layouts/BaseLayout.astro`.
+- **Nasazení** — push do `main` spustí `.github/workflows/deploy.yml`, který web
+  postaví a publikuje na GitHub Pages.
+- **Doména a podadresář** — build je hostitelsky nezávislý. `SITE_URL` určuje
+  doménu a `BASE_PATH` podadresář (GitHub Pages projekt běží na `/SaaS-Website`),
+  obojí předává deploy workflow automaticky. Odkazy se skládají přes
+  `withBase()` v `src/lib/paths.ts`, takže po nasměrování `breadguy.cz` na
+  repozitář se nemusí měnit nic v kódu — stačí custom doména v nastavení Pages.
+- **Obrázky** — fotky na stránce jsou WebP (o ~28 % menší než původní JPEG);
+  náhled pro sdílení na sítích zůstává JPEG, protože ne všechny scrapery
+  WebP zvládnou.
 - **Bez JS frameworku** — jediný klientský skript obsluhuje mobilní menu
   a filtr kategorií.
 

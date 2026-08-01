@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://breadguy.cz/sitemap-index.xml

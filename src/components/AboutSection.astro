@@ -1,5 +1,6 @@
 ---
 import { t, type Locale } from '../data/i18n';
+import { withBase } from '../lib/paths';
 
 interface Props {
   locale: Locale;
@@ -12,7 +13,7 @@ const i18n = t(locale);
 <section id="o-nas" class="py-16 sm:py-24">
   <div class="max-w-6xl mx-auto px-4 sm:px-6">
     <div class="max-w-2xl mx-auto text-center">
-      <img src="/logo.svg" alt="Bread Guy" class="h-20 w-20 mx-auto mb-6" />
+      <img src={withBase("/logo.svg")} alt="Bread Guy" class="h-20 w-20 mx-auto mb-6" />
       <h2 class="font-display font-800 text-3xl sm:text-4xl mb-4">{i18n.about.title}</h2>
       <p class="text-brand-charcoal/70 text-lg leading-relaxed mb-8">
         {i18n.about.story}

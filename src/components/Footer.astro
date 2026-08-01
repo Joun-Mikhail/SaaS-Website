@@ -1,5 +1,6 @@
 ---
 import { t, type Locale } from '../data/i18n';
+import { withBase } from '../lib/paths';
 
 interface Props {
   locale: Locale;
@@ -14,7 +15,7 @@ const i18n = t(locale);
     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
       <div>
         <div class="flex items-center gap-2 mb-1">
-          <img src="/logo.svg" alt="Bread Guy" class="h-8 w-8" />
+          <img src={withBase("/logo.svg")} alt="Bread Guy" class="h-8 w-8" />
           <span class="font-display font-800 text-lg text-white">bread guy</span>
         </div>
         <p class="text-sm text-white/50">{i18n.footer.tagline}</p>

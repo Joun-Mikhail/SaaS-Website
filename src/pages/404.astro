@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../lib/paths';
 
 /*
  * One 404 for both languages: a wrong URL carries no reliable locale, and the
@@ -24,13 +25,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
     <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
       <a
-        href="/"
+        href={withBase("/")}
         class="inline-flex items-center px-6 py-3 bg-brand-orange text-white font-semibold rounded-lg hover:bg-brand-orange-hover transition-colors"
       >
         Zpět na úvod
       </a>
       <a
-        href="/#pobocky"
+        href={withBase("/#pobocky")}
         class="inline-flex items-center px-6 py-3 border-2 border-brand-warm font-semibold rounded-lg hover:bg-brand-warm transition-colors"
       >
         Otevírací doba a pobočky

@@ -9,7 +9,7 @@
     },
     "priceWhole": 117,
     "priceHalf": 59,
-    "image": "/images/products/bily.jpg",
+    "image": "/images/products/bily.webp",
     "available": true
   },
   {
@@ -22,7 +22,7 @@
     },
     "priceWhole": 117,
     "priceHalf": 59,
-    "image": "/images/products/misenec.jpg",
+    "image": "/images/products/misenec.webp",
     "available": true
   },
   {
@@ -73,7 +73,7 @@
     },
     "priceFrom": 50,
     "priceTo": 125,
-    "image": "/images/products/focaccia-tomato.jpg",
+    "image": "/images/products/focaccia-tomato.webp",
     "available": true
   },
   {
@@ -97,7 +97,7 @@
       "en": "Espresso, mascarpone, amaretto, chocolate"
     },
     "price": null,
-    "image": "/images/products/tiramisu-babka.jpg",
+    "image": "/images/products/tiramisu-babka.webp",
     "available": true
   },
   {
@@ -109,7 +109,7 @@
       "en": "Ham, cheese, tomato, lettuce on house-made focaccia"
     },
     "price": null,
-    "image": "/images/products/sandwich-crosssection.jpg",
+    "image": "/images/products/sandwich-crosssection.webp",
     "available": true
   },
   {
@@ -121,7 +121,7 @@
       "en": "Poppyseed knot roll"
     },
     "price": null,
-    "image": "/images/products/makovy-uzlik.jpg",
+    "image": "/images/products/makovy-uzlik.webp",
     "available": true
   }
 ]

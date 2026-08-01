@@ -1,3 +1,5 @@
+import { toRoute } from '../lib/paths';
+
 export const translations = {
   cs: {
     nav: {
@@ -157,7 +159,8 @@ export function t(locale: Locale) {
 }
 
 export function getLocaleFromUrl(url: URL): Locale {
-  const [, lang] = url.pathname.split('/');
+  // Strip the deployment base first, or "/SaaS-Website/en/" reads as Czech.
+  const [, lang] = toRoute(url.pathname).split('/');
   if (lang === 'en') return 'en';
   return 'cs';
 }

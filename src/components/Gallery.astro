@@ -1,5 +1,6 @@
 ---
 import { t, type Locale } from '../data/i18n';
+import { withBase } from '../lib/paths';
 
 interface Props {
   locale: Locale;
@@ -9,12 +10,12 @@ const { locale } = Astro.props;
 const i18n = t(locale);
 
 const images = [
-  { src: '/images/products/bily.jpg', alt: i18n.gallery.bily },
-  { src: '/images/products/focaccia-tomato.jpg', alt: i18n.gallery.focacciaTomato },
-  { src: '/images/products/tiramisu-babka.jpg', alt: i18n.gallery.babka },
-  { src: '/images/products/focaccia-sandwich.jpg', alt: i18n.gallery.sandwich },
-  { src: '/images/products/makovy-uzlik.jpg', alt: i18n.gallery.makovyUzlik },
-  { src: '/images/products/focaccia-prosciutto.jpg', alt: i18n.gallery.focacciaProsciutto },
+  { src: withBase('/images/products/bily.webp'), alt: i18n.gallery.bily },
+  { src: withBase('/images/products/focaccia-tomato.webp'), alt: i18n.gallery.focacciaTomato },
+  { src: withBase('/images/products/tiramisu-babka.webp'), alt: i18n.gallery.babka },
+  { src: withBase('/images/products/focaccia-sandwich.webp'), alt: i18n.gallery.sandwich },
+  { src: withBase('/images/products/makovy-uzlik.webp'), alt: i18n.gallery.makovyUzlik },
+  { src: withBase('/images/products/focaccia-prosciutto.webp'), alt: i18n.gallery.focacciaProsciutto },
 ];
 ---
 

@@ -1,5 +1,6 @@
 ---
 import { t, type Locale } from '../data/i18n';
+import { withBase } from '../lib/paths';
 
 interface Props {
   locale: Locale;
@@ -12,7 +13,7 @@ const prefix = locale === 'en' ? '/en' : '';
 
 <section class="relative overflow-hidden bg-brand-charcoal text-white">
   <img
-    src="/images/products/focaccia-olive.jpg"
+    src={withBase("/images/products/focaccia-olive.webp")}
     alt=""
     class="absolute inset-0 w-full h-full object-cover opacity-30"
     width="800"
@@ -38,13 +39,13 @@ const prefix = locale === 'en' ? '/en' : '';
 
     <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
       <a
-        href={`${prefix}/#nabidka`}
+        href={withBase(`${prefix}/#nabidka`)}
         class="inline-flex items-center px-8 py-3.5 bg-brand-orange text-white font-semibold rounded-lg hover:bg-brand-orange-hover transition-colors text-base"
       >
         {i18n.hero.cta}
       </a>
       <a
-        href={`${prefix}/#pobocky`}
+        href={withBase(`${prefix}/#pobocky`)}
         class="inline-flex items-center px-8 py-3.5 border-2 border-white/30 text-white font-semibold rounded-lg hover:border-white/60 transition-colors text-base"
       >
         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

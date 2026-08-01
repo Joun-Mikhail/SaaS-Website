@@ -1,5 +1,6 @@
 ---
 import { t, type Locale } from '../data/i18n';
+import { toRoute, withBase } from '../lib/paths';
 
 interface Props {
   locale: Locale;
@@ -10,23 +11,24 @@ const i18n = t(locale);
 const prefix = locale === 'en' ? '/en' : '';
 const altLocale = locale === 'cs' ? 'en' : 'cs';
 const altPrefix = locale === 'cs' ? '/en' : '';
-const currentPath = Astro.url.pathname;
-const altPath = locale === 'cs'
-  ? `/en${currentPath}`
+const currentPath = toRoute(Astro.url.pathname);
+const altRoute = locale === 'cs'
+  ? (currentPath === '/' ? '/en/' : `/en${currentPath}`)
   : currentPath.replace(/^\/en/, '') || '/';
+const altPath = withBase(altRoute);
 ---
 
 <header class="sticky top-0 z-50 bg-brand-cream/95 backdrop-blur-sm border-b border-brand-warm/50">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-    <a href={`${prefix}/`} class="flex items-center gap-2">
-      <img src="/logo.svg" alt="Bread Guy" class="h-10 w-10" />
+    <a href={withBase(`${prefix}/`)} class="flex items-center gap-2">
+      <img src={withBase("/logo.svg")} alt="Bread Guy" class="h-10 w-10" />
       <span class="font-display font-900 text-xl text-brand-orange">bread guy</span>
     </a>
 
     <nav class="hidden sm:flex items-center gap-6 text-sm font-medium">
-      <a href={`${prefix}/#nabidka`} class="hover:text-brand-orange transition-colors">{i18n.nav.menu}</a>
-      <a href={`${prefix}/#pobocky`} class="hover:text-brand-orange transition-colors">{i18n.nav.locations}</a>
-      <a href={`${prefix}/#o-nas`} class="hover:text-brand-orange transition-colors">{i18n.nav.about}</a>
+      <a href={withBase(`${prefix}/#nabidka`)} class="hover:text-brand-orange transition-colors">{i18n.nav.menu}</a>
+      <a href={withBase(`${prefix}/#pobocky`)} class="hover:text-brand-orange transition-colors">{i18n.nav.locations}</a>
+      <a href={withBase(`${prefix}/#o-nas`)} class="hover:text-brand-orange transition-colors">{i18n.nav.about}</a>
       <a
         href={altPath}
         hreflang={altLocale}
@@ -53,9 +55,9 @@ const altPath = locale === 'cs'
 
   <nav id="mobile-menu" class="sm:hidden hidden border-t border-brand-warm/50 bg-brand-cream">
     <div class="px-4 py-3 space-y-3">
-      <a href={`${prefix}/#nabidka`} class="block text-sm font-medium hover:text-brand-orange">{i18n.nav.menu}</a>
-      <a href={`${prefix}/#pobocky`} class="block text-sm font-medium hover:text-brand-orange">{i18n.nav.locations}</a>
-      <a href={`${prefix}/#o-nas`} class="block text-sm font-medium hover:text-brand-orange">{i18n.nav.about}</a>
+      <a href={withBase(`${prefix}/#nabidka`)} class="block text-sm font-medium hover:text-brand-orange">{i18n.nav.menu}</a>
+      <a href={withBase(`${prefix}/#pobocky`)} class="block text-sm font-medium hover:text-brand-orange">{i18n.nav.locations}</a>
+      <a href={withBase(`${prefix}/#o-nas`)} class="block text-sm font-medium hover:text-brand-orange">{i18n.nav.about}</a>
       <a
         href={altPath}
         hreflang={altLocale}

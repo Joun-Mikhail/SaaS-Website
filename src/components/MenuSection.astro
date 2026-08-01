@@ -1,6 +1,7 @@
 ---
 import { t, type Locale } from '../data/i18n';
 import products from '../data/products.json';
+import { withBase } from '../lib/paths';
 
 interface Props {
   locale: Locale;
@@ -81,7 +82,7 @@ function formatPriceDetail(product: (typeof products)[number]): string {
             <div class="aspect-[4/3] overflow-hidden bg-brand-warm/30">
               {product.image ? (
                 <img
-                  src={product.image}
+                  src={withBase(product.image)}
                   alt={`${product.name[locale]} — ${product.description[locale]}`}
                   class="product-photo w-full h-full object-cover duration-300"
                   loading="lazy"
@@ -91,7 +92,7 @@ function formatPriceDetail(product: (typeof products)[number]): string {
                 />
               ) : (
                 <div class="w-full h-full flex items-center justify-center" aria-hidden="true">
-                  <img src="/logo.svg" alt="" class="w-12 h-12 opacity-25" width="48" height="48" />
+                  <img src={withBase("/logo.svg")} alt="" class="w-12 h-12 opacity-25" width="48" height="48" />
                 </div>
               )}
             </div>
