@@ -25,8 +25,8 @@ export default {
         },
       },
       fontFamily: {
-        display: ['Nunito', 'system-ui', 'sans-serif'],
-        body: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['Nunito Variable', 'Nunito', 'system-ui', 'sans-serif'],
+        body: ['Inter Variable', 'Inter', 'system-ui', 'sans-serif'],
       },
     },
   },

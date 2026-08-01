@@ -1,3 +1,11 @@
+/* Fonts are self-hosted rather than pulled from the Google Fonts CDN: it keeps
+   the render off a third-party origin, and an EU business embedding Google
+   Fonts hands visitor IPs to a third party, which is a GDPR problem.
+   Each @font-face carries a unicode-range, so a Czech page fetches only the
+   latin and latin-ext subsets it actually needs. */
+@import '@fontsource-variable/inter/wght.css';
+@import '@fontsource-variable/nunito/wght.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
