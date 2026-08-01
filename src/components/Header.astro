@@ -27,7 +27,13 @@ const altPath = locale === 'cs'
       <a href={`${prefix}/#nabidka`} class="hover:text-brand-orange transition-colors">{i18n.nav.menu}</a>
       <a href={`${prefix}/#pobocky`} class="hover:text-brand-orange transition-colors">{i18n.nav.locations}</a>
       <a href={`${prefix}/#o-nas`} class="hover:text-brand-orange transition-colors">{i18n.nav.about}</a>
-      <a href={altPath} class="uppercase text-xs px-2 py-1 border border-brand-warm rounded hover:bg-brand-warm transition-colors">
+      <a
+        href={altPath}
+        hreflang={altLocale}
+        lang={altLocale}
+        aria-label={i18n.nav.switchLanguage}
+        class="uppercase text-xs px-2 py-1 border border-brand-warm rounded hover:bg-brand-warm transition-colors"
+      >
         {altLocale.toUpperCase()}
       </a>
     </nav>
@@ -35,8 +41,9 @@ const altPath = locale === 'cs'
     <button
       id="mobile-menu-btn"
       class="sm:hidden p-2 -mr-2"
-      aria-label="Menu"
+      aria-label={i18n.nav.menu}
       aria-expanded="false"
+      aria-controls="mobile-menu"
     >
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -49,7 +56,13 @@ const altPath = locale === 'cs'
       <a href={`${prefix}/#nabidka`} class="block text-sm font-medium hover:text-brand-orange">{i18n.nav.menu}</a>
       <a href={`${prefix}/#pobocky`} class="block text-sm font-medium hover:text-brand-orange">{i18n.nav.locations}</a>
       <a href={`${prefix}/#o-nas`} class="block text-sm font-medium hover:text-brand-orange">{i18n.nav.about}</a>
-      <a href={altPath} class="inline-block uppercase text-xs px-2 py-1 border border-brand-warm rounded hover:bg-brand-warm">
+      <a
+        href={altPath}
+        hreflang={altLocale}
+        lang={altLocale}
+        aria-label={i18n.nav.switchLanguage}
+        class="inline-block uppercase text-xs px-2 py-1 border border-brand-warm rounded hover:bg-brand-warm"
+      >
         {altLocale.toUpperCase()}
       </a>
     </div>

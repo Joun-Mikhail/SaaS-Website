@@ -1,5 +1,48 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Nunito:wght@700;800;900&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Sticky header is 4rem tall — keep anchor targets clear of it. */
+    scroll-padding-top: 5rem;
+  }
+
+  :focus-visible {
+    outline: 2px solid theme('colors.brand.orange');
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  .skip-link {
+    @apply absolute left-4 -top-16 z-[100] bg-brand-orange text-white px-4 py-2 rounded-lg font-medium;
+    @apply focus:top-4 transition-[top];
+  }
+
+  .product-photo {
+    @apply transition-transform;
+  }
+  .product-card:hover .product-photo {
+    transform: scale(1.05);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .product-card:hover .product-photo {
+    transform: none;
+  }
+}

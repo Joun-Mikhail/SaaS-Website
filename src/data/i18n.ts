@@ -4,6 +4,8 @@ export const translations = {
       menu: 'Nabídka',
       locations: 'Pobočky',
       about: 'O nás',
+      skipToContent: 'Přejít na obsah',
+      switchLanguage: 'Přepnout na angličtinu',
     },
     hero: {
       badge: 'Pečeme každé ráno',
@@ -11,6 +13,7 @@ export const translations = {
       subtitle: 'Poctivé suroviny, ruční práce — od našich pecí k vám na stůl.',
       cta: 'Zobrazit nabídku',
       findUs: 'Najít pobočku',
+      photoAlt: 'Focaccia s olivami a bylinkami čerstvě z pece',
     },
     openNow: {
       open: 'Otevřeno',
@@ -33,6 +36,7 @@ export const translations = {
       soldOut: 'Vyprodáno',
       available: 'Dostupné',
       currency: 'Kč',
+      filterLabel: 'Filtrovat podle kategorie',
     },
     locations: {
       title: 'Pobočky',
@@ -58,6 +62,15 @@ export const translations = {
       tagline: 'A Brno Bakery',
       followUs: 'Sledujte nás',
     },
+    gallery: {
+      label: 'Fotogalerie našeho pečiva',
+      bily: 'Bochník kváskového chleba s křupavou kůrkou',
+      focacciaTomato: 'Focaccia s cherry rajčaty a olivami',
+      babka: 'Tiramisu babka s mascarpone',
+      sandwich: 'Sendviče z domácí focaccie',
+      makovyUzlik: 'Makové uzlíky',
+      focacciaProsciutto: 'Focaccia s prosciuttem a rukolou',
+    },
     sellOutWarning: 'Oblíbené položky se rychle vyprodají. Doporučujeme přijít co nejdříve.',
   },
   en: {
@@ -65,6 +78,8 @@ export const translations = {
       menu: 'Menu',
       locations: 'Locations',
       about: 'About',
+      skipToContent: 'Skip to content',
+      switchLanguage: 'Switch to Czech',
     },
     hero: {
       badge: 'Baked fresh every morning',
@@ -72,6 +87,7 @@ export const translations = {
       subtitle: 'Honest ingredients, handmade — from our ovens to your table.',
       cta: 'View Menu',
       findUs: 'Find a Location',
+      photoAlt: 'Focaccia with olives and herbs fresh from the oven',
     },
     openNow: {
       open: 'Open',
@@ -94,6 +110,7 @@ export const translations = {
       soldOut: 'Sold out',
       available: 'Available',
       currency: 'Kč',
+      filterLabel: 'Filter by category',
     },
     locations: {
       title: 'Locations',
@@ -118,6 +135,15 @@ export const translations = {
     footer: {
       tagline: 'A Brno Bakery',
       followUs: 'Follow us',
+    },
+    gallery: {
+      label: 'Photo gallery of our baking',
+      bily: 'A loaf of sourdough bread with a crisp crust',
+      focacciaTomato: 'Focaccia with cherry tomatoes and olives',
+      babka: 'Tiramisu babka with mascarpone',
+      sandwich: 'Sandwiches on house-made focaccia',
+      makovyUzlik: 'Poppyseed knot rolls',
+      focacciaProsciutto: 'Focaccia with prosciutto and arugula',
     },
     sellOutWarning: 'Popular items sell out quickly. We recommend arriving as early as possible.',
   },

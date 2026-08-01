@@ -1,23 +1,47 @@
 ---
+import { t, type Locale } from '../data/i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const i18n = t(locale);
+
 const images = [
-  { src: '/images/products/bily.jpg', alt: 'Sourdough bread' },
-  { src: '/images/products/focaccia-tomato.jpg', alt: 'Focaccia with cherry tomatoes and olives' },
-  { src: '/images/products/tiramisu-babka.jpg', alt: 'Tiramisu babka with mascarpone' },
-  { src: '/images/products/focaccia-sandwich.jpg', alt: 'Focaccia sandwiches' },
-  { src: '/images/products/makovy-uzlik.jpg', alt: 'Poppyseed knot rolls' },
-  { src: '/images/products/focaccia-prosciutto.jpg', alt: 'Focaccia with prosciutto and arugula' },
+  { src: '/images/products/bily.jpg', alt: i18n.gallery.bily },
+  { src: '/images/products/focaccia-tomato.jpg', alt: i18n.gallery.focacciaTomato },
+  { src: '/images/products/tiramisu-babka.jpg', alt: i18n.gallery.babka },
+  { src: '/images/products/focaccia-sandwich.jpg', alt: i18n.gallery.sandwich },
+  { src: '/images/products/makovy-uzlik.jpg', alt: i18n.gallery.makovyUzlik },
+  { src: '/images/products/focaccia-prosciutto.jpg', alt: i18n.gallery.focacciaProsciutto },
 ];
 ---
 
-<section class="py-8 sm:py-12 overflow-hidden">
+<section class="py-8 sm:py-12 overflow-hidden" aria-label={i18n.gallery.label}>
   <div class="flex gap-3 animate-scroll">
-    {[...images, ...images].map((img) => (
+    {images.map((img) => (
       <div class="flex-shrink-0 w-64 sm:w-80 aspect-[4/3] rounded-xl overflow-hidden">
         <img
           src={img.src}
           alt={img.alt}
           class="w-full h-full object-cover"
           loading="lazy"
+          decoding="async"
+          width="800"
+          height="600"
+        />
+      </div>
+    ))}
+    {/* Duplicate set makes the marquee loop seamlessly — decorative only. */}
+    {images.map((img) => (
+      <div class="flex-shrink-0 w-64 sm:w-80 aspect-[4/3] rounded-xl overflow-hidden" aria-hidden="true">
+        <img
+          src={img.src}
+          alt=""
+          class="w-full h-full object-cover"
+          loading="lazy"
+          decoding="async"
           width="800"
           height="600"
         />
@@ -36,5 +60,17 @@ const images = [
   }
   .animate-scroll:hover {
     animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    /* Stop the marquee and let the row be scrolled by hand instead. */
+    .animate-scroll {
+      animation: none !important;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+    }
+    .animate-scroll > * {
+      scroll-snap-align: start;
+    }
   }
 </style>

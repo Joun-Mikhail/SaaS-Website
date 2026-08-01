@@ -35,7 +35,7 @@
     },
     "priceWhole": 147,
     "priceHalf": 74,
-    "image": "/images/products/bily.jpg",
+    "image": null,
     "available": true
   },
   {
@@ -48,7 +48,7 @@
     },
     "priceWhole": 150,
     "priceHalf": 75,
-    "image": "/images/products/misenec.jpg",
+    "image": null,
     "available": true
   },
   {
@@ -60,7 +60,7 @@
       "en": "Smaller sourdough loaf"
     },
     "price": 65,
-    "image": "/images/products/bily.jpg",
+    "image": null,
     "available": true
   },
   {
@@ -85,7 +85,7 @@
       "en": "Classic cinnamon roll"
     },
     "price": 85,
-    "image": "/images/products/tiramisu-babka.jpg",
+    "image": null,
     "available": true
   },
   {

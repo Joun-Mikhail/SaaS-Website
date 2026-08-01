@@ -10,11 +10,18 @@ interface Props {
   description: string;
 }
 
+const SITE = 'https://breadguy.cz';
+/* Hero photo doubles as the social preview image. */
+const OG_IMAGE = '/images/products/focaccia-olive.jpg';
+
 const { title, description } = Astro.props;
 const locale = getLocaleFromUrl(Astro.url);
 const i18n = t(locale);
 const altLocale = locale === 'cs' ? 'en' : 'cs';
-const altPath = locale === 'cs' ? `/en${Astro.url.pathname}` : Astro.url.pathname.replace(/^\/en/, '') || '/';
+const csPath = Astro.url.pathname.replace(/^\/en/, '') || '/';
+/* Keep the trailing slash so hreflang matches the canonical URL exactly. */
+const enPath = csPath === '/' ? '/en/' : `/en${csPath}`;
+const altPath = locale === 'cs' ? enPath : csPath;
 
 const structuredData = locations.map((loc) => ({
   '@context': 'https://schema.org',
@@ -67,20 +74,42 @@ const structuredData = locations.map((loc) => ({
     <meta name="description" content={description} />
     <title>{title}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="alternate" hreflang={altLocale} href={altPath} />
-    <link rel="canonical" href={`https://breadguy.cz${Astro.url.pathname}`} />
+    <link rel="canonical" href={`${SITE}${Astro.url.pathname}`} />
+
+    <link rel="alternate" hreflang="cs" href={`${SITE}${csPath}`} />
+    <link rel="alternate" hreflang="en" href={`${SITE}${enPath}`} />
+    <link rel="alternate" hreflang="x-default" href={`${SITE}${csPath}`} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Nunito:wght@700;800;900&display=swap"
+    />
+
+    <meta property="og:site_name" content="Bread Guy" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={`https://breadguy.cz${Astro.url.pathname}`} />
+    <meta property="og:url" content={`${SITE}${Astro.url.pathname}`} />
     <meta property="og:locale" content={locale === 'cs' ? 'cs_CZ' : 'en_GB'} />
+    <meta property="og:image" content={`${SITE}${OG_IMAGE}`} />
+    <meta property="og:image:width" content="800" />
+    <meta property="og:image:height" content="600" />
+    <meta property="og:image:alt" content={i18n.hero.photoAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${SITE}${OG_IMAGE}`} />
+
     {structuredData.map((data) => (
       <script type="application/ld+json" set:html={JSON.stringify(data)} />
     ))}
   </head>
   <body class="bg-brand-cream text-brand-charcoal font-body antialiased">
+    <a href="#obsah" class="skip-link">{i18n.nav.skipToContent}</a>
     <Header locale={locale} />
-    <main>
+    <main id="obsah">
       <slot />
     </main>
     <Footer locale={locale} />
