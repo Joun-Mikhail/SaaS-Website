@@ -19,8 +19,13 @@
 
   :focus-visible {
     outline: 2px solid theme('colors.brand.orange');
-    outline-offset: 2px;
-    border-radius: 2px;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: theme('colors.brand.orange');
+    color: #fff;
   }
 }
 
@@ -30,14 +35,99 @@
     @apply focus:top-4 transition-[top];
   }
 
+  /* --- Scroll reveal -------------------------------------------------------
+     Content must never depend on JS to become visible. The hidden state is
+     applied only after the script marks the document ready, so with JS off (or
+     if the script fails) everything renders normally. */
+  .js-reveal [data-reveal] {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  .js-reveal [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  /* --- Cards --------------------------------------------------------------- */
+  .product-card {
+    transition:
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.35s ease;
+  }
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px -18px rgb(244 85 30 / 0.45);
+  }
   .product-photo {
-    @apply transition-transform;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .product-card:hover .product-photo {
-    transform: scale(1.05);
+    transform: scale(1.07);
+  }
+
+  /* --- Buttons ------------------------------------------------------------- */
+  .btn-lift {
+    transition:
+      transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.2s ease,
+      background-color 0.2s ease;
+  }
+  .btn-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px -10px rgb(196 66 20 / 0.6);
+  }
+  .btn-lift:active {
+    transform: translateY(0);
+  }
+
+  /* --- Heading accent ------------------------------------------------------ */
+  .heading-accent::after {
+    content: '';
+    display: block;
+    width: 3rem;
+    height: 4px;
+    margin: 0.75rem auto 0;
+    border-radius: 999px;
+    background: linear-gradient(90deg, theme('colors.brand.orange'), #f59e0b);
+  }
+
+  /* --- Live status dot ----------------------------------------------------- */
+  .status-dot-open {
+    position: relative;
+  }
+  .status-dot-open::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    background: inherit;
+    animation: status-pulse 2.4s ease-out infinite;
+  }
+
+  /* Fades the marquee into the page edges instead of cutting it off. */
+  .edge-fade {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
   }
 }
 
+@keyframes status-pulse {
+  0% { transform: scale(1); opacity: 0.55; }
+  70% { transform: scale(2.6); opacity: 0; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+
+@keyframes slow-zoom {
+  from { transform: scale(1.06); }
+  to { transform: scale(1.16); }
+}
+
+/* Honour the OS setting: no motion, and nothing left hidden or mid-transition. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -50,7 +140,19 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+  .js-reveal [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+  .product-card:hover,
+  .btn-lift:hover {
+    transform: none;
+    box-shadow: none;
+  }
   .product-card:hover .product-photo {
     transform: none;
+  }
+  .status-dot-open::after {
+    display: none;
   }
 }

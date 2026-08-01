@@ -19,8 +19,15 @@ const images = [
 ];
 ---
 
-<section class="py-8 sm:py-12 overflow-hidden" aria-label={i18n.gallery.label}>
-  <div class="flex gap-3 animate-scroll">
+<section class="py-10 sm:py-14 overflow-hidden edge-fade">
+  {/* Focusable and named: with reduced motion the marquee stops and becomes a
+      hand-scrollable row, which a keyboard user has to be able to reach. */}
+  <div
+    class="flex gap-3 animate-scroll"
+    role="group"
+    aria-label={i18n.gallery.label}
+    tabindex="0"
+  >
     {images.map((img) => (
       <div class="flex-shrink-0 w-64 sm:w-80 aspect-[4/3] rounded-xl overflow-hidden">
         <img

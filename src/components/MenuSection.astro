@@ -44,13 +44,14 @@ function formatPriceDetail(product: (typeof products)[number]): string {
 <section id="nabidka" class="py-16 sm:py-24">
   <div class="max-w-6xl mx-auto px-4 sm:px-6">
     <div class="text-center mb-12">
-      <h2 class="font-display font-extrabold text-3xl sm:text-4xl mb-3">{i18n.menu.title}</h2>
-      <p class="text-brand-muted max-w-lg mx-auto">{i18n.menu.subtitle}</p>
+      <h2 data-reveal class="heading-accent font-display font-extrabold text-3xl sm:text-5xl tracking-tight mb-3">{i18n.menu.title}</h2>
+      <p data-reveal data-reveal-index="1" class="text-brand-muted max-w-lg mx-auto mt-4">{i18n.menu.subtitle}</p>
     </div>
 
     <div
       class="flex flex-wrap justify-center gap-2 mb-10"
       id="category-filters"
+      data-reveal
       role="group"
       aria-label={i18n.menu.filterLabel}
     >
@@ -71,13 +72,15 @@ function formatPriceDetail(product: (typeof products)[number]): string {
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" id="product-grid">
-      {products.map((product) => {
+      {products.map((product, i) => {
         const price = formatPrice(product);
         const detail = formatPriceDetail(product);
         return (
           <div
             data-category={product.category}
-            class="product-card bg-white rounded-xl overflow-hidden border border-brand-warm/30 hover:border-brand-orange/30 hover:shadow-md transition-all"
+            data-reveal
+            data-reveal-index={i}
+            class="product-card bg-white rounded-2xl overflow-hidden border border-brand-warm/40 hover:border-brand-orange/40"
           >
             <div class="aspect-[4/3] overflow-hidden bg-brand-warm/30">
               {product.image ? (
@@ -118,7 +121,7 @@ function formatPriceDetail(product: (typeof products)[number]): string {
               </div>
               {price && (
                 <div class="mt-3 pt-3 border-t border-brand-warm/20">
-                  <span class="font-semibold text-brand-orange-text">{price}</span>
+                  <span class="font-display font-extrabold text-lg text-brand-orange-text">{price}</span>
                   {detail && (
                     <span class="text-xs text-brand-muted ml-1">({detail})</span>
                   )}
@@ -150,10 +153,14 @@ function formatPriceDetail(product: (typeof products)[number]): string {
       btn.setAttribute('aria-pressed', 'true');
 
       cards.forEach((card) => {
+        const el = card as HTMLElement;
         if (category === 'all' || card.getAttribute('data-category') === category) {
-          (card as HTMLElement).style.display = '';
+          el.style.display = '';
+          // A card revealed by filtering may never have been observed while it
+          // was hidden, so show it directly rather than leaving it at opacity 0.
+          el.classList.add('is-visible');
         } else {
-          (card as HTMLElement).style.display = 'none';
+          el.style.display = 'none';
         }
       });
     });

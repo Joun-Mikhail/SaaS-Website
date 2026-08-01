@@ -113,5 +113,48 @@ const structuredData = locations.map((loc) => ({
       <slot />
     </main>
     <Footer locale={locale} />
+
+    <script>
+      /*
+       * Reveal-on-scroll and header elevation.
+       *
+       * The hidden state is only armed once this script runs, so a visitor
+       * without JS — or one where this fails — still sees every section.
+       * Readers who ask for reduced motion get everything shown immediately.
+       */
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const targets = document.querySelectorAll<HTMLElement>('[data-reveal]');
+
+      if (!reduceMotion && 'IntersectionObserver' in window && targets.length) {
+        document.documentElement.classList.add('js-reveal');
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              const el = entry.target as HTMLElement;
+              // Stagger siblings so a grid cascades rather than popping at once.
+              const index = Number(el.dataset.revealIndex ?? 0);
+              el.style.setProperty('--reveal-delay', `${Math.min(index, 8) * 70}ms`);
+              el.classList.add('is-visible');
+              observer.unobserve(el);
+            }
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.08 }
+        );
+
+        targets.forEach((el) => observer.observe(el));
+      }
+
+      const header = document.querySelector<HTMLElement>('[data-header]');
+      if (header) {
+        const onScroll = () => {
+          header.classList.toggle('shadow-lg', window.scrollY > 8);
+          header.classList.toggle('shadow-brand-orange/5', window.scrollY > 8);
+        };
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+      }
+    </script>
   </body>
 </html>

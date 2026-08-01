@@ -11,44 +11,66 @@ const i18n = t(locale);
 const prefix = locale === 'en' ? '/en' : '';
 ---
 
-<section class="relative overflow-hidden bg-brand-charcoal text-white">
+<section class="relative overflow-hidden bg-brand-charcoal text-white isolate">
+  {/* Slow drift gives the crust some life without pulling focus off the text. */}
   <img
-    src={withBase("/images/products/focaccia-olive.webp")}
+    src={withBase('/images/products/focaccia-olive.webp')}
     alt=""
-    class="absolute inset-0 w-full h-full object-cover opacity-30"
+    class="hero-photo absolute inset-0 w-full h-full object-cover opacity-40"
     width="800"
     height="600"
     loading="eager"
     fetchpriority="high"
     decoding="async"
   />
-  <div class="absolute inset-0 bg-gradient-to-b from-brand-charcoal/70 via-brand-charcoal/50 to-brand-charcoal/90 z-10" />
 
-  <div class="relative z-20 max-w-6xl mx-auto px-4 sm:px-6 py-20 sm:py-32 text-center">
-    <span class="inline-block bg-brand-orange-deep text-white text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full mb-6 tracking-wide uppercase">
+  {/* Warm colour wash so the photo reads as brand rather than a stock backdrop. */}
+  <div
+    class="absolute inset-0 z-10 bg-gradient-to-b from-brand-charcoal/80 via-brand-charcoal/60 to-brand-charcoal/95"
+    aria-hidden="true"
+  />
+  <div
+    class="absolute inset-0 z-10 mix-blend-soft-light bg-[radial-gradient(70%_55%_at_50%_0%,#F4551E_0%,transparent_70%)]"
+    aria-hidden="true"
+  />
+
+  <div class="relative z-20 max-w-6xl mx-auto px-4 sm:px-6 py-24 sm:py-36 text-center">
+    <span
+      data-reveal
+      class="inline-flex items-center gap-2 bg-brand-orange-deep/95 text-white text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full mb-6 tracking-wide uppercase ring-1 ring-white/20"
+    >
+      <span class="w-1.5 h-1.5 rounded-full bg-white/90" aria-hidden="true"></span>
       {i18n.hero.badge}
     </span>
 
-    <h1 class="font-display font-black text-4xl sm:text-5xl lg:text-6xl leading-tight max-w-3xl mx-auto mb-6">
+    <h1
+      data-reveal
+      data-reveal-index="1"
+      class="font-display font-black text-4xl sm:text-6xl lg:text-7xl leading-[1.05] tracking-tight max-w-3xl mx-auto mb-6 text-balance"
+    >
       {i18n.hero.title}
     </h1>
 
-    <p class="text-white/80 text-lg sm:text-xl max-w-xl mx-auto mb-10">
+    <p
+      data-reveal
+      data-reveal-index="2"
+      class="text-white/85 text-lg sm:text-xl max-w-xl mx-auto mb-10 text-pretty"
+    >
       {i18n.hero.subtitle}
     </p>
 
-    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+    <div data-reveal data-reveal-index="3" class="flex flex-col sm:flex-row items-center justify-center gap-4">
       <a
         href={withBase(`${prefix}/#nabidka`)}
-        class="inline-flex items-center px-8 py-3.5 bg-brand-orange-deep text-white font-semibold rounded-lg hover:bg-brand-orange-hover transition-colors text-base"
+        class="btn-lift inline-flex items-center px-8 py-4 bg-brand-orange-deep text-white font-semibold rounded-xl hover:bg-brand-orange-hover text-base w-full sm:w-auto justify-center"
       >
         {i18n.hero.cta}
       </a>
       <a
         href={withBase(`${prefix}/#pobocky`)}
-        class="inline-flex items-center px-8 py-3.5 border-2 border-white/30 text-white font-semibold rounded-lg hover:border-white/60 transition-colors text-base"
+        class="btn-lift inline-flex items-center px-8 py-4 border-2 border-white/35 text-white font-semibold rounded-xl hover:border-white/70 hover:bg-white/5 text-base w-full sm:w-auto justify-center"
       >
-        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
         </svg>
@@ -57,3 +79,16 @@ const prefix = locale === 'en' ? '/en' : '';
     </div>
   </div>
 </section>
+
+<style>
+  .hero-photo {
+    animation: slow-zoom 24s ease-in-out infinite alternate;
+    transform-origin: 55% 45%;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-photo {
+      animation: none;
+      transform: none;
+    }
+  }
+</style>

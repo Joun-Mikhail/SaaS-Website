@@ -21,7 +21,8 @@ const i18n = t(locale);
             href={loc.mapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="flex items-center justify-between p-3 rounded-lg hover:bg-brand-cream/50 transition-colors group"
+            class="flex items-center justify-between p-3 rounded-xl hover:bg-brand-cream/70 transition-colors group"
+            data-reveal
             data-branch-status
             data-hours={JSON.stringify(loc.hours)}
             data-label-open={i18n.openNow.open}
@@ -32,7 +33,7 @@ const i18n = t(locale);
             <div class="flex items-center gap-3">
               <div
                 data-status-dot
-                class={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${status.isOpen ? 'bg-brand-open' : 'bg-brand-closed'}`}
+                class={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${status.isOpen ? 'bg-brand-open status-dot-open' : 'bg-brand-closed'}`}
               />
               <div>
                 <p class="font-semibold text-sm">{loc.label[locale]}</p>
@@ -87,6 +88,7 @@ const i18n = t(locale);
 
       if (dot) {
         dot.classList.toggle('bg-brand-open', status.isOpen);
+        dot.classList.toggle('status-dot-open', status.isOpen);
         dot.classList.toggle('bg-brand-closed', !status.isOpen);
       }
 

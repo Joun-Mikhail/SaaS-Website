@@ -18,7 +18,10 @@ const altRoute = locale === 'cs'
 const altPath = withBase(altRoute);
 ---
 
-<header class="sticky top-0 z-50 bg-brand-cream/95 backdrop-blur-sm border-b border-brand-warm/50">
+<header
+  data-header
+  class="sticky top-0 z-50 bg-brand-cream/90 backdrop-blur-md border-b border-brand-warm/50 transition-shadow duration-300"
+>
   <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
     <a href={withBase(`${prefix}/`)} class="flex items-center gap-2">
       <img src={withBase("/logo.svg")} alt="" class="h-10 w-10" />
