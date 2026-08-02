@@ -99,3 +99,36 @@ export function getStatus(hours: LocationHours, now: Date = new Date()): Status 
 
   return CLOSED;
 }
+
+export const DAY_ORDER: DayKey[] = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+
+export interface HourGroup {
+  /** "Po–Pá" for a run, "So" for a single day. */
+  days: DayKey[];
+  /** "08:00–18:00", or null when closed. */
+  value: string | null;
+}
+
+/**
+ * Collapse a week into runs of identical hours, so a card reads
+ * "Po–Pá 08:00–18:00 / So 08:00–12:00 / Ne zavřeno" instead of seven rows.
+ *
+ * Runs are consecutive only. A week that is open Mon, closed Tue and open Wed
+ * stays three groups rather than merging Mon with Wed, because "Po, St" printed
+ * as a range would be a lie.
+ */
+export function groupHours(hours: LocationHours): HourGroup[] {
+  const groups: HourGroup[] = [];
+
+  for (const day of DAY_ORDER) {
+    const value = hours[day] ?? null;
+    const last = groups[groups.length - 1];
+    if (last && last.value === value) {
+      last.days.push(day);
+    } else {
+      groups.push({ days: [day], value });
+    }
+  }
+
+  return groups;
+}

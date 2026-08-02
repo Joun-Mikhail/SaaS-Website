@@ -1,0 +1,119 @@
+---
+import Placeholder from './Placeholder.astro';
+import { t, type Locale } from '../data/i18n';
+import { withBase } from '../lib/paths';
+import { route } from '../lib/routes';
+import type products from '../data/products.json';
+
+type Product = (typeof products)[number];
+
+interface Props {
+  product: Product;
+  locale: Locale;
+  /** The menu grid links to detail pages; the home preview does too. */
+  linked?: boolean;
+}
+
+const { product, locale, linked = true } = Astro.props;
+const i18n = t(locale);
+
+const price = (() => {
+  if ('priceWhole' in product && product.priceWhole) {
+    return {
+      value: `${product.priceWhole} / ${product.priceHalf} ${i18n.menu.currency}`,
+      detail: `${i18n.menu.whole} / ${i18n.menu.half}`,
+    };
+  }
+  if ('price' in product && product.price) {
+    return { value: `${product.price} ${i18n.menu.currency}`, detail: '' };
+  }
+  return null;
+})();
+
+const href = route('product', locale, product.id);
+const description = product.description[locale];
+const allergens = product.allergens?.[locale] ?? null;
+---
+
+<article
+  class="product-card ground-chalk bg-brand-chalk text-brand-ink flex flex-col"
+  data-category={product.category}
+>
+  <div class="aspect-[4/3] overflow-hidden bg-brand-blue">
+    {
+      product.photo ? (
+        <img
+          class="card-photo w-full h-full object-cover"
+          src={withBase(`/images/products/${product.photo}-800.webp`)}
+          srcset={`${withBase(`/images/products/${product.photo}-400.webp`)} 400w, ${withBase(`/images/products/${product.photo}-800.webp`)} 800w`}
+          sizes="(min-width: 900px) 380px, 100vw"
+          alt={description ? `${product.name[locale]} — ${description}` : product.name[locale]}
+          width="800"
+          height="600"
+          loading="lazy"
+          decoding="async"
+        />
+      ) : (
+        <Placeholder variant="block" label={i18n.placeholder.photo} class="w-full h-full" />
+      )
+    }
+  </div>
+
+  <div class="p-s4 flex flex-col gap-s3 grow">
+    <h3 class="font-display text-t4">
+      {
+        linked ? (
+          <a href={href} class="hover:underline">
+            {product.name[locale]}
+          </a>
+        ) : (
+          product.name[locale]
+        )
+      }
+    </h3>
+
+    {
+      description ? (
+        <p class="text-t2">{description}</p>
+      ) : (
+        <Placeholder label={i18n.placeholder.description} />
+      )
+    }
+
+    {
+      allergens ? (
+        <p class="font-utility font-bold text-t1 uppercase bg-brand-ink text-brand-chalk px-s2 py-s1 self-start">
+          {i18n.menu.allergens} · {allergens.join(', ')}
+        </p>
+      ) : (
+        /* Never an empty space next to "Alergeny" — absence there could be read
+           as "contains none", which is the one claim this field must not make. */
+        <p
+          class="font-utility font-bold text-t1 uppercase text-brand-ink self-start px-s2 py-s1 ph-hatch-light"
+          style="border: 2px dashed currentColor"
+        >
+          {i18n.placeholder.allergens}
+        </p>
+      )
+    }
+
+    <div class="mt-auto pt-s2">
+      {
+        price ? (
+          <p class="tag-notch inline-flex items-baseline gap-s2 bg-brand-orange text-brand-ink px-s3 py-s2 font-utility font-bold text-t4">
+            <span>{price.value}</span>
+            {price.detail && (
+              <span class="text-t1 uppercase font-medium">{price.detail}</span>
+            )}
+          </p>
+        ) : (
+          <Placeholder
+            label={i18n.placeholder.price}
+            hint={i18n.placeholder.priceHint}
+            class="inline-block"
+          />
+        )
+      }
+    </div>
+  </div>
+</article>

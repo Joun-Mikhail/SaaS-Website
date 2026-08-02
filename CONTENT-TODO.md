@@ -44,10 +44,10 @@ already live, not only to new ones.
 | --- | --- |
 | `Objednat` | the persistent order CTA |
 | `Objednávka` | the flow's own name |
-| `Dnes pečeme` | home menu-preview heading — see §12 open question |
+| ~~`Dnes pečeme`~~ → `Naše pečivo` | home preview heading — reworded in Phase 3 so it states no schedule |
 | `Celá nabídka` | link to the full menu |
 | `Chcete chleba ve čtvrtek?` | order entry block heading |
-| `Vyberte pobočku, den a čas.` | order entry block subheading |
+| `Vyberte pobočku, den a čas vyzvednutí.` | order entry block subheading |
 | `Pokračovat` · `Zpět` · `Zpět na nabídku` | flow and page navigation |
 | `Další chleby` | related products |
 | `Složení` | ingredients (distinct from allergens) |
@@ -55,26 +55,24 @@ already live, not only to new ones.
 | `Krok 1 ze 6` | step indicator |
 | route slugs | `/nabidka` `/pobocky` `/objednavka` `/o-nas` |
 
-### Interface strings — `src/data/i18n.ts`, 57 strings
+### Interface strings — `src/data/i18n.ts`
 
-Highest risk first, because these are sentences rather than labels:
+The four invented sentences (`hero.subtitle`, `menu.subtitle`, `about.story`,
+`sellOutWarning`) and the `hero.badge` were **deleted in Phase 3**, not
+rewritten. So did `footer.tagline` — the English `A Brno Bakery` that was
+rendering in the Czech footer.
+
+What remains needs reading:
 
 | Key | String |
 | --- | --- |
-| `hero.subtitle` | Poctivé suroviny, ruční práce — od našich pecí k vám na stůl. |
-| `menu.subtitle` | Pečeme denně čerstvé. Populární položky se vyprodají brzy — přijďte včas. |
-| `about.story` | Bread Guy je pekárna v Brně zaměřená na kváskový chléb, focacciu a pečivo. Každý den pečeme z poctivých surovin, bez kompromisů. |
-| `sellOutWarning` | Oblíbené položky se rychle vyprodají. Doporučujeme přijít co nejdříve. |
-| `hero.badge` | Pečeme každé ráno |
-| `openNow.*` | Otevřeno · Zavřeno · Dnes zavřeno · Otevíráme v · Zavíráme v · Neděle — zavřeno |
-| `nav.*` | Nabídka · Pobočky · O nás · Přejít na obsah · Přepnout na angličtinu |
-| `menu.*` | Vše · Chleby · Sladké · Sendviče · celý · půlka · od · Vyprodáno · Dostupné · Filtrovat podle kategorie · Alergeny |
-| `locations.*` | Navštivte nás v Brně · Otevírací doba · Navigovat · Zavolat · Po–Ne · recenzí |
-| `gallery.*` | six photo alt texts |
-| `hero.photoAlt` | Focaccia s olivami a bylinkami čerstvě z pece |
-
-Note `footer.tagline` is **`A Brno Bakery`** — an English string rendering in
-the Czech footer. Separate bug, listed again in §11.
+| `hero.title` | Kváskový chléb a pečivo z Brna. |
+| `branch.*` | Otevírací doba · Navigovat · Zavolat · Otevřeno · Zavřeno · otevíráme v · zavíráme v · zavřeno · Po–Ne |
+| `nav.*` | Nabídka · Pobočky · O nás · Objednat · Přejít na obsah · Přepnout na angličtinu · Otevřít menu |
+| `menu.*` | Naše pečivo · Celá nabídka · Vše · Chleby · Sladké · Sendviče · celý · půlka · Filtrovat podle kategorie · Alergeny · Složení · Gramáž · Zpět na nabídku · Další pečivo |
+| `locations.*` | Pobočky · Kontakt · Telefon |
+| `placeholder.*` | all eleven placeholder strings, listed above |
+| `meta.*` | every page title and meta description, both languages |
 
 ### Product descriptions — `src/data/products.json`
 
@@ -153,10 +151,10 @@ structured data. Never owner-supplied. **Removed from both.**
 
 ---
 
-## 6. Focaccia — split into three (Phase 3)
+## 6. Focaccia — split into three ✅ done in Phase 3
 
 The site's **50–125 Kč (od)** range matches nothing seen in the shop and was
-never real. It is being replaced by three products:
+never real. It has been replaced by three products:
 
 | Product | Price observed on the tag |
 | --- | --- |
@@ -168,7 +166,7 @@ These prices are **observed, not owner-confirmed**.
 
 ---
 
-## 7. Products to add with placeholders (Phase 3)
+## 7. Products added with placeholders ✅ done in Phase 3
 
 Names are real. Everything missing uses the placeholder component — a visible,
 designed gap rather than an invention.
@@ -197,7 +195,7 @@ mák & švestka žitný chlebík.
 
 ---
 
-## 8. Invented copy — being deleted, not rewritten (Phase 3)
+## 8. Invented copy — deleted, not rewritten ✅ done in Phase 3
 
 Written without owner input and currently reading as real:
 
@@ -206,7 +204,7 @@ Written without owner input and currently reading as real:
 - the whole About paragraph
 - descriptions for **Bílý** and **Mišenec**, inferred from the product names
 
-All replaced by the placeholder component. Invented copy that reads as real is
+All replaced by the placeholder component in Phase 3. Invented copy that reads as real is
 worse than an obvious gap; on a pitch page the gap is the product.
 
 ---
@@ -257,14 +255,29 @@ a **full-bleed** image; the general rule is in `DECISIONS.md`.
 
 ---
 
-## 12. Open from Phase 2 (information architecture)
+## 12. Resolved in Phase 3 — all three the same way
 
-- **`/o-nas` has no confirmed content.** The current About paragraph was
-  invented and is deleted in Phase 3. The route stays in the structure;
-  whether it survives to launch depends on the owner supplying something true.
-- **`Dnes pečeme` implies a daily rotation we cannot back with data.** Nothing
-  records which products are baked on which day. Either the owner confirms a
-  rotation, or the heading becomes something static.
-- **Product weights.** The structure puts the weight in the product name
-  (`Pain de Campagne 500 g` is the reference's pattern, and it removes a whole
-  class of ambiguity). No weight is confirmed for any Bread Guy product.
+Each was a case where the honest empty state makes a better demo than a
+plausible fill. None was solved with invented content.
+
+- **`/o-nas` — route kept, copy deleted.** The invented paragraph is gone and
+  the placeholder ships in its place. An About page that visibly says the story
+  is waiting to be written is a stronger pitch artefact than a paragraph the
+  owner never said, because it makes the gap an item he is buying.
+  **Action (owner): a short interview.** If nothing real arrives before launch,
+  the route is cut then — not now.
+- **`Dnes pečeme` → `Naše pečivo`.** A heading implying a daily rotation we
+  cannot back is a claim, not a layout label, so the wording no longer states
+  a schedule. Subject to the same native review as every other Czech string.
+- **Product weights — schema kept, values empty.** Every product carries a
+  `weightGrams` field rendered through the placeholder. No gram figure is
+  estimated from a photograph.
+  **Action (owner):** they are on the tags, or the staff know them.
+
+### Not a defect — a completion feature
+
+**A per-product baking-day field.** Knowing which breads are baked which day is
+genuinely useful for this business: it drives a real "today" section, it makes
+the ordering flow able to say what is available on a chosen day, and it is the
+sort of thing that belongs in what the owner is paying for. It is scoped as
+part of completion, not as a gap in the demo.

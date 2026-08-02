@@ -105,11 +105,40 @@ if (Array.isArray(products)) {
       }
     }
 
-    if (product.image != null) {
-      if (typeof product.image !== 'string' || !product.image.startsWith('/images/')) {
-        fail(`${where}: image should be a path like "/images/products/name.jpg", or null`);
-      } else if (!existsSync(join(root, 'public', product.image))) {
-        fail(`${where}: image "${product.image}" does not exist in public/`);
+    /* Photos are stored as a base name, not a path — the card builds a srcset
+       from it. Both generated widths must exist or the srcset 404s at the
+       size nobody tests on. */
+    if (!('photo' in product)) {
+      fail(`${where}: missing "photo" key (use null when there is no photograph)`);
+    } else if (product.photo !== null) {
+      if (typeof product.photo !== 'string' || product.photo.includes('/')) {
+        fail(`${where}: photo should be a base name like "double-g-rez", or null`);
+      } else {
+        for (const w of [400, 800]) {
+          const f = `public/images/products/${product.photo}-${w}.webp`;
+          if (!existsSync(join(root, f))) fail(`${where}: ${f} is missing — run npm run images`);
+        }
+      }
+    }
+
+    /* Weight and ingredients follow the same contract as allergens: null means
+       nobody has confirmed it and the placeholder ships. An empty string or an
+       empty array would be a silent claim that there is nothing to say. */
+    if (!('weightGrams' in product)) {
+      fail(`${where}: missing "weightGrams" key (use null until it is confirmed)`);
+    } else if (product.weightGrams !== null &&
+               (typeof product.weightGrams !== 'number' || product.weightGrams <= 0)) {
+      fail(`${where}: weightGrams must be a positive number or null`);
+    }
+
+    if (!('ingredients' in product)) {
+      fail(`${where}: missing "ingredients" key (use null until it is confirmed)`);
+    } else if (product.ingredients !== null) {
+      for (const locale of ['cs', 'en']) {
+        const list = product.ingredients?.[locale];
+        if (!Array.isArray(list) || list.length === 0) {
+          fail(`${where}: ingredients.${locale} must be a non-empty array, or ingredients must be null`);
+        }
       }
     }
   });

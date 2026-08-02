@@ -1,41 +1,42 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { withBase } from '../lib/paths';
+import { t } from '../data/i18n';
+import { route } from '../lib/routes';
 
 /*
- * One 404 for both languages: a wrong URL carries no reliable locale, and the
- * customer base is Czech, so lead in Czech and repeat the essentials in English.
+ * One 404 for both languages: a wrong URL carries no reliable locale, so lead
+ * in Czech. The primary route out is Locations, not Home — a lost visitor is
+ * usually looking for an address or an opening time.
  */
+const i18n = t('cs');
 ---
 
 <BaseLayout
-  title="Stránka nenalezena — Bread Guy"
-  description="Tuto stránku se nepodařilo najít."
+  title={i18n.meta.notFoundTitle}
+  description={i18n.meta.notFoundDescription}
+  locale="cs"
+  page="home"
 >
-  <section class="max-w-2xl mx-auto px-4 sm:px-6 py-24 sm:py-32 text-center">
-    <p class="font-display font-900 text-6xl sm:text-7xl text-brand-orange mb-4">404</p>
+  <section class="ground-orange py-s7">
+    <div class="max-w-page mx-auto px-s4 flex flex-col gap-s4">
+      <p class="font-display text-t6">404</p>
+      <h1 class="font-display text-t5 max-w-display">{i18n.notFound.title}</h1>
+      <p class="text-t3 max-w-body">{i18n.notFound.text}</p>
 
-    <h1 class="font-display font-800 text-2xl sm:text-3xl mb-3">Tuto stránku nemáme</h1>
-    <p class="text-brand-charcoal/60 mb-2">
-      Odkaz možná zastaral nebo v adrese chybí písmeno.
-    </p>
-    <p class="text-brand-charcoal/40 text-sm mb-10" lang="en">
-      This page doesn't exist — the link may be out of date.
-    </p>
-
-    <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-      <a
-        href={withBase("/")}
-        class="inline-flex items-center px-6 py-3 bg-brand-orange text-white font-semibold rounded-lg hover:bg-brand-orange-hover transition-colors"
-      >
-        Zpět na úvod
-      </a>
-      <a
-        href={withBase("/#pobocky")}
-        class="inline-flex items-center px-6 py-3 border-2 border-brand-warm font-semibold rounded-lg hover:bg-brand-warm transition-colors"
-      >
-        Otevírací doba a pobočky
-      </a>
+      <div class="flex flex-wrap gap-s3 mt-s3">
+        <a
+          href={route('locations', 'cs')}
+          class="tag-notch bg-brand-ink text-brand-chalk font-utility font-bold uppercase text-t2 px-s4 py-s3"
+        >
+          {i18n.notFound.toLocations}
+        </a>
+        <a
+          href={route('home', 'cs')}
+          class="tag-notch bg-brand-chalk text-brand-ink font-utility font-bold uppercase text-t2 px-s4 py-s3"
+        >
+          {i18n.notFound.toHome}
+        </a>
+      </div>
     </div>
   </section>
 </BaseLayout>

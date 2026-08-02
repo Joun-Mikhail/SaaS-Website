@@ -1,0 +1,136 @@
+---
+import { t, type Locale } from '../data/i18n';
+import { groupHours, type LocationHours, type DayKey } from '../data/hours';
+import locations from '../data/locations.json';
+
+type Branch = (typeof locations)[number];
+
+interface Props {
+  branch: Branch;
+  locale: Locale;
+  /* In the hero these cards are the first headings on the page, so they are
+     h2. Inside the Locations section they sit under its h2 and are h3.
+     Getting this wrong is a real reading-order bug for a screen reader, not
+     just an audit failure. */
+  headingLevel?: 2 | 3;
+}
+
+const { branch, locale, headingLevel = 3 } = Astro.props;
+const Heading = `h${headingLevel}` as 'h2' | 'h3';
+const i18n = t(locale);
+
+/*
+ * The full week is printed as static text. Nothing here is computed from a
+ * clock, so it is correct whenever it is read and correct with JavaScript
+ * disabled — which is the hard rule, and which the previous build broke by
+ * freezing a build-time open/closed value into the markup.
+ *
+ * The live badge is added by script and is absent without it. A static page
+ * cannot know what day it is, so it must not claim to.
+ */
+const groups = groupHours(branch.hours as LocationHours);
+const dayLabel = (day: DayKey) => i18n.branch[day];
+const rangeLabel = (days: DayKey[]) =>
+  days.length === 1 ? dayLabel(days[0]) : `${dayLabel(days[0])}–${dayLabel(days[days.length - 1])}`;
+---
+
+<div class="bg-brand-chalk text-brand-ink p-s4 flex flex-col gap-s3">
+  <div>
+    <Heading class="font-display text-t4">{branch.label[locale]}</Heading>
+    <p class="text-t2">{branch.address}</p>
+  </div>
+
+  <dl class="grid grid-cols-[auto_1fr] gap-x-s4 gap-y-s1 font-utility text-t2">
+    {
+      groups.map((group) => (
+        <>
+          <dt class="font-bold uppercase">{rangeLabel(group.days)}</dt>
+          <dd>{group.value ?? i18n.branch.closedLabel}</dd>
+        </>
+      ))
+    }
+  </dl>
+
+  <p
+    class="branch-status font-utility font-bold text-t1 uppercase px-s2 py-s1 self-start"
+    data-branch-status
+    data-hours={JSON.stringify(branch.hours)}
+    data-label-open={i18n.branch.open}
+    data-label-closed={i18n.branch.closed}
+    data-label-opens-at={i18n.branch.opensAt}
+    data-label-closes-at={i18n.branch.closesAt}
+    hidden
+  >
+  </p>
+
+  <div class="flex flex-wrap gap-s2 mt-auto pt-s2">
+    <a
+      class="tag-notch bg-brand-ink text-brand-chalk font-utility font-bold text-t2 uppercase px-s3 py-s2"
+      href={branch.mapsUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      {i18n.branch.navigate}
+    </a>
+    {
+      branch.phone && (
+        <a
+          class="tag-notch bg-brand-orange text-brand-ink font-utility font-bold text-t2 uppercase px-s3 py-s2"
+          href={`tel:${branch.phone}`}
+        >
+          {branch.phoneDisplay ?? branch.phone}
+        </a>
+      )
+    }
+  </div>
+</div>
+
+<script>
+  import { getStatus, type LocationHours } from '../data/hours';
+
+  /*
+   * Progressive only. The markup ships with the badge hidden and empty; this
+   * fills it in and reveals it. With JavaScript off there is no badge at all,
+   * which is correct — a static page cannot know the time, and an absent
+   * status beats a wrong one.
+   */
+  function refresh() {
+    document.querySelectorAll<HTMLElement>('[data-branch-status]').forEach((el) => {
+      let hours: LocationHours;
+      try {
+        hours = JSON.parse(el.dataset.hours ?? '');
+      } catch {
+        return;
+      }
+
+      const status = getStatus(hours);
+      const openLabel = el.dataset.labelOpen ?? '';
+      const closedLabel = el.dataset.labelClosed ?? '';
+      const suffix = status.nextChange
+        ? ` · ${status.isOpen ? el.dataset.labelClosesAt : el.dataset.labelOpensAt} ${status.nextChange}`
+        : '';
+
+      el.textContent = `${status.isOpen ? openLabel : closedLabel}${suffix}`;
+      el.classList.toggle('is-open', status.isOpen);
+      el.classList.toggle('is-closed', !status.isOpen);
+      el.hidden = false;
+    });
+  }
+
+  refresh();
+  setInterval(refresh, 60_000);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) refresh();
+  });
+</script>
+
+<style>
+  .branch-status.is-open {
+    background: theme('colors.brand.green');
+    color: theme('colors.brand.ink');
+  }
+  .branch-status.is-closed {
+    background: theme('colors.brand.red');
+    color: theme('colors.brand.chalk');
+  }
+</style>

@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Placeholder from '../Placeholder.astro';
+import { t, type Locale } from '../../data/i18n';
+import locations from '../../data/locations.json';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const i18n = t(locale);
+
+/*
+ * Phase 4 builds the flow. This page exists now so the persistent Objednat
+ * link never lands on a 404, and it states plainly what the flow will ask —
+ * location, then day, then time — rather than pretending to be one.
+ */
+const STEPS = [
+  i18n.locations.title,
+  i18n.branch.hours,
+  i18n.menu.title,
+];
+---
+
+<BaseLayout
+  title={i18n.meta.orderTitle}
+  description={i18n.meta.orderDescription}
+  locale={locale}
+  page="order"
+>
+  <section class="ground-orange py-s6">
+    <div class="max-w-page mx-auto px-s4">
+      <h1 class="font-display text-t6 max-w-display">{i18n.order.title}</h1>
+      <p class="text-t3 mt-s4 max-w-body">{i18n.order.entryText}</p>
+    </div>
+  </section>
+
+  <section class="ground-ink py-s7">
+    <div class="max-w-page mx-auto px-s4 flex flex-col gap-s5 max-w-body">
+      <Placeholder label={i18n.placeholder.order} hint={i18n.placeholder.orderHint} />
+
+      <ol class="flex flex-col gap-s3 list-none p-0 m-0">
+        {
+          locations.map((branch) => (
+            <li class="bg-brand-chalk text-brand-ink p-s4">
+              <span class="font-display text-t4">{branch.label[locale]}</span>
+              <span class="block text-t2">{branch.address}</span>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+</BaseLayout>

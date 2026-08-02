@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
-  <circle cx="100" cy="100" r="96" fill="#F4551E"/>
+  <circle cx="100" cy="100" r="96" fill="#EA5F28"/>
   <text x="100" y="72" text-anchor="middle" font-family="'Nunito', 'Arial Rounded MT Bold', sans-serif" font-weight="900" font-size="42" fill="white" letter-spacing="1">BREAD</text>
   <text x="100" y="122" text-anchor="middle" font-family="'Nunito', 'Arial Rounded MT Bold', sans-serif" font-weight="900" font-size="42" fill="white" letter-spacing="1">GUY</text>
   <text x="100" y="158" text-anchor="middle" font-family="'Nunito', 'Arial Rounded MT Bold', sans-serif" font-weight="700" font-size="16" fill="white" letter-spacing="3" opacity="0.9">A BRNO BAKERY</text>
