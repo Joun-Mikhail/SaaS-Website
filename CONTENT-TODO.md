@@ -38,6 +38,23 @@ already live, not only to new ones.
 | `Chléb je na denní nabídce v obou pobočkách.` | filler line under a missing description |
 | `Ptejte se na prodejně.` | filler line under a missing price |
 
+### Navigation and ordering flow (Phase 2 — new)
+
+| String | Intent |
+| --- | --- |
+| `Objednat` | the persistent order CTA |
+| `Objednávka` | the flow's own name |
+| `Dnes pečeme` | home menu-preview heading — see §12 open question |
+| `Celá nabídka` | link to the full menu |
+| `Chcete chleba ve čtvrtek?` | order entry block heading |
+| `Vyberte pobočku, den a čas.` | order entry block subheading |
+| `Pokračovat` · `Zpět` · `Zpět na nabídku` | flow and page navigation |
+| `Další chleby` | related products |
+| `Složení` | ingredients (distinct from allergens) |
+| `Kontakt` | contact anchor on the locations page |
+| `Krok 1 ze 6` | step indicator |
+| route slugs | `/nabidka` `/pobocky` `/objednavka` `/o-nas` |
+
 ### Interface strings — `src/data/i18n.ts`, 57 strings
 
 Highest risk first, because these are sentences rather than labels:
@@ -237,3 +254,17 @@ a **full-bleed** image; the general rule is in `DECISIONS.md`.
 - An unconfirmed allergen field currently renders **nothing**. It should read as
   *pending* rather than silent — Phase 1 deliverable, deliberately not patched
   ahead of the placeholder component being designed.
+
+---
+
+## 12. Open from Phase 2 (information architecture)
+
+- **`/o-nas` has no confirmed content.** The current About paragraph was
+  invented and is deleted in Phase 3. The route stays in the structure;
+  whether it survives to launch depends on the owner supplying something true.
+- **`Dnes pečeme` implies a daily rotation we cannot back with data.** Nothing
+  records which products are baked on which day. Either the owner confirms a
+  rotation, or the heading becomes something static.
+- **Product weights.** The structure puts the weight in the product name
+  (`Pain de Campagne 500 g` is the reference's pattern, and it removes a whole
+  class of ambiguity). No weight is confirmed for any Bread Guy product.
