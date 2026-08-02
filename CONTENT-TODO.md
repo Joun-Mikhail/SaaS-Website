@@ -147,7 +147,27 @@ new breads (Žitný, Tousťák).
 
 ---
 
-## 9. Smaller items
+## 9. Two cutouts failed background removal
+
+Measured on the alpha channel of all fifteen in `assets/breadguy-photos/cutouts/`,
+not eyeballed from the contact sheet:
+
+| Cutout | Fully opaque pixels | Mean alpha | Verdict |
+| --- | --- | --- | --- |
+| `focaccia-prosciutto-rukola.webp` | **0.0 %** | 6 / 255 | Subject erased. Unusable. |
+| `tiramisu-babka-tray.webp` | **24.8 %** | 73 / 255 | Most of the tray lost, remainder semi-transparent. |
+| `focaccia-margherita.webp` | 49.8 % | 144 / 255 | Borderline — a bite-shaped chunk is missing from one edge. |
+
+The other twelve sit between 58 % and 80 % opaque with clean 2–9 % soft
+edges, which is what a good cutout looks like.
+
+**Action:** re-cut the first two (the pack README suggests remove.bg's free
+tier for the tricky ones) and drop them back under the same filenames. Until
+then those two products use the rectangular original, not the cutout.
+
+---
+
+## 10. Smaller items
 
 - **IČO / DIČ** missing from the footer — owner to supply, placeholder meanwhile.
 - **`A Brno Bakery`** is an English string rendering in the Czech footer.
