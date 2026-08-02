@@ -41,7 +41,33 @@ if (Array.isArray(products)) {
 
     for (const locale of ['cs', 'en']) {
       if (!product.name?.[locale]) fail(`${where}: missing name.${locale}`);
-      if (!product.description?.[locale]) fail(`${where}: missing description.${locale}`);
+      // A description may be deliberately empty when the wording is unconfirmed,
+      // but the key must exist in both languages so nothing renders "undefined".
+      if (typeof product.description?.[locale] !== 'string') {
+        fail(`${where}: description.${locale} must be a string (use "" if unconfirmed)`);
+      }
+    }
+
+    /* Allergens.
+       null            = not yet confirmed. Renders nothing at all.
+       {cs:[…],en:[…]} = confirmed. Renders on the card.
+       An empty array is rejected: it would quietly assert "contains no
+       allergens", which is not a claim we can make for the bakery, and it is
+       exactly the silent-empty case that must never reach a page. */
+    if (!('allergens' in product)) {
+      fail(`${where}: missing "allergens" key (use null if not yet confirmed)`);
+    } else if (product.allergens !== null) {
+      for (const locale of ['cs', 'en']) {
+        const list = product.allergens?.[locale];
+        if (!Array.isArray(list) || list.length === 0) {
+          fail(
+            `${where}: allergens.${locale} must be a non-empty array, ` +
+              `or allergens must be null`
+          );
+        } else if (list.some((a) => typeof a !== 'string' || !a.trim())) {
+          fail(`${where}: allergens.${locale} contains an empty entry`);
+        }
+      }
     }
 
     if (!VALID_CATEGORIES.has(product.category)) {
