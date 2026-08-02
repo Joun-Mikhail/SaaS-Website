@@ -161,7 +161,7 @@ export function t(locale: Locale) {
 }
 
 export function getLocaleFromUrl(url: URL): Locale {
-  // Strip the deployment base first, or "/SaaS-Website/en/" reads as Czech.
+  // Strip the deployment base first, or "/BreadGuy-web/en/" reads as Czech.
   const [, lang] = toRoute(url.pathname).split('/');
   if (lang === 'en') return 'en';
   return 'cs';

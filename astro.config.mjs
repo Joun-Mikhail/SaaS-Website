@@ -5,7 +5,7 @@ import tailwind from '@astrojs/tailwind';
  * Host is configurable so the same build works on GitHub Pages today and on
  * breadguy.cz once the domain points at it:
  *   SITE_URL  — origin, e.g. https://breadguy.cz
- *   BASE_PATH — subpath, e.g. /SaaS-Website (leave unset when served at root)
+ *   BASE_PATH — subpath, e.g. /BreadGuy-web (leave unset when served at root)
  */
 const site = process.env.SITE_URL ?? 'https://breadguy.cz';
 const base = process.env.BASE_PATH ?? '/';

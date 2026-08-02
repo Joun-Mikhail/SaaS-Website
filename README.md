@@ -177,7 +177,7 @@ public/         logo.svg, favicon.svg, robots.txt, images/products/
 - **Nasazení** — push do `main` spustí `.github/workflows/deploy.yml`, který web
   postaví a publikuje na GitHub Pages.
 - **Doména a podadresář** — build je hostitelsky nezávislý. `SITE_URL` určuje
-  doménu a `BASE_PATH` podadresář (GitHub Pages projekt běží na `/SaaS-Website`),
+  doménu a `BASE_PATH` podadresář (GitHub Pages projekt běží na `/BreadGuy-web`),
   obojí předává deploy workflow automaticky. Odkazy se skládají přes
   `withBase()` v `src/lib/paths.ts`, takže po nasměrování `breadguy.cz` na
   repozitář se nemusí měnit nic v kódu — stačí custom doména v nastavení Pages.

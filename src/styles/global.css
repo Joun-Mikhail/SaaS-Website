@@ -1,3 +1,5 @@
+@import './fonts.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -30,6 +32,10 @@
   }
 }
 
+/* Reduce means off, not fast. The common `animation-duration: 0.01ms` idiom
+   still runs the animation — it just runs it too quickly to see, which is a
+   different thing from not running it and can still trigger vestibular
+   symptoms on a long list. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -37,9 +43,8 @@
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    animation: none !important;
+    transition: none !important;
     scroll-behavior: auto !important;
   }
   .product-card:hover .product-photo {
