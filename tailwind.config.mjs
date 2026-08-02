@@ -20,7 +20,7 @@ export default {
         /* Sampled — never invented. See DECISIONS.md for file + coordinates. */
         brand: {
           orange: '#EA5F28',
-          blue: '#293254',
+          blue: '#2B3355',
           green: '#6FDC47',
           red: '#952312',
           ink: '#141413',
@@ -65,7 +65,7 @@ export default {
 
       fontFamily: {
         display: ['Titan One', 'system-ui', 'sans-serif'],
-        body: ['Work Sans', 'system-ui', 'sans-serif'],
+        body: ['Archivo', 'system-ui', 'sans-serif'],
         utility: ['Barlow Condensed', 'system-ui', 'sans-serif'],
       },
 

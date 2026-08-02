@@ -32,10 +32,14 @@
   }
 }
 
-/* Reduce means off, not fast. The common `animation-duration: 0.01ms` idiom
-   still runs the animation — it just runs it too quickly to see, which is a
-   different thing from not running it and can still trigger vestibular
-   symptoms on a long list. */
+/* Reduce collapses motion to nothing visible, but the end state still has to
+   apply. `animation: none` would be wrong: any element whose visible state
+   comes from a keyframe — opacity 0 to 1, a transform settling from an offset
+   — would stay at its start state forever, which hides content from exactly
+   the people who asked for less movement. Near-zero duration with a single
+   iteration runs the animation to completion instantly instead.
+   The structural guarantee behind this rule is in DECISIONS.md: nothing's
+   visible or interactive state may depend on an animation having run. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -43,8 +47,11 @@
   *,
   *::before,
   *::after {
-    animation: none !important;
-    transition: none !important;
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
     scroll-behavior: auto !important;
   }
   .product-card:hover .product-photo {

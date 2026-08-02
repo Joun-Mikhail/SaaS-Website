@@ -18,7 +18,66 @@ statements in the project thread.
 
 ---
 
-## 1. 🔴 HIGH — Hours, addresses and phone are not owner-verified
+## 1. 🔴 HIGH — Czech copy, needs native review
+
+**No native speaker has read any Czech on this site.** Everything below was
+written or translated without native validation, and it must be read by the
+bakery staff before the pitch. This applies retroactively to every string
+already live, not only to new ones.
+
+**Every Czech string added from here on gets appended to this section.**
+
+### Placeholder component (Phase 1 — new)
+
+| String | Intent |
+| --- | --- |
+| `FOTO DOPLNÍME` | photo to come |
+| `POPIS DOPLNÍME` | description to come |
+| `CENU DOPLNÍME` | price to come |
+| `ALERGENY · ČEKAJÍ NA POTVRZENÍ` | allergens awaiting confirmation |
+| `Chléb je na denní nabídce v obou pobočkách.` | filler line under a missing description |
+| `Ptejte se na prodejně.` | filler line under a missing price |
+
+### Interface strings — `src/data/i18n.ts`, 57 strings
+
+Highest risk first, because these are sentences rather than labels:
+
+| Key | String |
+| --- | --- |
+| `hero.subtitle` | Poctivé suroviny, ruční práce — od našich pecí k vám na stůl. |
+| `menu.subtitle` | Pečeme denně čerstvé. Populární položky se vyprodají brzy — přijďte včas. |
+| `about.story` | Bread Guy je pekárna v Brně zaměřená na kváskový chléb, focacciu a pečivo. Každý den pečeme z poctivých surovin, bez kompromisů. |
+| `sellOutWarning` | Oblíbené položky se rychle vyprodají. Doporučujeme přijít co nejdříve. |
+| `hero.badge` | Pečeme každé ráno |
+| `openNow.*` | Otevřeno · Zavřeno · Dnes zavřeno · Otevíráme v · Zavíráme v · Neděle — zavřeno |
+| `nav.*` | Nabídka · Pobočky · O nás · Přejít na obsah · Přepnout na angličtinu |
+| `menu.*` | Vše · Chleby · Sladké · Sendviče · celý · půlka · od · Vyprodáno · Dostupné · Filtrovat podle kategorie · Alergeny |
+| `locations.*` | Navštivte nás v Brně · Otevírací doba · Navigovat · Zavolat · Po–Ne · recenzí |
+| `gallery.*` | six photo alt texts |
+| `hero.photoAlt` | Focaccia s olivami a bylinkami čerstvě z pece |
+
+Note `footer.tagline` is **`A Brno Bakery`** — an English string rendering in
+the Czech footer. Separate bug, listed again in §11.
+
+### Product descriptions — `src/data/products.json`
+
+Owner-confirmed wording, but nobody has checked the Czech: Double G's
+*Kváskový chléb s konfitovaným česnekem a gochujangem.* and Miso Walnut's
+*Kváskový chléb s miso pastou a vlašskými ořechy*. The rest were invented and
+are being deleted anyway (§8).
+
+### `src/pages/404.astro`
+
+*Tuto stránku nemáme* · *Odkaz možná zastaral nebo v adrese chybí písmeno.* ·
+*Zpět na úvod* · *Otevírací doba a pobočky*
+
+**Action (owner):** have bakery staff read the list above and mark anything
+that sounds wrong, machine-translated, or too formal. Product names and
+addresses are excluded — those are never altered.
+
+---
+
+## 2. 🔴 HIGH — Hours, addresses and phone are not owner-verified
 
 Both addresses, the phone number and every opening hour on the site came from
 an early session and have **never been confirmed in writing by the owner**.
@@ -32,7 +91,7 @@ list. Wrong hours on the owner's phone ends the pitch.
 
 ---
 
-## 2. 🔴 HIGH — Allergen codes for every product
+## 3. 🔴 HIGH — Allergen codes for every product
 
 Only **Miso Walnut** carries a declared allergen (`vlašské ořechy` / `walnuts`),
 and that one is owner-confirmed. Every other product is `allergens: null`, which
@@ -58,7 +117,7 @@ unverified code is worse than none.
 
 ---
 
-## 3. Batch B — removed from the site
+## 4. Batch B — removed from the site
 
 Listed at 65 Kč, but it appeared on **no** wall menu and **no** price tag in any
 photograph. **Deleted from `products.json`.**
@@ -68,7 +127,7 @@ with a confirmed price and description.
 
 ---
 
-## 4. Rating removed — 4.6 / 106 reviews
+## 5. Rating removed — 4.6 / 106 reviews
 
 Was displayed on the Královo Pole card and asserted as `aggregateRating` in
 structured data. Never owner-supplied. **Removed from both.**
@@ -77,7 +136,7 @@ structured data. Never owner-supplied. **Removed from both.**
 
 ---
 
-## 5. Focaccia — split into three (Phase 1)
+## 6. Focaccia — split into three (Phase 3)
 
 The site's **50–125 Kč (od)** range matches nothing seen in the shop and was
 never real. It is being replaced by three products:
@@ -92,7 +151,7 @@ These prices are **observed, not owner-confirmed**.
 
 ---
 
-## 6. Products to add with placeholders (Phase 1)
+## 7. Products to add with placeholders (Phase 3)
 
 Names are real. Everything missing uses the placeholder component — a visible,
 designed gap rather than an invention.
@@ -121,7 +180,7 @@ mák & švestka žitný chlebík.
 
 ---
 
-## 7. Invented copy — being deleted, not rewritten (Phase 1)
+## 8. Invented copy — being deleted, not rewritten (Phase 3)
 
 Written without owner input and currently reading as real:
 
@@ -135,7 +194,7 @@ worse than an obvious gap; on a pitch page the gap is the product.
 
 ---
 
-## 8. Photos
+## 9. Photos
 
 Missing entirely: **Double G**, **Miso Walnut**, **Skořicový šnek**, and both
 new breads (Žitný, Tousťák).
@@ -147,7 +206,7 @@ new breads (Žitný, Tousťák).
 
 ---
 
-## 9. Two cutouts deleted — reclassified as full-bleed
+## 10. Two cutouts deleted — reclassified as full-bleed
 
 Measured on the alpha channel of all fifteen, not eyeballed from the contact
 sheet:
@@ -171,7 +230,7 @@ a **full-bleed** image; the general rule is in `DECISIONS.md`.
 
 ---
 
-## 10. Smaller items
+## 11. Smaller items
 
 - **IČO / DIČ** missing from the footer — owner to supply, placeholder meanwhile.
 - **`A Brno Bakery`** is an English string rendering in the Czech footer.

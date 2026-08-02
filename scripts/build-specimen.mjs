@@ -23,8 +23,8 @@ const LATIN_EXT =
 
 const faces = [
   ['Titan One', 400, 'titan-one'],
-  ['Work Sans', 400, 'work-sans'],
-  ['Work Sans', 600, 'work-sans'],
+  ['Archivo', 400, 'archivo'],
+  ['Archivo', 600, 'archivo'],
   ['Barlow Condensed', 500, 'barlow-condensed'],
   ['Barlow Condensed', 700, 'barlow-condensed'],
 ];
@@ -56,8 +56,8 @@ const SPACING = [
 
 const TYPE = [
   ['t1', 13, 1.45, 'Barlow Condensed', 'utility — allergen codes, tag labels, meta'],
-  ['t2', 15, 1.5, 'Work Sans', 'small — captions, secondary'],
-  ['t3', 17, 1.6, 'Work Sans', 'body — the reading size'],
+  ['t2', 15, 1.5, 'Archivo', 'small — captions, secondary'],
+  ['t3', 17, 1.6, 'Archivo', 'body — the reading size'],
   ['t4', 27, 1.25, 'Titan One', 'heading — card and subsection titles'],
   ['t5', 44, 1.08, 'Titan One', 'section — section titles, mobile hero'],
   ['t6', 72, 1.0, 'Titan One', 'hero — one per page'],
@@ -65,7 +65,7 @@ const TYPE = [
 
 const PALETTE = [
   ['orange', '#ea5f28', 'logo-original.webp', '300,180', '120×120 median', 'ink'],
-  ['blue', '#293254', 'sendvic-rez-b.webp', '330,190', '90×90 median', 'chalk'],
+  ['blue', '#2B3355', 'sendvic-rez-b.webp', '420,180', '40×40 flattest in-focus tile face', 'chalk'],
   ['green', '#6fdc47', 'focaccia-olive-tomato-herbs.webp', '1090,1300', '70×70 median', 'ink'],
   ['red', '#952312', 'focaccia-olive-tomato-herbs.webp', '612,840', '24×24 peak-saturation', 'chalk'],
   ['ink', '#141413', 'focaccia-margherita.webp', '200,190', '80×80 median', 'chalk'],
@@ -102,7 +102,7 @@ body{
   margin:0;
   background:var(--ink);
   color:var(--chalk);
-  font-family:'Work Sans',system-ui,sans-serif;
+  font-family:'Archivo',system-ui,sans-serif;
   font-size:var(--t3);
   line-height:1.6;
 }
@@ -223,7 +223,11 @@ td.num{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-feature-se
 .rule{border:0;border-top:2px solid rgba(255,255,255,.16);margin:0}
 
 @media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{transition:none !important;animation:none !important}
+  /* near-zero, not none — the end state must still apply */
+  *,*::before,*::after{
+    transition-duration:0.01ms !important;transition-delay:0ms !important;
+    animation-duration:0.01ms !important;animation-delay:0ms !important;
+    animation-iteration-count:1 !important}
   .motion-demo:hover .motion-dot,.motion-demo:focus-visible .motion-dot{transform:none}
 }
 :focus-visible{outline:3px solid var(--orange);outline-offset:3px}
@@ -322,7 +326,7 @@ const html = `<!doctype html>
         </div>
       </div>
       <div class="type-row">
-        <div class="type-meta">BODY<br>Work Sans 400 / 600<br>72 KB</div>
+        <div class="type-meta">BODY<br>Archivo 400 / 600<br>54 KB</div>
         <div>
           <div style="font-size:26px;line-height:1.3">Kváskový chléb s konfitovaným česnekem a gochujangem.</div>
           <div style="font-size:30px;line-height:1.45;margin-top:var(--s3)">${CZ_LOWER}</div>
@@ -369,7 +373,7 @@ const html = `<!doctype html>
       <thead><tr><th>Pozadí</th><th>Text</th><th>Kontrast</th><th>Stav</th></tr></thead>
       <tbody>
         <tr><td>orange #ea5f28</td><td>ink</td><td class="num">5.41</td><td class="pass">AA</td></tr>
-        <tr><td>blue #293254</td><td>chalk</td><td class="num">12.51</td><td class="pass">AAA</td></tr>
+        <tr><td>blue #2b3355</td><td>chalk</td><td class="num">12.30</td><td class="pass">AAA</td></tr>
         <tr><td>green #6fdc47</td><td>ink</td><td class="num">10.54</td><td class="pass">AAA</td></tr>
         <tr><td>red #952312</td><td>chalk</td><td class="num">8.31</td><td class="pass">AAA</td></tr>
         <tr><td>ink #141413</td><td>chalk</td><td class="num">18.43</td><td class="pass">AAA</td></tr>
