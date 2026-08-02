@@ -1,6 +1,5 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
-import sitemap from '@astrojs/sitemap';
 
 /*
  * Host is configurable so the same build works on GitHub Pages today and on
@@ -22,5 +21,9 @@ export default defineConfig({
       prefixDefaultLocale: false,
     },
   },
-  integrations: [tailwind(), sitemap()],
+  /* No sitemap while this is a demo: robots.txt disallows everything, and
+     publishing a sitemap alongside that just hands crawlers a list of the URLs
+     they have been told not to fetch. Re-add sitemap() when the site goes
+     public. */
+  integrations: [tailwind()],
 });

@@ -34,12 +34,10 @@ const dayLabels = {
           <div class="mb-4">
             <h3 class="font-display font-700 text-xl mb-1">{loc.label[locale]}</h3>
             <p class="text-sm text-brand-charcoal/60">{loc.address}</p>
-            {loc.rating && (
-              <p class="text-sm mt-1">
-                <span class="text-brand-orange font-semibold">{loc.rating}★</span>
-                <span class="text-brand-charcoal/40 ml-1">({loc.reviewCount} {i18n.locations.reviews})</span>
-              </p>
-            )}
+            {/* The star rating is gone along with the structured data that
+                carried it. 4.6 / 106 was never owner-supplied, and removing it
+                from the markup while leaving it on the page would have been
+                the same claim in a different place. */}
           </div>
 
           <div class="mb-5">
