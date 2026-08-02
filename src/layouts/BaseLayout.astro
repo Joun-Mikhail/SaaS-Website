@@ -89,11 +89,23 @@ const structuredData = locations.map((loc) => ({
     <link rel="alternate" hreflang="en" href={absolute(enRoute)} />
     <link rel="alternate" hreflang="x-default" href={absolute(csRoute)} />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    {/* Fonts are self-hosted (see src/styles/fonts.css). The display face is
+        preloaded in both subsets because a Czech headline routinely needs
+        glyphs from each: "Kváskový" takes á and ý from latin, "chléb" takes é
+        from latin, and any š/č/ř/ž comes from latin-ext. 17 KB together. */}
     <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Nunito:wght@700;800;900&display=swap"
+      rel="preload"
+      href={withBase('/fonts/titan-one-latin-400-normal.woff2')}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href={withBase('/fonts/titan-one-latin-ext-400-normal.woff2')}
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
 
     <meta property="og:site_name" content="Bread Guy" />

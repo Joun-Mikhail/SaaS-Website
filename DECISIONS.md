@@ -40,6 +40,45 @@ flagged rather than silently resolved.
   screenshots with Instagram UI burnt in. Never served to a user. They are the
   evidence behind the observed prices and allergen codes in `CONTENT-TODO.md`.
 
+## The system (Phase 1)
+
+Rendered in `specimen/index.html`. Tokens live in `tailwind.config.mjs`.
+
+- **Fonts are self-hosted, never from a CDN.** A blocked font server delayed
+  first paint by 12.7 s when it was measured in Phase 0; a CDN request also
+  hands the visitor's IP to Google for no benefit. 180 KB of woff2 in
+  `public/fonts/`, `font-display: swap`, display face preloaded.
+- **Czech needs both the `latin` and `latin-ext` subsets.** The acute vowels
+  (á é í ó ú ý) are in `latin`; the carons and the ring (č ě ř š ť ž ů) are in
+  `latin-ext`. Shipping one drops half of every Czech word.
+- **Spacing is Fibonacci — each step is the sum of the two before it.**
+  4, 8, 12, 20, 32, 52, 84, 136. The ratio converges on 1.618, the same number
+  that drives the display half of the type scale, so one constant governs both.
+- **The type scale has two halves.** Text sizes (13/15/17) sit on a tight 1.13
+  ratio so they don't compete; display sizes (27/44/72) sit on 1.618 so they
+  do. Body to hero is 4.24×.
+- **Display face is Titan One.** Chosen against `logo-original.webp`, not from
+  taste. Five candidates were disqualified on Czech: Bowlby One, Chewy and
+  Permanent Marker have no `latin-ext` at all; Fredoka and Lilita One lack
+  č ď ě ň ř ť ů; Luckiest Guy is caps-only, so Czech lowercase ť and ď render
+  with a caron above instead of the correct apostrophe form.
+- **Every ground has exactly one legal text colour**, fixed by measured
+  contrast: orange→ink 5.41, blue→chalk 12.51, green→ink 10.54, red→chalk 8.31,
+  ink→chalk 18.43. **White on orange is banned** at 3.41 — that exact pair was
+  the old site's primary button and one of its 67 contrast failures.
+- **Green is capped at one section per page.** It is the most aggressive value
+  in the palette; used as a general ground it stops reading as an accent.
+- **Motion: three curves, three durations, 420 ms ceiling.** No overshoot, no
+  bounce. `--ease-settle` for arrivals, `--ease-shift` for state changes,
+  `--ease-tap` for direct response.
+- **The placeholder is a first-class component, not a fallback.** Orange hatch
+  on ink, with the price-tag notch, so a missing field reads as a tag nobody
+  has written yet rather than as a broken asset. Never grey, never a
+  broken-image icon.
+- **An unconfirmed allergen renders as a dashed pending chip, never as
+  absence.** Empty space next to "Alergeny" can be read as "contains none",
+  which is the one thing the field must never imply.
+
 ## Truthfulness
 
 - **An allergen is published when someone has read the label, never inferred
