@@ -13,7 +13,7 @@
     "allergens": null,
     "priceWhole": 117,
     "priceHalf": 59,
-    "image": "/images/products/bily.webp",
+    "image": "/images/products/bily-loaf.webp",
     "available": true
   },
   {
@@ -30,7 +30,7 @@
     "allergens": null,
     "priceWhole": 117,
     "priceHalf": 59,
-    "image": "/images/products/misenec.webp",
+    "image": "/images/products/misenec-loaf.webp",
     "available": true
   },
   {
@@ -41,13 +41,13 @@
     },
     "category": "bread",
     "description": {
-      "cs": "",
-      "en": ""
+      "cs": "Kváskový chléb s konfitovaným česnekem a gochujangem",
+      "en": "Sourdough bread with confit garlic and gochujang"
     },
     "allergens": null,
     "priceWhole": 147,
     "priceHalf": 74,
-    "image": "/images/products/double-g-rez.webp",
+    "image": "/images/products/double-g-gochujang.webp",
     "available": true
   },
   {
@@ -58,8 +58,8 @@
     },
     "category": "bread",
     "description": {
-      "cs": "Kváskový chléb s miso a vlašskými ořechy",
-      "en": "Sourdough bread with miso and walnuts"
+      "cs": "Kváskový chléb s miso pastou a vlašskými ořechy",
+      "en": "Sourdough bread with miso paste and walnuts"
     },
     "allergens": {
       "cs": [
@@ -71,7 +71,7 @@
     },
     "priceWhole": 150,
     "priceHalf": 75,
-    "image": "/images/products/miso-walnut-rez.webp",
+    "image": "/images/products/miso-walnut-crumb.webp",
     "available": true
   },
   {

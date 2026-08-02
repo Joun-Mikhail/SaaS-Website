@@ -10,12 +10,10 @@ and price tags photographed from Instagram stories), plus owner confirmations.
 
 ## 1. Blocking — legal / rights
 
-### 1.1 Photo permission: Miso Walnut
-`miso-walnut-rez.webp` is a **customer repost (@michaela.dobi)**, now published
-on a commercial site. The photo pack README says to get her permission first.
-
-**Action:** get written permission, or replace the photo. Until then this is the
-one image on the site the bakery may not have the right to use.
+### 1.1 ~~Photo permission: Miso Walnut~~ — RESOLVED
+The customer repost (@michaela.dobi) has been **removed from the repo** and
+replaced with the bakery's own crumb shot (`miso-walnut-crumb.webp`). No
+permission question remains on this image.
 
 ### 1.2 Allergen codes are not on the site
 Price tags in the shop already carry codes (e.g. `A: 1, 3, 7, 11`), so the
@@ -26,22 +24,23 @@ numbering has not been verified, and publishing a wrong code is worse than none.
 **Action:** photograph every price tag, then fill `allergens` for every product.
 Confirm the exact legal obligation for unpackaged bakery goods with the owner.
 
-### 1.3 Double G may contain milk
-The cross-section shows confit garlic and a heavy orange swirl. If the second
-"G" is a cheese (gouda / gruyère), **milk is an undeclared allergen**.
-`allergens` is `null` until this is answered.
+### 1.3 ~~Double G may contain milk~~ — RESOLVED, but a new allergen question
+The second G is **gochujang**, not a cheese, so the milk concern is closed.
+
+**New question:** gochujang is normally made from soybeans and very often
+contains wheat, and miso is normally soy-based too. That would make **soy** —
+and possibly **gluten beyond the flour** — declarable on both Double G and
+Miso Walnut. Neither has been confirmed, so neither is declared.
+
+**Action:** check the gochujang and miso labels the bakery buys, then declare.
 
 ---
 
-## 2. Double G — description removed, needs replacing
+## 2. ~~Double G — description removed~~ — RESOLVED
 
-The old text "Dvojitě kynutý kváskový chléb" (double-*risen*) is **wrong** and
-has been deleted. The card now shows the name, photo and price with no
-description rather than a plausible invention.
-
-Confirmed: contains **confit garlic**. Unknown: what the second G stands for.
-
-**Action:** ask the owner what the two G's are, then write the description.
+Owner confirmed: **confit garlic and gochujang**. The description now reads
+"Kváskový chléb s konfitovaným česnekem a gochujangem" and the card carries the
+cross-section photo. See §1.3 for the outstanding soy/gluten question.
 
 ---
 
@@ -113,6 +112,10 @@ the photo gallery, where the caption is generic ("a loaf of sourdough bread").
 
 **Action:** identify both, then assign them.
 
+**Update:** Bílý and Mišenec now have their own dedicated photos, so no product
+card depends on this any more. `loaf-sourdough-a` is used only in the gallery
+under a generic caption; `loaf-sourdough-b` is unused.
+
 ---
 
 ## 8. Products still with no photo
@@ -121,6 +124,9 @@ the photo gallery, where the caption is generic ("a loaf of sourdough bread").
 | --- | --- |
 | **Batch B** | no photo — and may be discontinued (§4) |
 | **Skořicový šnek** | no photo |
+
+Bílý, Mišenec, Double G and Miso Walnut all have dedicated photos as of this
+round. 8 of 10 products now have one.
 
 Cards for these render with **no image area at all**. The previous logo-tile
 placeholder has been removed everywhere: a logo standing in for a product photo
@@ -157,3 +163,17 @@ no confirmed menu item matches them:
 - **IČO / DIČ** missing from the footer.
 - Rating **4.6 / 106 reviews**, both addresses, phone and all opening hours came
   from an earlier session and have not been owner-verified.
+
+---
+
+## 11. Provenance of the two studio loaf photos
+
+`bily-loaf.webp` and `misenec-loaf.webp` are studio-lit shots on dark
+backdrops — a noticeably different register from everything else in the pack,
+which is phone photography on the shop's blue tiles, in hands, in crates.
+
+They were supplied as Bread Guy's own product photos and are published on that
+basis. Flagging only because the project rule is "no stock photography", and
+these are the two images where that would be hardest to spot after the fact.
+
+**Action:** confirm these are the bakery's own images.
