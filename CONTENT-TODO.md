@@ -9,47 +9,48 @@ statements in the project thread.
 
 ---
 
-## 1. Double G — what are the two G's?
+## 1. 🔴 HIGH — Double G: soy and gluten allergens undeclared
 
-The description **"Dvojitě kynutý kváskový chléb"** (double-*risen*) has been
-**removed**. The cross-section photo shows whole confit garlic cloves and a
-heavy orange swirl, which is not what a double-risen plain sourdough looks
-like, so the old text was wrong.
+The description is now **owner-confirmed and live**: *"Kváskový chléb s
+konfitovaným česnekem a gochujangem."* — confit garlic and gochujang, which
+matches the cross-section photo.
 
-**The description is now empty. No replacement has been written.**
+Confirming the recipe created a new allergen exposure:
 
-⚠️ **Conflicting statements on record — needs settling:**
+**Gochujang almost always contains soybeans, and most commercial brands contain
+wheat or barley malt.** If that holds for the tub this bakery uses, Double G has
+**undeclared soy** — and possibly **gluten from a source other than the flour** —
+on a live page right now.
 
-| When | What was said |
-| --- | --- |
-| Earlier in the thread | *"first photo is double G ( conflict garlic and gochujang)"* |
-| Latest instruction | *"I don't know what the two G's are yet and neither do you — do not write a replacement"* |
+`allergens` is deliberately **left empty**. Soy has *not* been declared, because
+declaring an allergen from an inference about a product nobody has read the
+label on is the same failure this work exists to correct. A wrong or guessed
+declaration is worse than an absent one: it invites trust it hasn't earned.
 
-The latest instruction is what has been followed. If confit garlic + gochujang
-is in fact confirmed, the description can be written in one line.
+**Action (owner):** read the label on the actual gochujang tub in the bakery and
+send the codes. Same for the miso used in Miso Walnut — miso is normally
+soy-based too, and only walnuts are declared there.
 
-**Allergen consequence:** if the second G is a cheese, **milk** is undeclared.
-If it is gochujang, that is normally soy-based and often contains wheat, so
-**soy** would be declarable. `allergens` is `null` until this is answered.
+**Until then:** Double G shows name, photo and price, with no allergen line.
 
 ---
 
-## 2. Allergen codes for every other product
+## 2. 🔴 HIGH — Allergen codes for every remaining product
 
-Only **Miso Walnut** has an allergen declared. It is written as a word
-(`vlašské ořechy` / `walnuts`), **not** as a numeric code: the shop's price
-tags use codes such as `A: 1, 3, 7, 11`, but that numbering has not been
-verified against the products, and publishing a wrong code is worse than
-publishing none.
+Only **Miso Walnut** has an allergen declared (`vlašské ořechy` / `walnuts`), and
+even that is a word rather than a numeric code.
 
-Every other product has `allergens: null` — the field renders nothing rather
-than implying the product is allergen-free.
+**The shop already tracks this.** The price tags carry codes — `A: 1, 3, 7, 11`
+was clearly legible on the máslová burgerová bulka. So this is **a walk around
+the shop with a phone, not research**: photograph every tag and the names,
+prices and allergen codes all come back in one pass.
 
-**Action:** photograph every price tag, then fill `allergens` for each product.
-Confirm the legal obligation for unpackaged bakery goods with the owner.
+Every product except Miso Walnut currently has `allergens: null`, which renders
+nothing at all rather than implying the product is allergen-free.
 
-Note: **miso is normally soy-based**, so Miso Walnut may need soy declared in
-addition to walnuts. Not added without confirmation.
+**Action (owner):** photograph every price tag, then fill `allergens` for each
+product. Confirm with the owner what the numbering maps to before any numeric
+code is published — an unverified code is worse than none.
 
 ---
 
