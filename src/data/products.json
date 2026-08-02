@@ -75,22 +75,6 @@
     "available": true
   },
   {
-    "id": "batch-b",
-    "name": {
-      "cs": "Batch B",
-      "en": "Batch B"
-    },
-    "category": "bread",
-    "description": {
-      "cs": "Menší kváskový chléb",
-      "en": "Smaller sourdough loaf"
-    },
-    "allergens": null,
-    "price": 65,
-    "image": null,
-    "available": true
-  },
-  {
     "id": "focaccia",
     "name": {
       "cs": "Focaccia",

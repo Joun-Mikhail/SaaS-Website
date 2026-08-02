@@ -43,13 +43,9 @@ const structuredData = locations.map((loc) => ({
   telephone: loc.phone || undefined,
   url: absolute('/'),
   image: absolute(OG_IMAGE),
-  aggregateRating: loc.rating
-    ? {
-        '@type': 'AggregateRating',
-        ratingValue: loc.rating,
-        reviewCount: loc.reviewCount,
-      }
-    : undefined,
+  /* No aggregateRating. A star rating published under a real business's name
+     is a factual claim about that business, and the 4.6 / 106 figure was never
+     owner-supplied. It returns only with a real number from the owner. */
   openingHoursSpecification: Object.entries(loc.hours)
     .filter(([, v]) => v !== null)
     .map(([day, hours]) => {
@@ -80,6 +76,12 @@ const structuredData = locations.map((loc) => ({
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <title>{title}</title>
+
+    {/* This build is a specification demo, not the bakery's public site. It must
+        not be indexed and must not compete with the owner's own listing in
+        search. Removed only on the owner's written go-ahead. */}
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="googlebot" content="noindex, nofollow" />
     <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
     <link rel="canonical" href={canonical} />
 

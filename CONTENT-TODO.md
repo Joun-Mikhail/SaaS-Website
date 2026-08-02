@@ -1,7 +1,16 @@
 # Content TODO — unconfirmed, deliberately not published
 
-Everything here is **absent or unchanged on the live site** until the owner
-confirms it. Nothing on this list has been guessed into the product data.
+This build is a **specification demo** shown to the bakery owner. It is
+`noindex, nofollow` with `Disallow: /` in robots.txt, so nothing here competes
+with the bakery's real listing in search.
+
+Two rules govern this file:
+
+1. **Nothing on this list is guessed into the product data.** Empty and flagged
+   beats wrong and confident.
+2. **Allergens are never inferred from an ingredient name.** Not soy from miso,
+   not soy or wheat from gochujang, however likely. An allergen is published
+   when someone has read the label, and not before.
 
 Sources: the in-store wall menu and price tags photographed from Instagram
 stories (`README-mapping-and-menu-audit.md` in the photo pack), plus owner
@@ -9,128 +18,139 @@ statements in the project thread.
 
 ---
 
-## 1. 🔴 HIGH — Double G: soy and gluten allergens undeclared
+## 1. 🔴 HIGH — Hours, addresses and phone are not owner-verified
 
-The description is now **owner-confirmed and live**: *"Kváskový chléb s
-konfitovaným česnekem a gochujangem."* — confit garlic and gochujang, which
-matches the cross-section photo.
+Both addresses, the phone number and every opening hour on the site came from
+an early session and have **never been confirmed in writing by the owner**.
+They are also asserted in JSON-LD `openingHoursSpecification`.
 
-Confirming the recipe created a new allergen exposure:
+They stay on the site as-is — they are the best information available and the
+site is behind `noindex` — but they are the highest-value correction on this
+list. Wrong hours on the owner's phone ends the pitch.
 
-**Gochujang almost always contains soybeans, and most commercial brands contain
-wheat or barley malt.** If that holds for the tub this bakery uses, Double G has
-**undeclared soy** — and possibly **gluten from a source other than the flour** —
-on a live page right now.
-
-`allergens` is deliberately **left empty**. Soy has *not* been declared, because
-declaring an allergen from an inference about a product nobody has read the
-label on is the same failure this work exists to correct. A wrong or guessed
-declaration is worse than an absent one: it invites trust it hasn't earned.
-
-**Action (owner):** read the label on the actual gochujang tub in the bakery and
-send the codes. Same for the miso used in Miso Walnut — miso is normally
-soy-based too, and only walnuts are declared there.
-
-**Until then:** Double G shows name, photo and price, with no allergen line.
+**Action (owner):** confirm in writing. Until then this line stays.
 
 ---
 
-## 2. 🔴 HIGH — Allergen codes for every remaining product
+## 2. 🔴 HIGH — Allergen codes for every product
 
-Only **Miso Walnut** has an allergen declared (`vlašské ořechy` / `walnuts`), and
-even that is a word rather than a numeric code.
+Only **Miso Walnut** carries a declared allergen (`vlašské ořechy` / `walnuts`),
+and that one is owner-confirmed. Every other product is `allergens: null`, which
+renders nothing at all rather than implying the product is allergen-free.
+
+Two specific exposures, both known and both deliberately undeclared:
+
+| Product | Suspected, not declared |
+| --- | --- |
+| **Double G** | Gochujang is normally soy-based and commonly contains wheat or barley malt |
+| **Miso Walnut** | Miso is normally soy-based; only walnuts are declared |
+
+These are inferences about tubs nobody has read the label on, so they are not on
+the site. See rule 2 above.
 
 **The shop already tracks this.** The price tags carry codes — `A: 1, 3, 7, 11`
-was clearly legible on the máslová burgerová bulka. So this is **a walk around
-the shop with a phone, not research**: photograph every tag and the names,
-prices and allergen codes all come back in one pass.
+was legible on the máslová burgerová bulka. This is **a walk around the shop
+with a phone, not research**.
 
-Every product except Miso Walnut currently has `allergens: null`, which renders
-nothing at all rather than implying the product is allergen-free.
-
-**Action (owner):** photograph every price tag, then fill `allergens` for each
-product. Confirm with the owner what the numbering maps to before any numeric
-code is published — an unverified code is worse than none.
+**Action (owner):** photograph the gochujang and miso tubs, and every price tag.
+Confirm what the numeric codes map to before any code is published — an
+unverified code is worse than none.
 
 ---
 
-## 3. Batch B — does it still exist?
+## 3. Batch B — removed from the site
 
-Listed on the site at **65 Kč**, but it appears on **no** wall menu and **no**
-price tag anywhere in the photographs.
+Listed at 65 Kč, but it appeared on **no** wall menu and **no** price tag in any
+photograph. **Deleted from `products.json`.**
 
-Left on the site unchanged, because "probably discontinued" is not a fact.
-
-**Action:** confirm whether Batch B still exists. If not, delete it.
+**Action (owner):** confirm whether Batch B exists. If it does, it comes back
+with a confirmed price and description.
 
 ---
 
-## 4. Focaccia price does not match the shop
+## 4. Rating removed — 4.6 / 106 reviews
 
-| Source | Price |
+Was displayed on the Královo Pole card and asserted as `aggregateRating` in
+structured data. Never owner-supplied. **Removed from both.**
+
+**Action (owner):** supply the real figure and it returns.
+
+---
+
+## 5. Focaccia — split into three (Phase 1)
+
+The site's **50–125 Kč (od)** range matches nothing seen in the shop and was
+never real. It is being replaced by three products:
+
+| Product | Price observed on the tag |
 | --- | --- |
-| The site | **50–125 Kč (od)** |
-| Observed price tags | **55 Kč** plain · **75 Kč** s rajčaty · **75 Kč** s konfitovaným česnekem |
+| Focaccia | 55 Kč |
+| Focaccia s rajčaty | 75 Kč |
+| Focaccia s konfitovaným česnekem | 75 Kč |
 
-The range on the site matches nothing seen in the shop and predates any owner
-confirmation. It is **unchanged pending confirmation** rather than corrected to
-a guess.
-
-The tags distinguishing variants suggests focaccia should probably be several
-products rather than one price range.
-
-**Action:** confirm the real focaccia pricing and whether to split the product.
+These prices are **observed, not owner-confirmed**.
 
 ---
 
-## 5. Two breads missing from the site entirely
+## 6. Products to add with placeholders (Phase 1)
 
-The bread menu on the shop wall reads:
+Names are real. Everything missing uses the placeholder component — a visible,
+designed gap rather than an invention.
 
-**MIŠENEC · DOUBLE G · BÍLÝ CHLÉB · MISO WALNUT · ŽITNÝ · TOUSŤÁK**
+**On the wall menu, missing from the site entirely:**
 
-| Missing | Needs before it can be added |
-| --- | --- |
-| **Žitný** (rye) | price, description, allergens, photo |
-| **Tousťák** (toast loaf) | price, description, allergens, photo |
+| Product | Has | Needs |
+| --- | --- | --- |
+| **Žitný** (rye) | name | price, description, allergens, photo |
+| **Tousťák** (toast loaf) | name | price, description, allergens, photo |
 
-**Not added** — no confirmed price or description exists for either.
-
----
-
-## 6. Other products seen with price tags, none on the site
-
-Not added: prices are visible but descriptions and allergens are not confirmed.
+**Seen with a price tag, not yet on the site** — prices observed, not confirmed:
 
 | Product | Price seen |
 | --- | --- |
 | Loupáček | 33 Kč |
 | Máslová burgerová bulka | 28 Kč (tag shows `A: 1, 3, 7, 11`) |
-| Focaccia (plain) | 55 Kč |
-| Focaccia s rajčaty | 75 Kč |
-| Focaccia s konfitovaným česnekem | 75 Kč |
 | Pizza koláč se šunkou | 80 Kč |
 | Borůvkový koláč s tvarohem | 55 / 100 Kč |
 | Jablečný řez s karamelem a pekany | 95 Kč |
 | Formaggi (tag partly obscured) | 80 Kč |
 
-Photographed but unpriced: koláčky, makový koláč s pečenou švestkou a mandlovou
-drobenkou, makovo-citronový chlebík, Uganda banana bread, mák & švestka žitný
-chlebík.
+Photographed but unpriced, so not added: koláčky, makový koláč s pečenou
+švestkou a mandlovou drobenkou, makovo-citronový chlebík, Uganda banana bread,
+mák & švestka žitný chlebík.
 
 ---
 
-## 7. Carried over, still unverified
+## 7. Invented copy — being deleted, not rewritten (Phase 1)
 
-- **Third location.** An earlier brief mentioned a **Breadbar bistro on
-  Josefská**. The site has two locations. Not added.
-- **Invented copy still live:** the hero subtitle *"Poctivé suroviny, ruční
-  práce…"*, the badge *"Pečeme každé ráno"*, and the whole About paragraph were
-  written without owner input.
+Written without owner input and currently reading as real:
+
+- the hero subtitle *"Poctivé suroviny, ruční práce…"*
+- the badge *"Pečeme každé ráno"*
+- the whole About paragraph
+- descriptions for **Bílý** and **Mišenec**, inferred from the product names
+
+All replaced by the placeholder component. Invented copy that reads as real is
+worse than an obvious gap; on a pitch page the gap is the product.
+
+---
+
+## 8. Photos
+
+Missing entirely: **Double G**, **Miso Walnut**, **Skořicový šnek**, and both
+new breads (Žitný, Tousťák).
+
+**Unresolved:** which of the two pale loaf photographs is **Bílý** and which is
+**Mišenec**. They are currently assigned by guess.
+
+**Action (owner):** identify the two pale loaves.
+
+---
+
+## 9. Smaller items
+
+- **IČO / DIČ** missing from the footer — owner to supply, placeholder meanwhile.
 - **`A Brno Bakery`** is an English string rendering in the Czech footer.
-- Descriptions for **Bílý, Mišenec, Batch B** were inferred from product names,
-  never confirmed.
-- **IČO / DIČ** missing from the footer.
-- Rating **4.6 / 106 reviews**, both addresses, the phone number and all opening
-  hours came from an early session and have never been owner-verified.
-- **Skořicový šnek** has no photo.
+- An unconfirmed allergen field currently renders **nothing**. It should read as
+  *pending* rather than silent — Phase 1 deliverable, deliberately not patched
+  ahead of the placeholder component being designed.
