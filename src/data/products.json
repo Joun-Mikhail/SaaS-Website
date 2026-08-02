@@ -1,12 +1,16 @@
 [
   {
     "id": "bily",
-    "name": { "cs": "Bílý", "en": "White Bread" },
+    "name": {
+      "cs": "Bílý",
+      "en": "White Bread"
+    },
     "category": "bread",
     "description": {
       "cs": "Klasický bílý kváskový chléb",
       "en": "Classic white sourdough bread"
     },
+    "allergens": null,
     "priceWhole": 117,
     "priceHalf": 59,
     "image": "/images/products/bily.webp",
@@ -14,12 +18,16 @@
   },
   {
     "id": "misenec",
-    "name": { "cs": "Mišenec", "en": "Mixed Grain" },
+    "name": {
+      "cs": "Mišenec",
+      "en": "Mixed Grain"
+    },
     "category": "bread",
     "description": {
       "cs": "Kváskový chléb z mixu mouky",
       "en": "Sourdough bread from a flour mix"
     },
+    "allergens": null,
     "priceWhole": 117,
     "priceHalf": 59,
     "image": "/images/products/misenec.webp",
@@ -27,24 +35,39 @@
   },
   {
     "id": "double-g",
-    "name": { "cs": "Double G", "en": "Double G" },
+    "name": {
+      "cs": "Double G",
+      "en": "Double G"
+    },
     "category": "bread",
     "description": {
-      "cs": "Dvojitě kynutý kváskový chléb",
-      "en": "Double-fermented sourdough bread"
+      "cs": "",
+      "en": ""
     },
+    "allergens": null,
     "priceWhole": 147,
     "priceHalf": 74,
     "image": null,
     "available": true
   },
   {
-    "id": "miso",
-    "name": { "cs": "Miso", "en": "Miso" },
+    "id": "miso-walnut",
+    "name": {
+      "cs": "Miso Walnut",
+      "en": "Miso Walnut"
+    },
     "category": "bread",
     "description": {
-      "cs": "Kváskový chléb s miso pastou",
-      "en": "Sourdough bread with miso paste"
+      "cs": "Kváskový chléb s miso pastou a vlašskými ořechy",
+      "en": "Sourdough bread with miso paste and walnuts"
+    },
+    "allergens": {
+      "cs": [
+        "vlašské ořechy"
+      ],
+      "en": [
+        "walnuts"
+      ]
     },
     "priceWhole": 150,
     "priceHalf": 75,
@@ -53,24 +76,32 @@
   },
   {
     "id": "batch-b",
-    "name": { "cs": "Batch B", "en": "Batch B" },
+    "name": {
+      "cs": "Batch B",
+      "en": "Batch B"
+    },
     "category": "bread",
     "description": {
       "cs": "Menší kváskový chléb",
       "en": "Smaller sourdough loaf"
     },
+    "allergens": null,
     "price": 65,
     "image": null,
     "available": true
   },
   {
     "id": "focaccia",
-    "name": { "cs": "Focaccia", "en": "Focaccia" },
+    "name": {
+      "cs": "Focaccia",
+      "en": "Focaccia"
+    },
     "category": "bread",
     "description": {
       "cs": "Italský plochý chléb — olivy, cherry rajčata, bylinky",
       "en": "Italian flatbread — olives, cherry tomatoes, herbs"
     },
+    "allergens": null,
     "priceFrom": 50,
     "priceTo": 125,
     "image": "/images/products/focaccia-tomato.webp",
@@ -78,48 +109,64 @@
   },
   {
     "id": "skorice",
-    "name": { "cs": "Skořicový šnek", "en": "Cinnamon Roll" },
+    "name": {
+      "cs": "Skořicový šnek",
+      "en": "Cinnamon Roll"
+    },
     "category": "sweets",
     "description": {
       "cs": "Klasický skořicový šnek",
       "en": "Classic cinnamon roll"
     },
+    "allergens": null,
     "price": 85,
     "image": null,
     "available": true
   },
   {
     "id": "tiramisu-babka",
-    "name": { "cs": "Tiramisu babka", "en": "Tiramisu Babka" },
+    "name": {
+      "cs": "Tiramisu babka",
+      "en": "Tiramisu Babka"
+    },
     "category": "sweets",
     "description": {
       "cs": "Espresso, mascarpone, amaretto, čokoláda",
       "en": "Espresso, mascarpone, amaretto, chocolate"
     },
+    "allergens": null,
     "price": null,
     "image": "/images/products/tiramisu-babka.webp",
     "available": true
   },
   {
     "id": "focaccia-sandwich",
-    "name": { "cs": "Focaccia sendvič", "en": "Focaccia Sandwich" },
+    "name": {
+      "cs": "Focaccia sendvič",
+      "en": "Focaccia Sandwich"
+    },
     "category": "sandwiches",
     "description": {
       "cs": "Šunka, sýr, rajče, salát na domácí focaccii",
       "en": "Ham, cheese, tomato, lettuce on house-made focaccia"
     },
+    "allergens": null,
     "price": null,
     "image": "/images/products/sandwich-crosssection.webp",
     "available": true
   },
   {
     "id": "makovy-uzlik",
-    "name": { "cs": "Makový uzlík", "en": "Poppyseed Knot" },
+    "name": {
+      "cs": "Makový uzlík",
+      "en": "Poppyseed Knot"
+    },
     "category": "bread",
     "description": {
       "cs": "Houska s mákem",
       "en": "Poppyseed knot roll"
     },
+    "allergens": null,
     "price": null,
     "image": "/images/products/makovy-uzlik.webp",
     "available": true

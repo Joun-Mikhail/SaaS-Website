@@ -39,6 +39,7 @@ export const translations = {
       available: 'Dostupné',
       currency: 'Kč',
       filterLabel: 'Filtrovat podle kategorie',
+      allergens: 'Alergeny',
     },
     locations: {
       title: 'Pobočky',
@@ -113,6 +114,7 @@ export const translations = {
       available: 'Available',
       currency: 'Kč',
       filterLabel: 'Filter by category',
+      allergens: 'Allergens',
     },
     locations: {
       title: 'Locations',
