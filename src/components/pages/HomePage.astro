@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BranchCard from '../BranchCard.astro';
+import ProductCard from '../ProductCard.astro';
+import OrderEntry from '../OrderEntry.astro';
+import Collage from '../Collage.astro';
+import FullBleed from '../FullBleed.astro';
+import { t, type Locale } from '../../data/i18n';
+import { route } from '../../lib/routes';
+import locations from '../../data/locations.json';
+import products from '../../data/products.json';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const i18n = t(locale);
+
+/* The preview leads with the products that have a photograph — a demo should
+   put its strongest evidence first — then fills to six from the rest. */
+const preview = [...products].sort((a, b) => Number(Boolean(b.photo)) - Number(Boolean(a.photo))).slice(0, 6);
+---
+
+<BaseLayout
+  title={i18n.meta.homeTitle}
+  description={i18n.meta.homeDescription}
+  locale={locale}
+  page="home"
+>
+  {/*
+    Section 1. The customer standing on the street is finished by the end of
+    this screen: headline, both addresses, the full week's hours and the phone,
+    all from plain HTML. Nothing here is computed from a clock.
+  */}
+  <section class="ground-orange py-s6">
+    <div class="max-w-page mx-auto px-s4 grid gap-s5 lg:grid-cols-2 lg:gap-s6 lg:items-start">
+      <h1 class="font-display text-t6 max-w-display">{i18n.hero.title}</h1>
+      <div class="grid gap-s3">
+        {locations.map((branch) => <BranchCard branch={branch} locale={locale} headingLevel={2} />)}
+      </div>
+    </div>
+  </section>
+
+  {/* Section 2 — what they bake and what it costs. */}
+  <section class="ground-ink py-s7">
+    <div class="max-w-page mx-auto px-s4">
+      <div class="flex flex-wrap items-baseline justify-between gap-s3 mb-s5">
+        <h2 class="font-display text-t5">{i18n.menu.previewTitle}</h2>
+        <a
+          href={route('menu', locale)}
+          class="font-utility font-bold uppercase text-t2 text-brand-orange"
+        >
+          {i18n.menu.seeAll} →
+        </a>
+      </div>
+      <div class="grid gap-s4 sm:grid-cols-2 lg:grid-cols-3">
+        {preview.map((product) => <ProductCard product={product} locale={locale} />)}
+      </div>
+    </div>
+  </section>
+
+  {/* Section 3 — the ordering flow, once the walk-in has been served. */}
+  <OrderEntry locale={locale} />
+
+  {/* Section 4 — brand texture, after intent and action rather than between. */}
+  <Collage locale={locale} />
+
+  <FullBleed file="focaccia-prosciutto-rukola" alt="" />
+
+  {/* Section 5 — both branches in full. */}
+  <section class="ground-blue py-s7" id="pobocky">
+    <div class="max-w-page mx-auto px-s4">
+      <h2 class="font-display text-t5 mb-s5">{i18n.locations.title}</h2>
+      <div class="grid gap-s4 md:grid-cols-2">
+        {locations.map((branch) => <BranchCard branch={branch} locale={locale} />)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

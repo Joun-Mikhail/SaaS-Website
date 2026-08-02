@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BranchCard from '../BranchCard.astro';
+import Placeholder from '../Placeholder.astro';
+import { t, type Locale } from '../../data/i18n';
+import locations from '../../data/locations.json';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const i18n = t(locale);
+const phone = locations.find((l) => l.phone);
+---
+
+<BaseLayout
+  title={i18n.meta.locationsTitle}
+  description={i18n.meta.locationsDescription}
+  locale={locale}
+  page="locations"
+>
+  <section class="ground-orange py-s6">
+    <div class="max-w-page mx-auto px-s4">
+      <h1 class="font-display text-t6 max-w-display">{i18n.locations.title}</h1>
+    </div>
+  </section>
+
+  <section class="ground-ink py-s7">
+    <div class="max-w-page mx-auto px-s4 grid gap-s4 md:grid-cols-2">
+      {locations.map((branch) => <BranchCard branch={branch} locale={locale} />)}
+    </div>
+  </section>
+
+  {/* Contact is not a separate route. For a two-location bakery it is two
+      addresses, a phone number and an Instagram handle — the substance of
+      this page. */}
+  <section class="ground-blue py-s7" id="kontakt">
+    <div class="max-w-page mx-auto px-s4 flex flex-col gap-s4">
+      <h2 class="font-display text-t5">{i18n.locations.contact}</h2>
+      <div class="flex flex-wrap gap-s5">
+        {
+          phone && (
+            <p class="flex flex-col gap-s1">
+              <span class="eyebrow">{i18n.locations.phone}</span>
+              <a class="text-t3" href={`tel:${phone.phone}`}>
+                {phone.phoneDisplay}
+              </a>
+            </p>
+          )
+        }
+        <p class="flex flex-col gap-s1">
+          <span class="eyebrow">{i18n.locations.instagram}</span>
+          <a
+            class="text-t3"
+            href="https://www.instagram.com/breadguybrno"
+            target="_blank"
+            rel="noopener noreferrer">@breadguybrno</a
+          >
+        </p>
+      </div>
+      <Placeholder
+        label={`${i18n.footer.ico} / ${i18n.footer.dic}`}
+        class="self-start"
+      />
+    </div>
+  </section>
+</BaseLayout>

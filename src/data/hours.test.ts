@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { getStatus, getWallClock, parseRange, type LocationHours } from './hours.ts';
+import { getStatus, getWallClock, groupHours, parseRange, type LocationHours } from './hours.ts';
 
 const WEEKDAY_HOURS: LocationHours = {
   mon: '08:00–18:00',
@@ -94,4 +94,41 @@ test('malformed hours read as closed rather than throwing', () => {
     const status = getStatus({ ...WEEKDAY_HOURS, mon: bad }, summerMonday('12:00'));
     assert.equal(status.isOpen, false, `expected "${bad}" to read as closed`);
   }
+});
+
+test('groupHours collapses a consecutive run into one group', () => {
+  const groups = groupHours({
+    mon: '08:00–18:00',
+    tue: '08:00–18:00',
+    wed: '08:00–18:00',
+    thu: '08:00–18:00',
+    fri: '08:00–18:00',
+    sat: '08:00–12:00',
+    sun: null,
+  });
+
+  assert.equal(groups.length, 3);
+  assert.deepEqual(groups[0].days, ['mon', 'tue', 'wed', 'thu', 'fri']);
+  assert.equal(groups[0].value, '08:00–18:00');
+  assert.deepEqual(groups[1].days, ['sat']);
+  assert.deepEqual(groups[2].days, ['sun']);
+  assert.equal(groups[2].value, null);
+});
+
+test('groupHours does not merge non-consecutive days with equal hours', () => {
+  // Open Mon, closed Tue, open Wed. Printing "Po–St" would claim Tuesday.
+  const groups = groupHours({
+    mon: '08:00–18:00',
+    tue: null,
+    wed: '08:00–18:00',
+    thu: null,
+    fri: null,
+    sat: null,
+    sun: null,
+  });
+
+  assert.equal(groups.length, 4);
+  assert.deepEqual(groups[0].days, ['mon']);
+  assert.equal(groups[1].value, null);
+  assert.deepEqual(groups[2].days, ['wed']);
 });

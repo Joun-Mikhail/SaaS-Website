@@ -1,158 +1,236 @@
 [
   {
     "id": "bily",
-    "name": {
-      "cs": "Bílý",
-      "en": "White Bread"
-    },
+    "name": { "cs": "Bílý", "en": "Bílý" },
     "category": "bread",
-    "description": {
-      "cs": "Klasický bílý kváskový chléb",
-      "en": "Classic white sourdough bread"
-    },
+    "weightGrams": null,
+    "description": { "cs": "", "en": "" },
+    "ingredients": null,
     "allergens": null,
     "priceWhole": 117,
     "priceHalf": 59,
-    "image": "/images/products/bily.webp",
+    "photo": null,
     "available": true
   },
   {
     "id": "misenec",
-    "name": {
-      "cs": "Mišenec",
-      "en": "Mixed Grain"
-    },
+    "name": { "cs": "Mišenec", "en": "Mišenec" },
     "category": "bread",
-    "description": {
-      "cs": "Kváskový chléb z mixu mouky",
-      "en": "Sourdough bread from a flour mix"
-    },
+    "weightGrams": null,
+    "description": { "cs": "", "en": "" },
+    "ingredients": null,
     "allergens": null,
     "priceWhole": 117,
     "priceHalf": 59,
-    "image": "/images/products/misenec.webp",
+    "photo": null,
     "available": true
   },
   {
     "id": "double-g",
-    "name": {
-      "cs": "Double G",
-      "en": "Double G"
-    },
+    "name": { "cs": "Double G", "en": "Double G" },
     "category": "bread",
+    "weightGrams": null,
     "description": {
       "cs": "Kváskový chléb s konfitovaným česnekem a gochujangem.",
       "en": "Sourdough bread with confit garlic and gochujang."
     },
+    "ingredients": null,
     "allergens": null,
     "priceWhole": 147,
     "priceHalf": 74,
-    "image": null,
+    "photo": "double-g-rez",
     "available": true
   },
   {
     "id": "miso-walnut",
-    "name": {
-      "cs": "Miso Walnut",
-      "en": "Miso Walnut"
-    },
+    "name": { "cs": "Miso Walnut", "en": "Miso Walnut" },
     "category": "bread",
+    "weightGrams": null,
     "description": {
       "cs": "Kváskový chléb s miso pastou a vlašskými ořechy",
       "en": "Sourdough bread with miso paste and walnuts"
     },
-    "allergens": {
-      "cs": [
-        "vlašské ořechy"
-      ],
-      "en": [
-        "walnuts"
-      ]
-    },
+    "ingredients": null,
+    "allergens": { "cs": ["vlašské ořechy"], "en": ["walnuts"] },
     "priceWhole": 150,
     "priceHalf": 75,
-    "image": null,
+    "photo": "miso-walnut-rez",
+    "available": true
+  },
+  {
+    "id": "zitny",
+    "name": { "cs": "Žitný", "en": "Žitný" },
+    "category": "bread",
+    "weightGrams": null,
+    "description": { "cs": "", "en": "" },
+    "ingredients": null,
+    "allergens": null,
+    "photo": null,
+    "available": true
+  },
+  {
+    "id": "toustak",
+    "name": { "cs": "Tousťák", "en": "Tousťák" },
+    "category": "bread",
+    "weightGrams": null,
+    "description": { "cs": "", "en": "" },
+    "ingredients": null,
+    "allergens": null,
+    "photo": null,
     "available": true
   },
   {
     "id": "focaccia",
+    "name": { "cs": "Focaccia", "en": "Focaccia" },
+    "category": "bread",
+    "weightGrams": null,
+    "description": { "cs": "", "en": "" },
+    "ingredients": null,
+    "allergens": null,
+    "price": 55,
+    "photo": null,
+    "available": true
+  },
+  {
+    "id": "focaccia-rajcata",
+    "name": { "cs": "Focaccia s rajčaty", "en": "Focaccia s rajčaty" },
+    "category": "bread",
+    "weightGrams": null,
+    "description": { "cs": "", "en": "" },
+    "ingredients": null,
+    "allergens": null,
+    "price": 75,
+    "photo": "focaccia-olive-tomato-herbs",
+    "available": true
+  },
+  {
+    "id": "focaccia-cesnek",
     "name": {
-      "cs": "Focaccia",
-      "en": "Focaccia"
+      "cs": "Focaccia s konfitovaným česnekem",
+      "en": "Focaccia s konfitovaným česnekem"
     },
     "category": "bread",
-    "description": {
-      "cs": "Italský plochý chléb — olivy, cherry rajčata, bylinky",
-      "en": "Italian flatbread — olives, cherry tomatoes, herbs"
-    },
+    "weightGrams": null,
+    "description": { "cs": "", "en": "" },
+    "ingredients": null,
     "allergens": null,
-    "priceFrom": 50,
-    "priceTo": 125,
-    "image": "/images/products/focaccia-tomato.webp",
+    "price": 75,
+    "photo": null,
     "available": true
   },
   {
-    "id": "skorice",
-    "name": {
-      "cs": "Skořicový šnek",
-      "en": "Cinnamon Roll"
-    },
-    "category": "sweets",
-    "description": {
-      "cs": "Klasický skořicový šnek",
-      "en": "Classic cinnamon roll"
-    },
+    "id": "loupacek",
+    "name": { "cs": "Loupáček", "en": "Loupáček" },
+    "category": "bread",
+    "weightGrams": null,
+    "description": { "cs": "", "en": "" },
+    "ingredients": null,
     "allergens": null,
-    "price": 85,
-    "image": null,
+    "price": 33,
+    "photo": null,
     "available": true
   },
   {
-    "id": "tiramisu-babka",
+    "id": "burgerova-bulka",
     "name": {
-      "cs": "Tiramisu babka",
-      "en": "Tiramisu Babka"
+      "cs": "Máslová burgerová bulka",
+      "en": "Máslová burgerová bulka"
     },
-    "category": "sweets",
-    "description": {
-      "cs": "Espresso, mascarpone, amaretto, čokoláda",
-      "en": "Espresso, mascarpone, amaretto, chocolate"
-    },
+    "category": "bread",
+    "weightGrams": null,
+    "description": { "cs": "", "en": "" },
+    "ingredients": null,
     "allergens": null,
-    "price": null,
-    "image": "/images/products/tiramisu-babka.webp",
-    "available": true
-  },
-  {
-    "id": "focaccia-sandwich",
-    "name": {
-      "cs": "Focaccia sendvič",
-      "en": "Focaccia Sandwich"
-    },
-    "category": "sandwiches",
-    "description": {
-      "cs": "Šunka, sýr, rajče, salát na domácí focaccii",
-      "en": "Ham, cheese, tomato, lettuce on house-made focaccia"
-    },
-    "allergens": null,
-    "price": null,
-    "image": "/images/products/sandwich-crosssection.webp",
+    "price": 28,
+    "photo": null,
     "available": true
   },
   {
     "id": "makovy-uzlik",
-    "name": {
-      "cs": "Makový uzlík",
-      "en": "Poppyseed Knot"
-    },
+    "name": { "cs": "Makový uzlík", "en": "Makový uzlík" },
     "category": "bread",
-    "description": {
-      "cs": "Houska s mákem",
-      "en": "Poppyseed knot roll"
-    },
+    "weightGrams": null,
+    "description": { "cs": "", "en": "" },
+    "ingredients": null,
     "allergens": null,
-    "price": null,
-    "image": "/images/products/makovy-uzlik.webp",
+    "photo": "makovy-uzlik-tray",
+    "available": true
+  },
+  {
+    "id": "skorice",
+    "name": { "cs": "Skořicový šnek", "en": "Skořicový šnek" },
+    "category": "sweets",
+    "weightGrams": null,
+    "description": { "cs": "", "en": "" },
+    "ingredients": null,
+    "allergens": null,
+    "price": 85,
+    "photo": null,
+    "available": true
+  },
+  {
+    "id": "tiramisu-babka",
+    "name": { "cs": "Tiramisu babka", "en": "Tiramisu babka" },
+    "category": "sweets",
+    "weightGrams": null,
+    "description": { "cs": "", "en": "" },
+    "ingredients": null,
+    "allergens": null,
+    "photo": null,
+    "available": true
+  },
+  {
+    "id": "boruvkovy-kolac",
+    "name": {
+      "cs": "Borůvkový koláč s tvarohem",
+      "en": "Borůvkový koláč s tvarohem"
+    },
+    "category": "sweets",
+    "weightGrams": null,
+    "description": { "cs": "", "en": "" },
+    "ingredients": null,
+    "allergens": null,
+    "priceWhole": 100,
+    "priceHalf": 55,
+    "photo": null,
+    "available": true
+  },
+  {
+    "id": "jablecny-rez",
+    "name": {
+      "cs": "Jablečný řez s karamelem a pekany",
+      "en": "Jablečný řez s karamelem a pekany"
+    },
+    "category": "sweets",
+    "weightGrams": null,
+    "description": { "cs": "", "en": "" },
+    "ingredients": null,
+    "allergens": null,
+    "price": 95,
+    "photo": null,
+    "available": true
+  },
+  {
+    "id": "focaccia-sendvic",
+    "name": { "cs": "Focaccia sendvič", "en": "Focaccia sendvič" },
+    "category": "sandwiches",
+    "weightGrams": null,
+    "description": { "cs": "", "en": "" },
+    "ingredients": null,
+    "allergens": null,
+    "photo": "sendvic-rez-a",
+    "available": true
+  },
+  {
+    "id": "pizza-kolac",
+    "name": { "cs": "Pizza koláč se šunkou", "en": "Pizza koláč se šunkou" },
+    "category": "sandwiches",
+    "weightGrams": null,
+    "description": { "cs": "", "en": "" },
+    "ingredients": null,
+    "allergens": null,
+    "price": 80,
+    "photo": null,
     "available": true
   }
 ]

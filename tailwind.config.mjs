@@ -1,73 +1,80 @@
 /*
- * The Phase 1 design system, expressed as tokens.
+ * The Phase 1 design system, enforced.
  *
- * These are added to Tailwind's defaults rather than replacing them, because
- * Phase 1 builds nothing — the existing components still reference the old
- * scale and rewriting them here would be building. Phase 3 replaces
- * `theme.spacing` and `theme.fontSize` outright, which is what makes an
- * arbitrary value impossible rather than merely discouraged.
+ * `spacing`, `fontSize` and `colors` REPLACE Tailwind's defaults rather than
+ * extending them. That is the whole point: with the default scale gone, `p-4`
+ * and `text-gray-500` do not compile, so an off-system value fails the build
+ * instead of quietly shipping. Phase 1 could only document the scale; this is
+ * where it becomes impossible to break.
  *
- * The full rationale, including the colour sample coordinates and the
- * contrast matrix, is in DECISIONS.md and rendered in specimen/index.html.
+ * Colour sample coordinates, the contrast matrix and the reasoning are in
+ * DECISIONS.md, rendered in specimen/index.html.
  */
 
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   theme: {
+    /* Six values, four sampled from the bakery's own photographs. Tailwind's
+       default palette is deliberately absent — there is no gray-500 to reach
+       for at 2am. */
+    colors: {
+      transparent: 'transparent',
+      current: 'currentColor',
+      inherit: 'inherit',
+      brand: {
+        orange: '#EA5F28',
+        blue: '#2B3355',
+        green: '#6FDC47',
+        red: '#952312',
+        ink: '#141413',
+        chalk: '#FFFFFF',
+      },
+    },
+
+    /* Fibonacci: each step is the sum of the two before it. Governs every
+       margin, padding, gap and offset on the site. */
+    spacing: {
+      0: '0px',
+      px: '1px',
+      s1: '4px',
+      s2: '8px',
+      s3: '12px',
+      s4: '20px',
+      s5: '32px',
+      s6: '52px',
+      s7: '84px',
+      s8: '136px',
+    },
+
+    /* Text on a tight 1.13 so sizes do not compete; display on 1.618 so they
+       do. Body 17px to hero 72px is 4.24x. */
+    fontSize: {
+      t1: ['13px', { lineHeight: '1.45' }],
+      t2: ['15px', { lineHeight: '1.5' }],
+      t3: ['17px', { lineHeight: '1.6' }],
+      t4: ['27px', { lineHeight: '1.25' }],
+      t5: ['44px', { lineHeight: '1.08' }],
+      t6: ['clamp(44px, 9vw, 72px)', { lineHeight: '1.0' }],
+    },
+
     extend: {
-      colors: {
-        /* Sampled — never invented. See DECISIONS.md for file + coordinates. */
-        brand: {
-          orange: '#EA5F28',
-          blue: '#2B3355',
-          green: '#6FDC47',
-          red: '#952312',
-          ink: '#141413',
-          chalk: '#FFFFFF',
-
-          /* Retired in Phase 3. Kept only so the current components still
-             compile until they are rebuilt onto the tokens above. */
-          'orange-hover': '#D94A18',
-          cream: '#FAF6F1',
-          charcoal: '#2C2C2C',
-          warm: '#E8E0D6',
-        },
-      },
-
-      /* Fibonacci: each step is the sum of the two before it. */
-      spacing: {
-        s1: '4px',
-        s2: '8px',
-        s3: '12px',
-        s4: '20px',
-        s5: '32px',
-        s6: '52px',
-        s7: '84px',
-        s8: '136px',
-      },
-
-      /* Text sizes on a tight 1.13 ratio, display sizes on 1.618.
-         Body 17px to hero 72px is 4.24x. */
-      fontSize: {
-        t1: ['13px', { lineHeight: '1.45' }],
-        t2: ['15px', { lineHeight: '1.5' }],
-        t3: ['17px', { lineHeight: '1.6' }],
-        t4: ['27px', { lineHeight: '1.25' }],
-        t5: ['44px', { lineHeight: '1.08' }],
-        t6: ['clamp(44px, 9vw, 72px)', { lineHeight: '1.0' }],
+      fontFamily: {
+        display: ['Titan One', 'Titan One Fallback', 'system-ui', 'sans-serif'],
+        body: ['Archivo', 'Archivo Fallback', 'system-ui', 'sans-serif'],
+        utility: ['Barlow Condensed', 'Barlow Condensed Fallback', 'system-ui', 'sans-serif'],
       },
 
       maxWidth: {
         body: '64ch',
         display: '16ch',
+        page: '1180px',
       },
 
-      fontFamily: {
-        display: ['Titan One', 'system-ui', 'sans-serif'],
-        body: ['Archivo', 'system-ui', 'sans-serif'],
-        utility: ['Barlow Condensed', 'system-ui', 'sans-serif'],
-      },
+      /* Image and icon dimensions are not spacing, so they live apart from the
+         Fibonacci scale rather than bending it. */
+      width: { icon: '20px', logo: '40px', 'logo-lg': '56px' },
+      height: { icon: '20px', logo: '40px', 'logo-lg': '56px', header: '64px' },
 
       transitionTimingFunction: {
         settle: 'cubic-bezier(0.22, 1, 0.36, 1)',

@@ -40,6 +40,26 @@ flagged rather than silently resolved.
   screenshots with Instagram UI burnt in. Never served to a user. They are the
   evidence behind the observed prices and allergen codes in `CONTENT-TODO.md`.
 
+## The build (Phase 3)
+
+- **Tailwind's spacing, fontSize and colour scales are replaced, not extended.**
+  With the defaults gone, `p-4` and `text-gray-500` do not compile, so an
+  off-system value fails the build instead of quietly shipping. Phase 1 could
+  only document the scale; this is what makes it impossible to break.
+- **Category sections, not JavaScript filters.** The old menu hid cards with
+  inline `display:none`, so the page did nothing at all without JavaScript.
+  Sections work with JS off, are linkable, and let a screen reader move by
+  heading.
+- **Branch-card heading level is a prop.** In the hero these are the first
+  headings on the page and must be h2; inside the Locations section they sit
+  under its h2 and must be h3. Hard-coding either one breaks reading order for
+  a screen reader.
+- **Three faces are preloaded, not one.** The header CTA (Barlow Condensed),
+  the body text (Archivo) and the headline (Titan One) all paint above the
+  fold. With only the display face preloaded, the swap from fallback to real
+  face resized the header's flex row and registered as layout shift. Preloading
+  all three took CLS from 0.0011 to exactly 0.
+
 ## The system (Phase 1)
 
 Rendered in `specimen/index.html`. Tokens live in `tailwind.config.mjs`.
@@ -108,7 +128,32 @@ Rendered in `specimen/index.html`. Tokens live in `tailwind.config.mjs`.
   absence.** Empty space next to "Alergeny" can be read as "contains none",
   which is the one thing the field must never imply.
 
+## Information architecture (Phase 2)
+
+- **The ordering flow asks location before day.** Slots depend on the branch:
+  Královo Pole is closed on Sunday, so asking for a day first would offer a day
+  that cannot be served, then take it away. Logistics before products, but only
+  inside the flow — the public menu shows every price with no question asked.
+- **Browse and buy are two hierarchies with two rules.** `/nabidka` and every
+  product page show price immediately; `/objednavka` asks location and day
+  before a total. A walk-in standing on Husitská never has to say what day it
+  is to find out what a Mišenec costs.
+- **No `/kontakt` route.** For a two-location bakery, contact is two addresses,
+  a phone number and an Instagram handle — the substance of `/pobocky`. A
+  separate route would exist only to fill the nav.
+- **The open/closed badge is progressive, never server-rendered.** Static
+  markup carries the full week's hours as text; the live badge is added by
+  script and is absent without it. A static page cannot know what day it is,
+  so it must not claim to. The previous build froze a build-time status into
+  the HTML and could assert "Otevřeno" at 3am.
+
 ## Truthfulness
+
+- **STANDING RULE: where a fact is missing, the placeholder ships.** We never
+  fill a gap with something plausible, and we never quietly drop a field to
+  avoid showing the gap. Both are ways of lying. On a pitch page the visible
+  gap is the product — it turns what is missing into an item the owner is
+  buying rather than a defect he has to discover.
 
 - **An allergen is published when someone has read the label, never inferred
   from an ingredient name.** Not soy from miso, not soy or wheat from

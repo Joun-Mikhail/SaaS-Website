@@ -1,0 +1,28 @@
+---
+import { t, type Locale } from '../data/i18n';
+import { route } from '../lib/routes';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const i18n = t(locale);
+---
+
+<section class="ground-orange py-s7">
+  <div
+    class="max-w-page mx-auto px-s4 flex flex-col md:flex-row md:items-center md:justify-between gap-s5"
+  >
+    <div class="max-w-body">
+      <h2 class="font-display text-t5">{i18n.order.entryTitle}</h2>
+      <p class="text-t3 mt-s3">{i18n.order.entryText}</p>
+    </div>
+    <a
+      href={route('order', locale)}
+      class="tag-notch bg-brand-ink text-brand-chalk font-utility font-bold uppercase text-t4 px-s5 py-s3 self-start shrink-0"
+    >
+      {i18n.order.cta}
+    </a>
+  </div>
+</section>

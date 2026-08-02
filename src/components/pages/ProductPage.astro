@@ -1,0 +1,165 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Placeholder from '../Placeholder.astro';
+import ProductCard from '../ProductCard.astro';
+import { t, type Locale } from '../../data/i18n';
+import { withBase } from '../../lib/paths';
+import { route } from '../../lib/routes';
+import products from '../../data/products.json';
+
+type Product = (typeof products)[number];
+
+interface Props {
+  product: Product;
+  locale: Locale;
+}
+
+const { product, locale } = Astro.props;
+const i18n = t(locale);
+
+const description = product.description[locale];
+const allergens = product.allergens?.[locale] ?? null;
+const ingredients = product.ingredients?.[locale] ?? null;
+
+const price = (() => {
+  if ('priceWhole' in product && product.priceWhole) {
+    return {
+      value: `${product.priceWhole} / ${product.priceHalf} ${i18n.menu.currency}`,
+      detail: `${i18n.menu.whole} / ${i18n.menu.half}`,
+    };
+  }
+  if ('price' in product && product.price) {
+    return { value: `${product.price} ${i18n.menu.currency}`, detail: '' };
+  }
+  return null;
+})();
+
+const related = products.filter((p) => p.id !== product.id && p.category === product.category).slice(0, 3);
+---
+
+<BaseLayout
+  title={`${product.name[locale]} — Bread Guy`}
+  description={description || i18n.meta.menuDescription}
+  locale={locale}
+  page="product"
+  slug={product.id}
+>
+  <article class="ground-ink py-s6">
+    <div class="max-w-page mx-auto px-s4">
+      <a href={route('menu', locale)} class="font-utility font-bold uppercase text-t2 text-brand-orange">
+        ← {i18n.menu.backToMenu}
+      </a>
+
+      <div class="grid gap-s5 lg:grid-cols-2 mt-s5">
+        <div class="aspect-[4/3] overflow-hidden bg-brand-blue">
+          {
+            product.photo ? (
+              <img
+                src={withBase(`/images/products/${product.photo}-800.webp`)}
+                srcset={`${withBase(`/images/products/${product.photo}-400.webp`)} 400w, ${withBase(`/images/products/${product.photo}-800.webp`)} 800w`}
+                sizes="(min-width: 1024px) 560px, 100vw"
+                alt={description ? `${product.name[locale]} — ${description}` : product.name[locale]}
+                width="800"
+                height="600"
+                class="w-full h-full object-cover"
+                decoding="async"
+              />
+            ) : (
+              <Placeholder variant="block" label={i18n.placeholder.photo} class="w-full h-full" />
+            )
+          }
+        </div>
+
+        <div class="flex flex-col gap-s4">
+          <h1 class="font-display text-t5">{product.name[locale]}</h1>
+
+          {/* Weight belongs with the name — it removes a whole class of
+              ambiguity. No figure is confirmed for any product yet. */}
+          {
+            product.weightGrams ? (
+              <p class="font-utility font-bold uppercase text-t2">{product.weightGrams} g</p>
+            ) : (
+              <Placeholder label={i18n.placeholder.weight} class="self-start" />
+            )
+          }
+
+          {
+            price ? (
+              <p class="tag-notch inline-flex items-baseline gap-s2 bg-brand-orange text-brand-ink px-s4 py-s2 font-utility font-bold text-t4 self-start">
+                <span>{price.value}</span>
+                {price.detail && <span class="text-t1 uppercase font-medium">{price.detail}</span>}
+              </p>
+            ) : (
+              <Placeholder
+                label={i18n.placeholder.price}
+                hint={i18n.placeholder.priceHint}
+                class="self-start"
+              />
+            )
+          }
+
+          {
+            description ? (
+              <p class="text-t3 max-w-body">{description}</p>
+            ) : (
+              <Placeholder label={i18n.placeholder.description} />
+            )
+          }
+
+          {/* Ingredients are a description. Allergens are a legal claim. They
+              are separate fields and never share one. */}
+          <div>
+            <h2 class="eyebrow mb-s2">{i18n.menu.ingredients}</h2>
+            {
+              ingredients ? (
+                <p class="text-t2">{ingredients.join(', ')}</p>
+              ) : (
+                <Placeholder label={i18n.placeholder.ingredients} />
+              )
+            }
+          </div>
+
+          <div>
+            <h2 class="eyebrow mb-s2">{i18n.menu.allergens}</h2>
+            {
+              allergens ? (
+                <p class="font-utility font-bold text-t2 uppercase bg-brand-chalk text-brand-ink px-s3 py-s2 self-start inline-block">
+                  {allergens.join(', ')}
+                </p>
+              ) : (
+                <p
+                  class="font-utility font-bold text-t2 uppercase text-brand-ink self-start inline-block px-s3 py-s2 ph-hatch-light"
+                  style="border: 2px dashed currentColor"
+                >
+                  {i18n.placeholder.allergens}
+                </p>
+              )
+            }
+          </div>
+
+          <a
+            href={route('order', locale)}
+            class="tag-notch bg-brand-chalk text-brand-ink font-utility font-bold uppercase text-t4 px-s5 py-s3 self-start"
+          >
+            {i18n.order.cta}
+          </a>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  {
+    related.length > 0 && (
+      <section class="ground-blue py-s7">
+        <div class="max-w-page mx-auto px-s4">
+          <h2 class="font-display text-t5 mb-s5">{i18n.menu.related}</h2>
+          <div class="grid gap-s4 sm:grid-cols-2 lg:grid-cols-3">
+            {related.map((p) => (
+              <ProductCard product={p} locale={locale} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+</BaseLayout>

@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Placeholder from '../Placeholder.astro';
+import FullBleed from '../FullBleed.astro';
+import { t, type Locale } from '../../data/i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const i18n = t(locale);
+
+/*
+ * The route stays; the copy is gone. The previous paragraph was written
+ * without the owner ever saying it, and an About page that visibly says the
+ * story is waiting to be written is a stronger pitch artefact than a
+ * paragraph he never approved — it turns the gap into an item he is buying.
+ */
+---
+
+<BaseLayout
+  title={i18n.meta.aboutTitle}
+  description={i18n.meta.aboutDescription}
+  locale={locale}
+  page="about"
+>
+  <section class="ground-orange py-s6">
+    <div class="max-w-page mx-auto px-s4">
+      <h1 class="font-display text-t6 max-w-display">{i18n.about.title}</h1>
+    </div>
+  </section>
+
+  <section class="ground-ink py-s7">
+    <div class="max-w-page mx-auto px-s4 max-w-body">
+      <Placeholder label={i18n.placeholder.about} hint={i18n.placeholder.aboutHint} />
+    </div>
+  </section>
+
+  <FullBleed file="tiramisu-babka-tray" alt="" />
+</BaseLayout>

@@ -1,0 +1,62 @@
+---
+import { t, type Locale } from '../data/i18n';
+import { withBase } from '../lib/paths';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const i18n = t(locale);
+
+/*
+ * The static collage. Phase 7 makes these draggable; this layout is what it
+ * falls back to under reduced motion, save-data, a narrow viewport or no
+ * JavaScript — so it has to read as deliberate on its own, not as a
+ * degraded version of something better.
+ *
+ * Thirteen cutouts exist. Two products have none, because an overhead shot
+ * that fills the frame has no background to remove; those two are used
+ * full-bleed elsewhere. See DECISIONS.md.
+ */
+const CUTOUTS = [
+  { file: 'loaf-sourdough-a', rotate: -6, span: 'col-span-2 row-span-2' },
+  { file: 'double-g-rez', rotate: 4, span: '' },
+  { file: 'focaccia-feta-olive-onion', rotate: -3, span: '' },
+  { file: 'miso-walnut-rez', rotate: 7, span: '' },
+  { file: 'makovy-uzlik-tray', rotate: -5, span: '' },
+  { file: 'slider-sesame-bun', rotate: 3, span: '' },
+  { file: 'sendvic-rez-a', rotate: -8, span: 'col-span-2' },
+  { file: 'focaccia-margherita', rotate: 5, span: '' },
+  { file: 'loaf-sourdough-b', rotate: -4, span: '' },
+  { file: 'focaccia-lilek-parmezan', rotate: 6, span: '' },
+  { file: 'hero-focaccia-sandwich', rotate: -2, span: '' },
+  { file: 'focaccia-olive-tomato-herbs', rotate: 4, span: '' },
+  { file: 'sendvic-rez-b', rotate: -7, span: '' },
+];
+---
+
+<section class="ground-green py-s7" aria-label={i18n.collage.label}>
+  <div class="max-w-page mx-auto px-s4">
+    <ul class="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-7 gap-s3 list-none p-0 m-0">
+      {
+        CUTOUTS.map(({ file, rotate, span }) => (
+          <li class={span}>
+            <img
+              src={withBase(`/images/cutouts/${file}-320.webp`)}
+              srcset={`${withBase(`/images/cutouts/${file}-320.webp`)} 320w, ${withBase(`/images/cutouts/${file}-640.webp`)} 640w`}
+              sizes="(min-width: 1024px) 160px, (min-width: 640px) 180px, 110px"
+              alt=""
+              width="320"
+              height="320"
+              loading="lazy"
+              decoding="async"
+              class="w-full h-auto"
+              style={`transform: rotate(${rotate}deg)`}
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

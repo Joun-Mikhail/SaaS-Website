@@ -2,34 +2,29 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { getLocaleFromUrl, t } from '../data/i18n';
-import { toRoute, withBase } from '../lib/paths';
+import { t, type Locale } from '../data/i18n';
+import { withBase } from '../lib/paths';
+import { route, otherLocale, type PageKey } from '../lib/routes';
 import locations from '../data/locations.json';
 
 interface Props {
   title: string;
   description: string;
+  locale: Locale;
+  page: PageKey;
+  slug?: string;
 }
 
-const SITE = Astro.site?.origin ?? 'https://breadguy.cz';
-/* Hero photo doubles as the social preview image — JPEG, because some social
-   scrapers still don't render WebP previews. */
-const OG_IMAGE = '/images/products/focaccia-olive.jpg';
-
-const { title, description } = Astro.props;
-const locale = getLocaleFromUrl(Astro.url);
+const { title, description, locale, page, slug } = Astro.props;
 const i18n = t(locale);
-const altLocale = locale === 'cs' ? 'en' : 'cs';
+const other = otherLocale(locale);
 
-const route = toRoute(Astro.url.pathname);
-const csRoute = route.replace(/^\/en/, '') || '/';
-/* Keep the trailing slash so hreflang matches the canonical URL exactly. */
-const enRoute = csRoute === '/' ? '/en/' : `/en${csRoute}`;
-const altPath = withBase(locale === 'cs' ? enRoute : csRoute);
+const SITE = Astro.site?.origin ?? 'https://breadguy.cz';
+const absolute = (path: string) => `${SITE}${path}`;
+const canonical = absolute(route(page, locale, slug));
 
-const absolute = (path: string) => `${SITE}${withBase(path)}`;
-const canonical = absolute(route);
-
+/* No aggregateRating. A star rating published under a real business's name is
+   a factual claim about that business, and no figure has been supplied. */
 const structuredData = locations.map((loc) => ({
   '@context': 'https://schema.org',
   '@type': 'Bakery',
@@ -41,11 +36,7 @@ const structuredData = locations.map((loc) => ({
     addressCountry: 'CZ',
   },
   telephone: loc.phone || undefined,
-  url: absolute('/'),
-  image: absolute(OG_IMAGE),
-  /* No aggregateRating. A star rating published under a real business's name
-     is a factual claim about that business, and the 4.6 / 106 figure was never
-     owner-supplied. It returns only with a real number from the owner. */
+  url: absolute(route('home', locale)),
   openingHoursSpecification: Object.entries(loc.hours)
     .filter(([, v]) => v !== null)
     .map(([day, hours]) => {
@@ -59,12 +50,7 @@ const structuredData = locations.map((loc) => ({
         sun: 'Sunday',
       };
       const [opens, closes] = (hours as string).split('–');
-      return {
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: dayMap[day],
-        opens,
-        closes,
-      };
+      return { '@type': 'OpeningHoursSpecification', dayOfWeek: dayMap[day], opens, closes };
     }),
 }));
 ---
@@ -77,22 +63,19 @@ const structuredData = locations.map((loc) => ({
     <meta name="description" content={description} />
     <title>{title}</title>
 
-    {/* This build is a specification demo, not the bakery's public site. It must
-        not be indexed and must not compete with the owner's own listing in
-        search. Removed only on the owner's written go-ahead. */}
+    {/* Specification demo — must not be indexed and must not compete with the
+        bakery's real listing. Removed only on the owner's written go-ahead. */}
     <meta name="robots" content="noindex, nofollow" />
     <meta name="googlebot" content="noindex, nofollow" />
+
     <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
     <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang={locale} href={canonical} />
+    <link rel="alternate" hreflang={other} href={absolute(route(page, other, slug))} />
+    <link rel="alternate" hreflang="x-default" href={absolute(route(page, 'cs', slug))} />
 
-    <link rel="alternate" hreflang="cs" href={absolute(csRoute)} />
-    <link rel="alternate" hreflang="en" href={absolute(enRoute)} />
-    <link rel="alternate" hreflang="x-default" href={absolute(csRoute)} />
-
-    {/* Fonts are self-hosted (see src/styles/fonts.css). The display face is
-        preloaded in both subsets because a Czech headline routinely needs
-        glyphs from each: "Kváskový" takes á and ý from latin, "chléb" takes é
-        from latin, and any š/č/ř/ž comes from latin-ext. 17 KB together. */}
+    {/* Self-hosted. The display face is preloaded in both subsets because a
+        Czech headline needs glyphs from each. */}
     <link
       rel="preload"
       href={withBase('/fonts/titan-one-latin-400-normal.woff2')}
@@ -107,6 +90,23 @@ const structuredData = locations.map((loc) => ({
       type="font/woff2"
       crossorigin
     />
+    {/* The header CTA, the prices and the body text all paint above the fold.
+        Without these preloaded, the swap from fallback to real face resizes
+        the header's flex row and registers as layout shift. */}
+    <link
+      rel="preload"
+      href={withBase('/fonts/barlow-condensed-latin-700-normal.woff2')}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href={withBase('/fonts/archivo-latin-400-normal.woff2')}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
 
     <meta property="og:site_name" content="Bread Guy" />
     <meta property="og:title" content={title} />
@@ -114,22 +114,13 @@ const structuredData = locations.map((loc) => ({
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={locale === 'cs' ? 'cs_CZ' : 'en_GB'} />
-    <meta property="og:image" content={absolute(OG_IMAGE)} />
-    <meta property="og:image:width" content="800" />
-    <meta property="og:image:height" content="600" />
-    <meta property="og:image:alt" content={i18n.hero.photoAlt} />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={absolute(OG_IMAGE)} />
 
-    {structuredData.map((data) => (
-      <script type="application/ld+json" set:html={JSON.stringify(data)} />
-    ))}
+    {structuredData.map((data) => <script type="application/ld+json" set:html={JSON.stringify(data)} />)}
   </head>
-  <body class="bg-brand-cream text-brand-charcoal font-body antialiased">
+
+  <body class="font-body text-t3">
     <a href="#obsah" class="skip-link">{i18n.nav.skipToContent}</a>
-    <Header locale={locale} />
+    <Header locale={locale} page={page} slug={slug} />
     <main id="obsah">
       <slot />
     </main>

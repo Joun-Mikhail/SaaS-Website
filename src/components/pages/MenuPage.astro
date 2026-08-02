@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProductCard from '../ProductCard.astro';
+import OrderEntry from '../OrderEntry.astro';
+import { t, type Locale } from '../../data/i18n';
+import products from '../../data/products.json';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const i18n = t(locale);
+
+/*
+ * Categories are rendered as sections rather than as JavaScript filters. The
+ * filter on the old build hid cards with inline display:none, which meant the
+ * page did nothing at all without JavaScript. Sections work with JS off, are
+ * linkable, and let a screen reader move by heading.
+ */
+const GROUPS = [
+  { key: 'bread', label: i18n.menu.bread },
+  { key: 'sweets', label: i18n.menu.sweets },
+  { key: 'sandwiches', label: i18n.menu.sandwiches },
+] as const;
+---
+
+<BaseLayout
+  title={i18n.meta.menuTitle}
+  description={i18n.meta.menuDescription}
+  locale={locale}
+  page="menu"
+>
+  <section class="ground-orange py-s6">
+    <div class="max-w-page mx-auto px-s4">
+      <h1 class="font-display text-t6 max-w-display">{i18n.menu.title}</h1>
+      <nav class="flex flex-wrap gap-s2 mt-s5" aria-label={i18n.menu.filterLabel}>
+        {
+          GROUPS.map((group) => (
+            <a
+              href={`#${group.key}`}
+              class="tag-notch bg-brand-ink text-brand-chalk font-utility font-bold uppercase text-t2 px-s3 py-s2"
+            >
+              {group.label}
+            </a>
+          ))
+        }
+      </nav>
+    </div>
+  </section>
+
+  {
+    GROUPS.map((group, index) => (
+      <section class={index % 2 === 0 ? 'ground-ink py-s7' : 'ground-blue py-s7'} id={group.key}>
+        <div class="max-w-page mx-auto px-s4">
+          <h2 class="font-display text-t5 mb-s5">{group.label}</h2>
+          <div class="grid gap-s4 sm:grid-cols-2 lg:grid-cols-3">
+            {products
+              .filter((p) => p.category === group.key)
+              .map((product) => (
+                <ProductCard product={product} locale={locale} />
+              ))}
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <OrderEntry locale={locale} />
+</BaseLayout>

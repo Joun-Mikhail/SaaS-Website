@@ -1,4 +1,5 @@
 @import './fonts.css';
+@import './font-fallbacks.css';
 
 @tailwind base;
 @tailwind components;
@@ -7,39 +8,113 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    /* Sticky header is 4rem tall — keep anchor targets clear of it. */
-    scroll-padding-top: 5rem;
+    /* Sticky header is 64px — keep anchor targets clear of it. */
+    scroll-padding-top: 84px;
+  }
+
+  body {
+    /* Saturated grounds only. No cream, no off-white, no neutral plane. */
+    background: theme('colors.brand.ink');
+    color: theme('colors.brand.chalk');
   }
 
   :focus-visible {
-    outline: 2px solid theme('colors.brand.orange');
-    outline-offset: 2px;
-    border-radius: 2px;
+    outline: 3px solid theme('colors.brand.orange');
+    outline-offset: 3px;
+  }
+
+  /* Focus on an orange or green ground would be invisible against itself. */
+  .ground-orange :focus-visible,
+  .ground-green :focus-visible {
+    outline-color: theme('colors.brand.ink');
   }
 }
 
 @layer components {
   .skip-link {
-    @apply absolute left-4 -top-16 z-[100] bg-brand-orange text-white px-4 py-2 rounded-lg font-medium;
-    @apply focus:top-4 transition-[top];
+    @apply absolute left-s4 z-50 bg-brand-ink text-brand-chalk font-utility font-bold uppercase;
+    @apply px-s3 py-s2 text-t1;
+    top: -84px;
+    letter-spacing: 0.12em;
+    transition: top var(--dur-tap) var(--ease-tap);
+  }
+  .skip-link:focus {
+    top: 20px;
   }
 
-  .product-photo {
-    @apply transition-transform;
+  /* The shop's price-tag silhouette. One notched corner, used by the price
+     block and by every placeholder, so an empty field and a filled one are
+     obviously the same object in two states. */
+  .tag-notch {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
   }
-  .product-card:hover .product-photo {
-    transform: scale(1.05);
+
+  .ph-hatch {
+    background-color: theme('colors.brand.ink');
+    background-image: repeating-linear-gradient(
+      -45deg,
+      rgb(234 95 40 / 0.85) 0 6px,
+      transparent 6px 16px
+    );
+  }
+
+  .ph-hatch-light {
+    background-color: theme('colors.brand.chalk');
+    background-image: repeating-linear-gradient(
+      -45deg,
+      rgb(20 20 19 / 0.14) 0 5px,
+      transparent 5px 13px
+    );
+  }
+
+  .ground-orange {
+    @apply bg-brand-orange text-brand-ink;
+  }
+  .ground-blue {
+    @apply bg-brand-blue text-brand-chalk;
+  }
+  .ground-green {
+    @apply bg-brand-green text-brand-ink;
+  }
+  .ground-red {
+    @apply bg-brand-red text-brand-chalk;
+  }
+  .ground-ink {
+    @apply bg-brand-ink text-brand-chalk;
+  }
+
+  .eyebrow {
+    @apply font-utility font-bold text-t1 uppercase;
+    letter-spacing: 0.16em;
+  }
+
+  /* CSS-only card hover: the frame holds its crop, the photograph grows
+     inside it. No JavaScript, and nothing about the card's readable state
+     depends on it. */
+  .card-photo {
+    transition: transform var(--dur-move) var(--ease-settle);
+  }
+  .product-card:hover .card-photo,
+  .product-card:focus-within .card-photo {
+    transform: scale(1.04);
   }
 }
 
+:root {
+  --ease-settle: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-shift: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-tap: cubic-bezier(0.33, 1, 0.68, 1);
+  --dur-tap: 120ms;
+  --dur-move: 240ms;
+  --dur-enter: 420ms;
+}
+
 /* Reduce collapses motion to nothing visible, but the end state still has to
-   apply. `animation: none` would be wrong: any element whose visible state
-   comes from a keyframe — opacity 0 to 1, a transform settling from an offset
-   — would stay at its start state forever, which hides content from exactly
-   the people who asked for less movement. Near-zero duration with a single
-   iteration runs the animation to completion instantly instead.
-   The structural guarantee behind this rule is in DECISIONS.md: nothing's
-   visible or interactive state may depend on an animation having run. */
+   apply. `animation: none` would be wrong: anything whose visible state comes
+   from a keyframe would stay at its start state forever, hiding content from
+   exactly the people who asked for less movement. See DECISIONS.md — no
+   element's visible or interactive state may depend on an animation
+   having run. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -53,8 +128,5 @@
     transition-duration: 0.01ms !important;
     transition-delay: 0ms !important;
     scroll-behavior: auto !important;
-  }
-  .product-card:hover .product-photo {
-    transform: none;
   }
 }

@@ -1,0 +1,41 @@
+---
+/*
+ * The placeholder. A first-class component, not a fallback.
+ *
+ * Where a fact is missing this ships — we never fill the gap with something
+ * plausible and never quietly drop the field to hide it. Both are ways of
+ * lying, and on a pitch page the visible gap is the product.
+ *
+ * Orange hatching on ink, carrying the price-tag notch, so an empty field
+ * reads as a tag nobody has written yet rather than as a broken asset. Never
+ * grey, never a broken-image icon.
+ */
+interface Props {
+  /** `block` fills a photo slot; `inline` sits in a text flow. */
+  variant?: 'block' | 'inline';
+  label: string;
+  hint?: string;
+  class?: string;
+}
+
+const { variant = 'inline', label, hint, class: extraClass = '' } = Astro.props;
+---
+
+{
+  variant === 'block' ? (
+    <div
+      class={`ph-hatch tag-notch flex items-center justify-center p-s4 text-center ${extraClass}`}
+    >
+      <span class="tag-notch bg-brand-ink text-brand-chalk font-utility font-bold text-t1 uppercase tracking-wide px-s3 py-s2">
+        {label}
+      </span>
+    </div>
+  ) : (
+    <div class={`ph-hatch-light tag-notch border-l-4 border-brand-orange px-s3 py-s2 ${extraClass}`}>
+      <span class="block font-utility font-bold text-t1 uppercase tracking-wide text-brand-ink">
+        {label}
+      </span>
+      {hint && <span class="block text-t2 text-brand-ink">{hint}</span>}
+    </div>
+  )
+}
