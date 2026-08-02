@@ -28,7 +28,9 @@ Two uploads, two very different kinds of value.
 | `sendvic-rez-b.webp` | Same product, second angle | I cropped out the black letterbox bars; it was a video screenshot, so it's the softest image in the set. Use only as a secondary. |
 | `logo-original.webp` | The orange roundel | Higher-fidelity than the current `logo.svg`? Compare. Don't replace a clean SVG with a raster. |
 
-Every file also exists as `.jpg` at the same size.
+~~Every file also exists as `.jpg` at the same size.~~ **Not true of what was
+committed** — only the `.webp` files shipped. There is no re-editable JPEG
+master in the repo.
 
 **Total WebP weight: ~2.7 MB across 14 images.** That is fine as source material — your framework should be generating responsive sizes from these, not serving 1600px files to a phone. If it isn't, that's a bug to fix before launch.
 
@@ -89,16 +91,13 @@ The price tags carry allergen codes (`A: 1, 3, 7, 11`). So the bakery already tr
 
 ---
 
-## 4. What this changes about the design brief
+## 4. Design direction — superseded
 
-The logo settles a question I got wrong. Bread Guy is **bright orange, chunky, hand-drawn, playful** — the roundel, the hand-lettered "A BRNO BAKERY" painted on the counter, the marker-pen chalk tags. That is a real, confident identity, and it is the opposite of the moody "5 a.m., dark, glowing oven" direction I recommended last message.
+This section previously carried design direction. It is **dead**. The single
+source of design truth is `breadguy-amended-brief.md` in the repo root; the
+three points from here that survive are recorded in `DECISIONS.md`.
 
-**Ignore Direction A.** Build on what already exists:
-
-- **Orange is the brand.** Not an accent you choose — the one they already own. Sample the exact value from `logo-original.webp` rather than picking a Tailwind orange.
-- **The display face should have the same energy as the logo lettering** — rounded, chunky, slightly irregular. Not a refined serif. This is a bakery whose brand voice is a marker pen on a chalkboard, and that's more distinctive than the tasteful-artisan register every other bakery site uses.
-- **The signature element is already invented for you: the chalkboard price tag.** Handwritten label, price in that scrawled style, allergen code underneath. Use it as the product card. It's true to the shop, nobody else has it, and it solves "how do I make a price look interesting."
-- **Bright ground, not dark.** Warm white or a soft off-orange. Their photos are shot on blue tiles and steel and coloured crates — that palette wants light around it.
+If this README and the brief ever disagree, the brief wins.
 
 ---
 
@@ -120,12 +119,13 @@ Every product photo with the background removed, saved as WebP with an alpha
 channel and trimmed to the subject's bounding box. These are the assets the
 sticker-collage direction needs — rectangular photos can't do that layout.
 
-- 15 files, ~3 MB total, max 1200px on the long edge.
+- **13 files**, max 1200px on the long edge. Two of the original fifteen were
+  deleted — see below.
 - `_contact-sheet.jpg` shows all of them composited on magenta. **Look at this
   first.** Magenta makes bad alpha edges obvious — halos, chewed outlines,
-  missing chunks.
+  missing chunks. It still shows the two deleted cutouts.
 - Segmentation was automatic (u2net + alpha matting), so it will not be
-  perfect on all fifteen. The likely failure points:
+  perfect on all of them. The likely failure points:
   - **Photos with a hand holding the bread.** The model may have kept the hand,
     cut it at the wrist, or removed it entirely. A hand holding a loaf is
     genuinely good for this direction; a floating severed wrist is not. Check
@@ -134,8 +134,20 @@ sticker-collage direction needs — rectangular photos can't do that layout.
   - **Crate photos.** `focaccia-*` shots were taken in coloured crates, so the
     model had to decide whether the crate is subject or background. Whichever
     it chose may not be what you want.
-- Anything that came out badly: redo that one through remove.bg's free tier,
-  which handles tricky edges better than a local model, and drop the result in
-  the same folder with the same filename.
-- Originals are untouched — the rectangular `.webp`/`.jpg` files in the parent
-  folder are still there for any layout that wants a framed photo.
+- Originals are untouched — the rectangular `.webp` files in the parent folder
+  are still there for any layout that wants a framed photo.
+
+### The two deleted cutouts
+
+`focaccia-prosciutto-rukola` and `tiramisu-babka-tray` came back at 0 % and
+25 % opaque coverage respectively. Re-cutting was tried through two models and
+did not improve them, because the cause is structural rather than a bad run:
+both are **overhead shots where the food fills the entire frame**. There is no
+background to remove, so a segmentation model carves an arbitrary region out
+of the middle. A cutout of these two is meaningless.
+
+They are reclassified as **full-bleed photographs** — full-width section
+backgrounds or edge-to-edge blocks, which suits an overhead shot better than a
+collage sticker would. The general rule is in `DECISIONS.md`: overhead
+full-frame shots get full-bleed treatment, isolated subjects get cutout
+treatment.
