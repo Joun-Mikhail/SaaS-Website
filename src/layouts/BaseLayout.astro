@@ -12,9 +12,10 @@ interface Props {
 }
 
 const SITE = Astro.site?.origin ?? 'https://breadguy.cz';
-/* Hero photo doubles as the social preview image — JPEG, because some social
-   scrapers still don't render WebP previews. */
-const OG_IMAGE = '/images/products/focaccia-olive.jpg';
+/* Dedicated 1200x630 crop of the hero photo. Landscape because that is the
+   shape social cards actually render, and JPEG because some scrapers still
+   don't handle WebP previews. */
+const OG_IMAGE = '/images/og-image.jpg';
 
 const { title, description } = Astro.props;
 const locale = getLocaleFromUrl(Astro.url);
@@ -94,8 +95,8 @@ const structuredData = locations.map((loc) => ({
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={locale === 'cs' ? 'cs_CZ' : 'en_GB'} />
     <meta property="og:image" content={absolute(OG_IMAGE)} />
-    <meta property="og:image:width" content="800" />
-    <meta property="og:image:height" content="600" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content={i18n.hero.photoAlt} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
