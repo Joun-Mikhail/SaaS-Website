@@ -107,9 +107,9 @@ If this README and the brief ever disagree, the brief wins.
 2. **Walk the shop with your phone.** Photograph every price tag — that gives you names, prices, and allergens in one pass. Twenty minutes.
 3. **Get the missing five products shot**: Double G, Miso Walnut, Žitný, Tousťák, Skořicový šnek. Same setup as the two loaves — daylight, hands, plain background.
 4. **Confirm with the owner** whether Batch B still exists, and get the full current product list.
-5. Then hand the photo pack plus this audit to Claude Code.
+5. Then hand the photo pack plus this audit to the build.
 
-The `_reference-instagram-screenshots/` folder is for you and Claude Code to *read*. Do not put any of those images on the site — they have Instagram UI burnt into them.
+The `_reference-instagram-screenshots/` folder is for *reading* only. Do not put any of those images on the site — they have Instagram UI burnt into them.
 
 ---
 
