@@ -22,6 +22,8 @@ const out = join(root, 'public/images');
    pairings are here — the two pale loaves are deliberately absent because
    nobody has said which is Bílý and which is Mišenec. */
 const PRODUCTS = [
+  'bily',
+  'misenec',
   'double-g-rez',
   'miso-walnut-rez',
   'makovy-uzlik-tray',

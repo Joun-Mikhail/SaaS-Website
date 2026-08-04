@@ -14,8 +14,8 @@ Two uploads, two very different kinds of value.
 | `hero-focaccia-sandwich.webp` | Focaccia sandwich, held in two hands, natural light | **This is your hero.** Best photo in the set by a wide margin — real light, real hands, dark background, the crumb is readable. 62 KB. |
 | `miso-walnut-rez.webp` | **Miso Walnut**, cross-section — walnuts through an open crumb | Confirmed by the owner. 862px — the smallest usable file in the pack. Fine for a product card at typical sizes, don't scale it up. ⚠️ This is the customer repost (michaela.dobi) — get her permission before it goes on a commercial site. |
 | `double-g-rez.webp` | **Double G**, cross-section — confit garlic cloves, orange swirl | Confirmed by the owner. Cropped out of a phone screenshot, so it's 1090px not 1600px — still sharp enough for a product card, not for a full-bleed hero. See the description flag in section 2. |
-| `loaf-sourdough-a.webp` | Sourdough, elongated, two ears | ⚠️ Bílý or Mišenec — see section 2. |
-| `loaf-sourdough-b.webp` | Sourdough, rounder, single ear | ⚠️ Bílý or Mišenec — see section 2. |
+| `misenec.webp` | Sourdough, elongated, two ears | **Mišenec** — owner-confirmed. Renamed from `loaf-sourdough-a`. |
+| `bily.webp` | Sourdough, rounder, single ear | **Bílý** — owner-confirmed. Renamed from `loaf-sourdough-b`. |
 | `tiramisu-babka-tray.webp` | Tiramisu babka tray, cream + cocoa | Replaces the current one. Overhead, full tray — reads as "there's a lot of it," which sells. |
 | `makovy-uzlik-tray.webp` | Poppy-seed knots in crate | Matches `Makový uzlík` on the menu. |
 | `slider-sesame-bun.webp` | Slider — black sesame bun, asparagus, courgette | ⚠️ Not on the menu at all. Related to the 28 Kč *máslová burgerová bulka*? |
@@ -38,7 +38,7 @@ master in the repo.
 
 ## 2. Loaf identification — resolved, and one problem it exposed
 
-Double G and Miso Walnut are now confirmed and named. That leaves the two loose loaves in the photo pack (`loaf-sourdough-a`, `loaf-sourdough-b`) unidentified — both pale gold, so most likely **Bílý pšeničný** and **Mišenec**, matching the shelf photo where those two are the pale ones. Confirm which is which and they can be renamed.
+Double G and Miso Walnut are now confirmed and named. **Resolved.** The owner confirmed `loaf-sourdough-a` is **Mišenec** and `loaf-sourdough-b` is **Bílý**. Both files are renamed to their product ids; see `content/photo-mapping.md`.
 
 Still with no photo at all: **Žitný**, **Tousťák**, **Skořicový šnek**.
 
@@ -103,13 +103,13 @@ If this README and the brief ever disagree, the brief wins.
 
 ## 5. What to do next, in order
 
-1. **Tell me which loaf is which** in the two sourdough files.
+1. ~~Tell me which loaf is which in the two sourdough files.~~ **Done** — see `content/photo-mapping.md`.
 2. **Walk the shop with your phone.** Photograph every price tag — that gives you names, prices, and allergens in one pass. Twenty minutes.
-3. **Get the missing five products shot**: Double G, Miso Walnut, Žitný, Tousťák, Skořicový šnek. Same setup as the loose loaves — daylight, hands, plain background.
+3. **Get the missing five products shot**: Double G, Miso Walnut, Žitný, Tousťák, Skořicový šnek. Same setup as the two loaves — daylight, hands, plain background.
 4. **Confirm with the owner** whether Batch B still exists, and get the full current product list.
-5. Then hand the photo pack plus this audit to Claude Code.
+5. Then hand the photo pack plus this audit to the build.
 
-The `_reference-instagram-screenshots/` folder is for you and Claude Code to *read*. Do not put any of those images on the site — they have Instagram UI burnt into them.
+The `_reference-instagram-screenshots/` folder is for *reading* only. Do not put any of those images on the site — they have Instagram UI burnt into them.
 
 ---
 
@@ -129,7 +129,7 @@ sticker-collage direction needs — rectangular photos can't do that layout.
   - **Photos with a hand holding the bread.** The model may have kept the hand,
     cut it at the wrist, or removed it entirely. A hand holding a loaf is
     genuinely good for this direction; a floating severed wrist is not. Check
-    `loaf-sourdough-a/b`, `hero-focaccia-sandwich`, `slider-sesame-bun`,
+    `misenec`/`bily`, `hero-focaccia-sandwich`, `slider-sesame-bun`,
     `sendvic-rez-a/b`, `double-g-rez`, `miso-walnut-rez`.
   - **Crate photos.** `focaccia-*` shots were taken in coloured crates, so the
     model had to decide whether the crate is subject or background. Whichever

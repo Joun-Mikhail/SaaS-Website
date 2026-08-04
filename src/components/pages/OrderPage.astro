@@ -2,7 +2,9 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Placeholder from '../Placeholder.astro';
 import { t, type Locale } from '../../data/i18n';
+import { route } from '../../lib/routes';
 import locations from '../../data/locations.json';
+import products from '../../data/products.json';
 
 interface Props {
   locale: Locale;
@@ -12,14 +14,72 @@ const { locale } = Astro.props;
 const i18n = t(locale);
 
 /*
- * Phase 4 builds the flow. This page exists now so the persistent Objednat
- * link never lands on a 404, and it states plainly what the flow will ask —
- * location, then day, then time — rather than pretending to be one.
+ * A mock pickup-order flow. Front end only: no payment, no backend, no
+ * submission. Six steps in the order Phase 2 fixed — location, day, time,
+ * products, contact, summary — because slots depend on the branch, and asking
+ * for a day before a branch would offer a day that cannot be served.
+ *
+ * Days and slots are built in the browser. A static page does not know what
+ * today is, and a baked-in list of dates would be stale on arrival.
  */
+
+const phoneBranch = locations.find((l) => l.phone);
+
+/* Priced products can be ordered. The rest get a designed, explained state —
+   a dead control with no reason is the thing this project exists to avoid. */
+const priceOf = (p: (typeof products)[number]) =>
+  'priceWhole' in p && p.priceWhole ? p.priceWhole : 'price' in p && p.price ? p.price : null;
+
+const orderable = products.filter((p) => priceOf(p) !== null);
+const unpriced = products.filter((p) => priceOf(p) === null);
+
+/* Everything the browser needs, serialised once. Branch hours drive the slot
+   generation client-side; the strings keep every message in the page's
+   language instead of hard-coded in the script. */
+const flowConfig = {
+  branches: locations.map((l) => ({
+    id: l.id,
+    label: l.label[locale],
+    address: l.address,
+    hours: l.hours,
+  })),
+  strings: {
+    closedBadge: i18n.order.closedBadge,
+    closedThatDay: i18n.order.closedThatDay,
+    noSlots: i18n.order.noSlots,
+    total: i18n.order.total,
+    pickupAt: i18n.order.pickupAt,
+    currency: i18n.menu.currency,
+    whole: i18n.menu.whole,
+    errNoLocation: i18n.order.errNoLocation,
+    errNoDay: i18n.order.errNoDay,
+    errNoSlot: i18n.order.errNoSlot,
+    errNoItems: i18n.order.errNoItems,
+    errNameRequired: i18n.order.errNameRequired,
+    errNameShort: i18n.order.errNameShort,
+    errPhoneRequired: i18n.order.errPhoneRequired,
+    errPhoneFormat: i18n.order.errPhoneFormat,
+    name: i18n.order.name,
+    phone: i18n.order.phone,
+    days: {
+      mon: i18n.branch.mon,
+      tue: i18n.branch.tue,
+      wed: i18n.branch.wed,
+      thu: i18n.branch.thu,
+      fri: i18n.branch.fri,
+      sat: i18n.branch.sat,
+      sun: i18n.branch.sun,
+    },
+  },
+};
+
 const STEPS = [
-  i18n.locations.title,
-  i18n.branch.hours,
-  i18n.menu.title,
+  i18n.order.stepLocation,
+  i18n.order.stepDay,
+  i18n.order.stepSlot,
+  i18n.order.stepItems,
+  i18n.order.stepDetails,
+  i18n.order.stepSummary,
 ];
 ---
 
@@ -29,6 +89,11 @@ const STEPS = [
   locale={locale}
   page="order"
 >
+  <script is:inline>
+    // Set before first paint so the no-JS fallback never flashes.
+    document.documentElement.classList.add('js');
+  </script>
+
   <section class="ground-orange py-s6">
     <div class="max-w-page mx-auto px-s4">
       <h1 class="font-display text-t6 max-w-display">{i18n.order.title}</h1>
@@ -36,20 +101,320 @@ const STEPS = [
     </div>
   </section>
 
-  <section class="ground-ink py-s7">
-    <div class="max-w-page mx-auto px-s4 flex flex-col gap-s5 max-w-body">
-      <Placeholder label={i18n.placeholder.order} hint={i18n.placeholder.orderHint} />
+  <section class="no-js-only ground-ink py-s7">
+    <div class="max-w-page mx-auto px-s4 flex flex-col gap-s4 max-w-body">
+      <Placeholder label={i18n.order.noJsTitle} hint={i18n.order.noJsText} />
+      {
+        phoneBranch && (
+          <a
+            class="tag-notch bg-brand-orange text-brand-ink font-utility font-bold uppercase text-t4 px-s5 py-s3 self-start"
+            href={`tel:${phoneBranch.phone}`}
+          >
+            {phoneBranch.phoneDisplay}
+          </a>
+        )
+      }
+      <a class="font-utility font-bold uppercase text-t2 text-brand-orange" href={route('menu', locale)}>
+        {i18n.menu.seeAll} →
+      </a>
+    </div>
+  </section>
 
-      <ol class="flex flex-col gap-s3 list-none p-0 m-0">
+  <section class="js-only ground-ink py-s6" data-flow>
+    <div class="max-w-page mx-auto px-s4">
+      <ol class="flex flex-wrap gap-s2 list-none p-0 m-0 mb-s5">
         {
-          locations.map((branch) => (
-            <li class="bg-brand-chalk text-brand-ink p-s4">
-              <span class="font-display text-t4">{branch.label[locale]}</span>
-              <span class="block text-t2">{branch.address}</span>
+          STEPS.map((label, index) => (
+            <li class="step-chip font-utility font-bold uppercase text-t1 px-s2 py-s1" data-step-chip={index + 1}>
+              <span aria-hidden="true">{index + 1}.</span> {label}
             </li>
           ))
         }
       </ol>
+
+      <form data-order-form novalidate>
+        {/* Step 1 ships visible. If every step started hidden, the first paint would
+      show an empty shell and the script revealing step 1 would push the page
+      down — a layout shift of 0.21 when it was measured. The rest are hidden
+      here and swapped by the script. */}
+        <fieldset class="flow-step" data-step="1">
+          <legend class="font-display text-t5 mb-s4" tabindex="-1" data-step-heading>
+            {i18n.order.chooseLocation}
+          </legend>
+          <div class="grid gap-s3 md:grid-cols-2">
+            {
+              locations.map((loc) => (
+                <label class="choice">
+                  <input type="radio" name="location" value={loc.id} class="sr-radio" />
+                  <span class="choice-box">
+                    <span class="font-display text-t4">{loc.label[locale]}</span>
+                    <span class="text-t2">{loc.address}</span>
+                  </span>
+                </label>
+              ))
+            }
+          </div>
+          <p class="flow-error" data-error role="alert"></p>
+        </fieldset>
+
+        <fieldset class="flow-step" data-step="2" hidden>
+          <legend class="font-display text-t5 mb-s4" tabindex="-1" data-step-heading>
+            {i18n.order.chooseDay}
+          </legend>
+          <div class="grid gap-s2 grid-cols-2 sm:grid-cols-4" data-days></div>
+          <p class="flow-error" data-error role="alert"></p>
+        </fieldset>
+
+        <fieldset class="flow-step" data-step="3" hidden>
+          <legend class="font-display text-t5 mb-s4" tabindex="-1" data-step-heading>
+            {i18n.order.chooseSlot}
+          </legend>
+          <div class="grid gap-s2 grid-cols-3 sm:grid-cols-6" data-slots></div>
+          <p class="flow-error" data-error role="alert"></p>
+        </fieldset>
+
+        <fieldset class="flow-step" data-step="4" hidden>
+          <legend class="font-display text-t5 mb-s4" tabindex="-1" data-step-heading>
+            {i18n.order.chooseItems}
+          </legend>
+
+          <ul class="grid gap-s3 list-none p-0 m-0">
+            {
+              orderable.map((p) => (
+                <li
+                  class="bg-brand-chalk text-brand-ink p-s3 flex items-center justify-between gap-s3"
+                  data-item={p.id}
+                  data-price={priceOf(p)}
+                  data-name={p.name[locale]}
+                >
+                  <span class="flex flex-col">
+                    <span class="font-display text-t4">{p.name[locale]}</span>
+                    <span class="font-utility font-bold text-t2">
+                      {priceOf(p)} {i18n.menu.currency}
+                      {'priceWhole' in p && p.priceWhole && <span class="uppercase"> · {i18n.menu.whole}</span>}
+                    </span>
+                  </span>
+                  <span class="flex items-center gap-s2 shrink-0">
+                    <button
+                      type="button"
+                      class="qty-btn"
+                      data-dec
+                      aria-label={`${i18n.order.removeOne} — ${p.name[locale]}`}
+                    >
+                      −
+                    </button>
+                    <output class="qty-out font-utility font-bold text-t4" data-qty>0</output>
+                    <button
+                      type="button"
+                      class="qty-btn"
+                      data-inc
+                      aria-label={`${i18n.order.addOne} — ${p.name[locale]}`}
+                    >
+                      +
+                    </button>
+                  </span>
+                </li>
+              ))
+            }
+          </ul>
+
+          {
+            unpriced.length > 0 && (
+              <div class="mt-s5">
+                <h3 class="eyebrow mb-s3">{i18n.order.notOrderable}</h3>
+                <p class="text-t2 max-w-body mb-s3">{i18n.order.notOrderableWhy}</p>
+                <ul class="flex flex-wrap gap-s2 list-none p-0 m-0">
+                  {unpriced.map((p) => (
+                    <li class="ph-hatch-light tag-notch border-l-4 border-brand-orange px-s3 py-s2 text-brand-ink font-utility font-bold text-t2">
+                      {p.name[locale]}
+                    </li>
+                  ))}
+                </ul>
+                {phoneBranch && (
+                  <a
+                    class="tag-notch bg-brand-orange text-brand-ink font-utility font-bold uppercase text-t2 px-s3 py-s2 inline-block mt-s3"
+                    href={`tel:${phoneBranch.phone}`}
+                  >
+                    {phoneBranch.phoneDisplay}
+                  </a>
+                )}
+              </div>
+            )
+          }
+          <p class="flow-error" data-error role="alert"></p>
+        </fieldset>
+
+        <fieldset class="flow-step" data-step="5" hidden>
+          <legend class="font-display text-t5 mb-s4" tabindex="-1" data-step-heading>
+            {i18n.order.yourDetails}
+          </legend>
+          <div class="grid gap-s4 max-w-body">
+            <label class="flex flex-col gap-s2">
+              <span class="eyebrow">{i18n.order.name}</span>
+              <input type="text" name="name" autocomplete="name" class="field" />
+            </label>
+            <label class="flex flex-col gap-s2">
+              <span class="eyebrow">{i18n.order.phone}</span>
+              <input type="tel" name="phone" autocomplete="tel" inputmode="tel" class="field" />
+              <span class="text-t2">{i18n.order.phoneHint}</span>
+            </label>
+          </div>
+          <p class="flow-error" data-error role="alert"></p>
+        </fieldset>
+
+        <section class="flow-step" data-step="6" hidden>
+          <h2 class="font-display text-t5 mb-s4" tabindex="-1" data-step-heading>{i18n.order.summaryTitle}</h2>
+          <div class="bg-brand-chalk text-brand-ink p-s4 flex flex-col gap-s3 max-w-body" data-summary></div>
+          <p class="flow-error" data-error role="alert"></p>
+        </section>
+
+        <section class="flow-step" data-step="7" hidden>
+          <h2 class="font-display text-t5 mb-s4" tabindex="-1" data-step-heading>{i18n.order.doneTitle}</h2>
+          <div class="grid gap-s4 max-w-body">
+            <div class="bg-brand-chalk text-brand-ink p-s4 flex flex-col gap-s3" data-receipt></div>
+            <div class="ground-green p-s4">
+              <h3 class="eyebrow mb-s2">{i18n.order.doneWhatNext}</h3>
+              <ol class="flex flex-col gap-s2 text-t2 pl-s4">
+                <li>{i18n.order.doneStep1}</li>
+                <li>{i18n.order.doneStep2}</li>
+                <li>{i18n.order.doneStep3}</li>
+              </ol>
+            </div>
+            {/* Clearly labelled: nothing was sent, and wiring a real inbox is
+                part of completion rather than something already built. */}
+            <div class="ph-hatch-light tag-notch border-l-4 border-brand-orange p-s4 text-brand-ink">
+              <p class="font-utility font-bold uppercase text-t1">{i18n.order.mockTitle}</p>
+              <p class="text-t2 mt-s2">{i18n.order.mockText}</p>
+            </div>
+          </div>
+        </section>
+
+        <div class="flex flex-wrap gap-s3 mt-s5">
+          <button type="button" class="btn-secondary" data-back hidden>{i18n.order.back}</button>
+          <button type="button" class="btn-primary" data-next>{i18n.order.continue}</button>
+          <button type="submit" class="btn-primary" data-send hidden>{i18n.order.send}</button>
+          <button type="button" class="btn-secondary" data-restart hidden>{i18n.order.doneNewOrder}</button>
+        </div>
+      </form>
     </div>
   </section>
+  <script type="application/json" data-flow-config set:html={JSON.stringify(flowConfig)} />
 </BaseLayout>
+
+<script>
+  import { initOrderFlow } from '../../scripts/order-flow';
+
+  const node = document.querySelector('[data-flow-config]');
+  if (node?.textContent) {
+    const config = JSON.parse(node.textContent);
+    initOrderFlow(config.branches, config.strings);
+  }
+</script>
+
+<style>
+  /* No JavaScript: the flow is hidden and the fallback shows. With it, the
+     reverse. Both are deliberate states; neither flashes the other. */
+  .js-only {
+    display: none;
+  }
+  :global(html.js) .js-only {
+    display: block;
+  }
+  :global(html.js) .no-js-only {
+    display: none;
+  }
+
+  fieldset {
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  .sr-radio {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+  }
+  .choice-box {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: theme('colors.brand.chalk');
+    color: theme('colors.brand.ink');
+    padding: 20px;
+    border: 4px solid transparent;
+    cursor: pointer;
+  }
+  .sr-radio:checked + .choice-box {
+    border-color: theme('colors.brand.orange');
+  }
+  /* The input is offscreen, so the visible box carries the focus ring. */
+  .sr-radio:focus-visible + .choice-box {
+    outline: 3px solid theme('colors.brand.orange');
+    outline-offset: 3px;
+  }
+
+  .qty-btn {
+    font-family: 'Barlow Condensed', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 27px;
+    line-height: 1;
+    width: 44px;
+    height: 44px;
+    background: theme('colors.brand.ink');
+    color: theme('colors.brand.chalk');
+    cursor: pointer;
+  }
+  .qty-out {
+    min-width: 32px;
+    text-align: center;
+  }
+
+  .field {
+    background: theme('colors.brand.chalk');
+    color: theme('colors.brand.ink');
+    border: 4px solid theme('colors.brand.ink');
+    padding: 12px;
+    font-size: 17px;
+    font-family: 'Archivo', system-ui, sans-serif;
+    width: 100%;
+  }
+  .field[aria-invalid='true'] {
+    border-color: theme('colors.brand.red');
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    font-family: 'Barlow Condensed', system-ui, sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 27px;
+    padding: 12px 32px;
+    cursor: pointer;
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
+  }
+  .btn-primary {
+    background: theme('colors.brand.orange');
+    color: theme('colors.brand.ink');
+  }
+  .btn-secondary {
+    background: theme('colors.brand.chalk');
+    color: theme('colors.brand.ink');
+  }
+
+  .step-chip {
+    background: theme('colors.brand.ink');
+    color: theme('colors.brand.chalk');
+    border: 2px solid theme('colors.brand.chalk');
+  }
+  .step-chip[aria-current='step'] {
+    background: theme('colors.brand.orange');
+    color: theme('colors.brand.ink');
+    border-color: theme('colors.brand.orange');
+  }
+  .step-chip[data-done='true'] {
+    background: theme('colors.brand.chalk');
+    color: theme('colors.brand.ink');
+  }
+</style>

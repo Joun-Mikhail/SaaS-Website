@@ -67,6 +67,42 @@
     );
   }
 
+  /* Used by elements the ordering flow creates at runtime. Astro's scoped
+     styles only reach markup that existed at build time, so anything
+     JavaScript builds has to be styled here or it renders naked. */
+  .pill {
+    @apply font-utility font-bold uppercase w-full bg-brand-chalk text-brand-ink;
+    padding: 12px 8px;
+    border: 4px solid transparent;
+    cursor: pointer;
+    line-height: 1.2;
+  }
+  .pill[aria-pressed='true'] {
+    background: theme('colors.brand.orange');
+    border-color: theme('colors.brand.ink');
+  }
+  .pill[disabled] {
+    background: theme('colors.brand.ink');
+    color: theme('colors.brand.chalk');
+    border-color: theme('colors.brand.chalk');
+    cursor: not-allowed;
+  }
+  .pill small {
+    display: block;
+    font-size: 13px;
+    text-transform: lowercase;
+    font-weight: 500;
+  }
+
+  .flow-error {
+    @apply font-utility font-bold bg-brand-red text-brand-chalk text-t3;
+    padding: 8px 12px;
+    margin-top: 20px;
+  }
+  .flow-error:empty {
+    display: none;
+  }
+
   .ground-orange {
     @apply bg-brand-orange text-brand-ink;
   }

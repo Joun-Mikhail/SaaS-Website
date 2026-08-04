@@ -107,6 +107,15 @@ const structuredData = locations.map((loc) => ({
       type="font/woff2"
       crossorigin
     />
+    {/* Czech above the fold needs latin-ext too: POBOČKA takes its Č from that
+        subset, and loading it late rewrapped the ordering flow's step chips. */}
+    <link
+      rel="preload"
+      href={withBase('/fonts/barlow-condensed-latin-ext-700-normal.woff2')}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
 
     <meta property="og:site_name" content="Bread Guy" />
     <meta property="og:title" content={title} />

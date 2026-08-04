@@ -198,7 +198,7 @@ Runs whether he buys or not. `README.md` written for a hiring manager: real Brno
 
 ---
 
-## Your jobs, not Claude Code's
+## Your jobs, not the build's
 
 1. **A domain that isn't a vercel.app subdomain.** Half of what you're selling is "this looks like a company."
 2. **Merge or close the open PRs**, commit this brief to the repo root, commit `assets/breadguy-photos/` including `cutouts/`.

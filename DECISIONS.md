@@ -54,11 +54,68 @@ flagged rather than silently resolved.
   headings on the page and must be h2; inside the Locations section they sit
   under its h2 and must be h3. Hard-coding either one breaks reading order for
   a screen reader.
-- **Three faces are preloaded, not one.** The header CTA (Barlow Condensed),
-  the body text (Archivo) and the headline (Titan One) all paint above the
-  fold. With only the display face preloaded, the swap from fallback to real
-  face resized the header's flex row and registered as layout shift. Preloading
-  all three took CLS from 0.0011 to exactly 0.
+- **Three faces are preloaded, not one — and the reason is worth keeping.**
+  Metric-matched fallbacks alone left CLS at 0.0011, not zero. Lighthouse named
+  the shifting node: the header's right-hand flex row (`OBJEDNAT`, `EN`, `≡`).
+  Only the display face was preloaded, so the header CTA in Barlow Condensed
+  and the body text in Archivo swapped from fallback to real face *after* first
+  paint; in a `justify-between` row any width change moves every sibling.
+  Preloading all three faces took CLS to exactly 0. The general lesson: metric
+  matching fixes vertical rhythm, but horizontal width matching is an average
+  and cannot be exact — the only reliable fix for text in a flex row is to have
+  the real face before first paint.
+- **Fallback metrics are measured, not estimated.** `npm run fallbacks` renders
+  the same Czech-heavy string in the real face and in the fallback inside a
+  real browser and takes the ratio of the two widths as `size-adjust`; ascent,
+  descent and line-gap overrides come from the font's own metrics divided by
+  it. Published tables of "Arial equivalents" are guesses about a font the
+  visitor may not have.
+- **Full-bleed images carry an explicit aspect ratio at every breakpoint,
+  never unconstrained height.** A portrait master at `w-full` with no ratio was
+  over 1000px tall at 1440 and swallowed the page. The ratios are `4/3` at
+  mobile, `16/9` from 640px, `21/9` from 1024px. Choosing those three was a
+  crop decision I made, not one the full-bleed rule dictated — the rule said
+  "use it edge to edge", it did not say how tall. It does now.
+
+## The ordering flow (Phase 4)
+
+- **Slots are derived from the real opening hours, never from a list.**
+  `slotsForDay` returns nothing for a closed day, so Sunday at Královo Pole
+  offers no times and says why. A malformed range or a window shorter than the
+  closing buffer also returns nothing — under-promising beats sending someone
+  to a locked door.
+- **The last slot sits 30 minutes before closing.** Handing bread over takes a
+  moment; a slot at the closing minute is a promise the counter cannot keep.
+- **Days and slots are generated in the browser, not at build time.** A static
+  page does not know what today is, and a baked-in list of dates is stale on
+  arrival. The dates come from the Prague wall clock, so a visitor in another
+  timezone is offered the bakery's days rather than their own.
+- **Changing the branch clears the chosen day and slot.** A different branch
+  has different hours, so a selection made under the old one may not exist. It
+  is dropped rather than carried forward as something no longer true.
+- **A stored step is a hint, not a promise.** On load, every step before the
+  stored one is re-validated and the flow falls back to the first that fails,
+  so a refresh — or a hand-edited localStorage — cannot land on a broken
+  screen. Submission re-validates all of it again.
+- **A product with no confirmed price is explained, not disabled.** It appears
+  in its own labelled group with the reason and a phone number, rather than as
+  a dead control. Same rule as the placeholder: the gap is shown and named.
+- **Nothing is sent anywhere, and the confirmation says so.** The mock notice
+  is part of the design, not a disclaimer bolted on, and it names connecting a
+  real inbox as part of completion.
+- **Step 1 ships visible in the markup.** With every step hidden, first paint
+  showed an empty shell and the script revealing step 1 pushed the page down —
+  0.21 CLS when measured. The other steps are hidden and swapped by script.
+- **The live status badge occupies its space from the start.** It is made
+  visible by script rather than inserted by it. Revealing an element grows the
+  card; occupying the space does not. With JavaScript off it is an empty
+  strip that claims nothing.
+- **Elements built by JavaScript are styled in the global layer.** Astro's
+  scoped styles only reach markup that existed at build time, so the day and
+  slot pills rendered naked until their rules moved to `global.css`.
+- **Czech above the fold needs the `latin-ext` subset preloaded too.**
+  `POBOČKA` takes its `Č` from it, and loading it late rewrapped the flow's
+  step chips into a measurable shift.
 
 ## The system (Phase 1)
 
@@ -104,8 +161,11 @@ Rendered in `specimen/index.html`. Tokens live in `tailwind.config.mjs`.
 - **Green is capped at one section per page.** It is the most aggressive value
   in the palette; used as a general ground it stops reading as an accent.
   It also comes from a **crate, not from the food** — authentic to the shop,
-  but packaging rather than product. If it starts fighting the orange in
-  Phase 3, it is the first thing to cut.
+  but packaging rather than product.
+  **Deferred decision, revisit at Phase 6.** It survived Phase 3 because it is
+  used once per page, on one band, and contained. Once motion is on it, the
+  test is whether it pulls the eye away from the ordering CTA. If it does, it
+  goes. Recorded so neither of us has to remember why it is still here.
 - **Motion: three curves, three durations, 420 ms ceiling.** No overshoot, no
   bounce. `--ease-settle` for arrivals, `--ease-shift` for state changes,
   `--ease-tap` for direct response.

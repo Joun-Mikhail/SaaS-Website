@@ -51,17 +51,23 @@ const rangeLabel = (days: DayKey[]) =>
     }
   </dl>
 
-  <p
-    class="branch-status font-utility font-bold text-t1 uppercase px-s2 py-s1 self-start"
-    data-branch-status
-    data-hours={JSON.stringify(branch.hours)}
-    data-label-open={i18n.branch.open}
-    data-label-closed={i18n.branch.closed}
-    data-label-opens-at={i18n.branch.opensAt}
-    data-label-closes-at={i18n.branch.closesAt}
-    hidden
-  >
-  </p>
+  {/* The badge's space is reserved in the static markup and the badge is made
+      visible by script, rather than being inserted by it. Revealing an element
+      grows the card and registers as layout shift; occupying the space from
+      the start does not. With JavaScript off this is simply an empty strip —
+      no status is claimed. */}
+  <div class="h-s5 flex items-center">
+    <p
+      class="branch-status invisible font-utility font-bold text-t1 uppercase px-s2 py-s1"
+      data-branch-status
+      data-hours={JSON.stringify(branch.hours)}
+      data-label-open={i18n.branch.open}
+      data-label-closed={i18n.branch.closed}
+      data-label-opens-at={i18n.branch.opensAt}
+      data-label-closes-at={i18n.branch.closesAt}
+    >
+    </p>
+  </div>
 
   <div class="flex flex-wrap gap-s2 mt-auto pt-s2">
     <a
@@ -113,7 +119,7 @@ const rangeLabel = (days: DayKey[]) =>
       el.textContent = `${status.isOpen ? openLabel : closedLabel}${suffix}`;
       el.classList.toggle('is-open', status.isOpen);
       el.classList.toggle('is-closed', !status.isOpen);
-      el.hidden = false;
+      el.classList.remove('invisible');
     });
   }
 
