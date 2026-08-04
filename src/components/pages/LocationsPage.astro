@@ -28,7 +28,9 @@ const phone = locations.find((l) => l.phone);
 
   <section class="ground-ink py-s7">
     <div class="max-w-page mx-auto px-s4 grid gap-s4 md:grid-cols-2">
-      {locations.map((branch) => <BranchCard branch={branch} locale={locale} />)}
+      {/* First headings after the h1 on this page, so h2 — there is no
+          section heading above them here. */}
+      {locations.map((branch) => <BranchCard branch={branch} locale={locale} headingLevel={2} />)}
     </div>
   </section>
 

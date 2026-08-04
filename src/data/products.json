@@ -1,33 +1,48 @@
 [
   {
     "id": "bily",
-    "name": { "cs": "Bílý", "en": "Bílý" },
+    "name": {
+      "cs": "Bílý",
+      "en": "Bílý"
+    },
     "category": "bread",
     "weightGrams": null,
-    "description": { "cs": "", "en": "" },
+    "description": {
+      "cs": "",
+      "en": ""
+    },
     "ingredients": null,
     "allergens": null,
     "priceWhole": 117,
     "priceHalf": 59,
-    "photo": null,
+    "photo": "bily",
     "available": true
   },
   {
     "id": "misenec",
-    "name": { "cs": "Mišenec", "en": "Mišenec" },
+    "name": {
+      "cs": "Mišenec",
+      "en": "Mišenec"
+    },
     "category": "bread",
     "weightGrams": null,
-    "description": { "cs": "", "en": "" },
+    "description": {
+      "cs": "",
+      "en": ""
+    },
     "ingredients": null,
     "allergens": null,
     "priceWhole": 117,
     "priceHalf": 59,
-    "photo": null,
+    "photo": "misenec",
     "available": true
   },
   {
     "id": "double-g",
-    "name": { "cs": "Double G", "en": "Double G" },
+    "name": {
+      "cs": "Double G",
+      "en": "Double G"
+    },
     "category": "bread",
     "weightGrams": null,
     "description": {
@@ -43,7 +58,10 @@
   },
   {
     "id": "miso-walnut",
-    "name": { "cs": "Miso Walnut", "en": "Miso Walnut" },
+    "name": {
+      "cs": "Miso Walnut",
+      "en": "Miso Walnut"
+    },
     "category": "bread",
     "weightGrams": null,
     "description": {
@@ -51,7 +69,14 @@
       "en": "Sourdough bread with miso paste and walnuts"
     },
     "ingredients": null,
-    "allergens": { "cs": ["vlašské ořechy"], "en": ["walnuts"] },
+    "allergens": {
+      "cs": [
+        "vlašské ořechy"
+      ],
+      "en": [
+        "walnuts"
+      ]
+    },
     "priceWhole": 150,
     "priceHalf": 75,
     "photo": "miso-walnut-rez",
@@ -59,10 +84,16 @@
   },
   {
     "id": "zitny",
-    "name": { "cs": "Žitný", "en": "Žitný" },
+    "name": {
+      "cs": "Žitný",
+      "en": "Žitný"
+    },
     "category": "bread",
     "weightGrams": null,
-    "description": { "cs": "", "en": "" },
+    "description": {
+      "cs": "",
+      "en": ""
+    },
     "ingredients": null,
     "allergens": null,
     "photo": null,
@@ -70,10 +101,16 @@
   },
   {
     "id": "toustak",
-    "name": { "cs": "Tousťák", "en": "Tousťák" },
+    "name": {
+      "cs": "Tousťák",
+      "en": "Tousťák"
+    },
     "category": "bread",
     "weightGrams": null,
-    "description": { "cs": "", "en": "" },
+    "description": {
+      "cs": "",
+      "en": ""
+    },
     "ingredients": null,
     "allergens": null,
     "photo": null,
@@ -81,10 +118,16 @@
   },
   {
     "id": "focaccia",
-    "name": { "cs": "Focaccia", "en": "Focaccia" },
+    "name": {
+      "cs": "Focaccia",
+      "en": "Focaccia"
+    },
     "category": "bread",
     "weightGrams": null,
-    "description": { "cs": "", "en": "" },
+    "description": {
+      "cs": "",
+      "en": ""
+    },
     "ingredients": null,
     "allergens": null,
     "price": 55,
@@ -93,10 +136,16 @@
   },
   {
     "id": "focaccia-rajcata",
-    "name": { "cs": "Focaccia s rajčaty", "en": "Focaccia s rajčaty" },
+    "name": {
+      "cs": "Focaccia s rajčaty",
+      "en": "Focaccia s rajčaty"
+    },
     "category": "bread",
     "weightGrams": null,
-    "description": { "cs": "", "en": "" },
+    "description": {
+      "cs": "",
+      "en": ""
+    },
     "ingredients": null,
     "allergens": null,
     "price": 75,
@@ -111,7 +160,10 @@
     },
     "category": "bread",
     "weightGrams": null,
-    "description": { "cs": "", "en": "" },
+    "description": {
+      "cs": "",
+      "en": ""
+    },
     "ingredients": null,
     "allergens": null,
     "price": 75,
@@ -120,10 +172,16 @@
   },
   {
     "id": "loupacek",
-    "name": { "cs": "Loupáček", "en": "Loupáček" },
+    "name": {
+      "cs": "Loupáček",
+      "en": "Loupáček"
+    },
     "category": "bread",
     "weightGrams": null,
-    "description": { "cs": "", "en": "" },
+    "description": {
+      "cs": "",
+      "en": ""
+    },
     "ingredients": null,
     "allergens": null,
     "price": 33,
@@ -138,7 +196,10 @@
     },
     "category": "bread",
     "weightGrams": null,
-    "description": { "cs": "", "en": "" },
+    "description": {
+      "cs": "",
+      "en": ""
+    },
     "ingredients": null,
     "allergens": null,
     "price": 28,
@@ -147,10 +208,16 @@
   },
   {
     "id": "makovy-uzlik",
-    "name": { "cs": "Makový uzlík", "en": "Makový uzlík" },
+    "name": {
+      "cs": "Makový uzlík",
+      "en": "Makový uzlík"
+    },
     "category": "bread",
     "weightGrams": null,
-    "description": { "cs": "", "en": "" },
+    "description": {
+      "cs": "",
+      "en": ""
+    },
     "ingredients": null,
     "allergens": null,
     "photo": "makovy-uzlik-tray",
@@ -158,10 +225,16 @@
   },
   {
     "id": "skorice",
-    "name": { "cs": "Skořicový šnek", "en": "Skořicový šnek" },
+    "name": {
+      "cs": "Skořicový šnek",
+      "en": "Skořicový šnek"
+    },
     "category": "sweets",
     "weightGrams": null,
-    "description": { "cs": "", "en": "" },
+    "description": {
+      "cs": "",
+      "en": ""
+    },
     "ingredients": null,
     "allergens": null,
     "price": 85,
@@ -170,10 +243,16 @@
   },
   {
     "id": "tiramisu-babka",
-    "name": { "cs": "Tiramisu babka", "en": "Tiramisu babka" },
+    "name": {
+      "cs": "Tiramisu babka",
+      "en": "Tiramisu babka"
+    },
     "category": "sweets",
     "weightGrams": null,
-    "description": { "cs": "", "en": "" },
+    "description": {
+      "cs": "",
+      "en": ""
+    },
     "ingredients": null,
     "allergens": null,
     "photo": null,
@@ -187,7 +266,10 @@
     },
     "category": "sweets",
     "weightGrams": null,
-    "description": { "cs": "", "en": "" },
+    "description": {
+      "cs": "",
+      "en": ""
+    },
     "ingredients": null,
     "allergens": null,
     "priceWhole": 100,
@@ -203,7 +285,10 @@
     },
     "category": "sweets",
     "weightGrams": null,
-    "description": { "cs": "", "en": "" },
+    "description": {
+      "cs": "",
+      "en": ""
+    },
     "ingredients": null,
     "allergens": null,
     "price": 95,
@@ -212,10 +297,16 @@
   },
   {
     "id": "focaccia-sendvic",
-    "name": { "cs": "Focaccia sendvič", "en": "Focaccia sendvič" },
+    "name": {
+      "cs": "Focaccia sendvič",
+      "en": "Focaccia sendvič"
+    },
     "category": "sandwiches",
     "weightGrams": null,
-    "description": { "cs": "", "en": "" },
+    "description": {
+      "cs": "",
+      "en": ""
+    },
     "ingredients": null,
     "allergens": null,
     "photo": "sendvic-rez-a",
@@ -223,10 +314,16 @@
   },
   {
     "id": "pizza-kolac",
-    "name": { "cs": "Pizza koláč se šunkou", "en": "Pizza koláč se šunkou" },
+    "name": {
+      "cs": "Pizza koláč se šunkou",
+      "en": "Pizza koláč se šunkou"
+    },
     "category": "sandwiches",
     "weightGrams": null,
-    "description": { "cs": "", "en": "" },
+    "description": {
+      "cs": "",
+      "en": ""
+    },
     "ingredients": null,
     "allergens": null,
     "price": 80,

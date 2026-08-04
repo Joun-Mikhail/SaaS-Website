@@ -55,6 +55,33 @@ already live, not only to new ones.
 | `Krok 1 ze 6` | step indicator |
 | route slugs | `/nabidka` `/pobocky` `/objednavka` `/o-nas` |
 
+### Ordering flow (Phase 4 — new)
+
+Every string the flow can show, including all eight error messages. These are
+the highest-risk Czech on the site: an error message that reads oddly is read
+at the exact moment someone is already frustrated.
+
+| String | Intent |
+| --- | --- |
+| `Kde si pečivo vyzvednete?` · `Kdy si přijdete?` · `V kolik hodin?` · `Co si dáte?` · `Kam se vám ozveme?` | the five step questions |
+| `Zkontrolujte objednávku` | summary heading |
+| `V tento den má pobočka zavřeno. Vyberte jiný den.` | closed-day explanation |
+| `Na tento den nejsou žádné časy — pobočka má zavřeno.` | empty slot list |
+| `Zatím nelze objednat online` | heading over the unpriced products |
+| `U tohoto pečiva nemáme potvrzenou cenu. Zeptejte se na prodejně nebo zavolejte.` | why they cannot be ordered |
+| `Vyberte pobočku.` · `Vyberte den.` · `Vyberte čas vyzvednutí.` · `Přidejte alespoň jedno pečivo.` | step errors |
+| `Napište prosím jméno — bez něj vás na prodejně nenajdeme.` | name missing |
+| `Jméno je příliš krátké.` | name too short |
+| `Napište telefon — potřebujeme ho k potvrzení objednávky.` | phone missing |
+| `Telefon nevypadá správně. Zkuste formát 601 539 515.` | phone malformed |
+| `Hotovo — objednávka je připravená` | confirmation heading |
+| `Co bude dál` + three steps | what happens next |
+| `Ukázka — objednávka se nikam neodeslala` + body | the mock notice |
+| `Nová objednávka` · `Odeslat objednávku` · `Pokračovat` · `Zpět` | controls |
+| `Objednávka potřebuje JavaScript` · `Zavolejte nám, rádi objednávku vyřídíme po telefonu.` | no-JS fallback |
+| `Jméno a příjmení` · `Telefon` · `Například 601 539 515` · `Počet` · `Celkem` · `Vyzvednutí` | field labels |
+| `Pobočka` · `Den` · `Čas` · `Pečivo` · `Kontakt` · `Souhrn` | step chips |
+
 ### Interface strings — `src/data/i18n.ts`
 
 The four invented sentences (`hero.subtitle`, `menu.subtitle`, `about.story`,
@@ -209,19 +236,35 @@ worse than an obvious gap; on a pitch page the gap is the product.
 
 ---
 
-## 9. Photos
+## 9. Product name — three versions of one loaf
 
-Missing entirely: **Double G**, **Miso Walnut**, **Skořicový šnek**, and both
-new breads (Žitný, Tousťák).
+| Source | Name |
+| --- | --- |
+| `products.json` | **Bílý** |
+| The shop's wall menu | **BÍLÝ CHLÉB** |
+| The owner's photo confirmation | **Bílý pšeničný** |
 
-**Unresolved:** which of the two pale loaf photographs is **Bílý** and which is
-**Mišenec**. They are currently assigned by guess.
+The name has **not** been changed. The owner was confirming which photograph
+the loaf is, not renaming the product, and a product name is never altered on
+an inference — including an inference from an owner message about something
+else.
 
-**Action (owner):** identify the two pale loaves.
+**Action (owner):** which of the three is the product's name?
 
 ---
 
-## 10. Two cutouts deleted — reclassified as full-bleed
+## 10. Photos
+
+Missing entirely: **Skořicový šnek**, **Žitný**, **Tousťák**, and the six
+products added from price tags alone.
+
+~~Unresolved: which pale loaf is which.~~ **Resolved by the owner** —
+`misenec.webp` and `bily.webp`, renamed to their product ids and recorded in
+`content/photo-mapping.md`. Photographed products: 7 of 18.
+
+---
+
+## 11. Two cutouts deleted — reclassified as full-bleed
 
 Measured on the alpha channel of all fifteen, not eyeballed from the contact
 sheet:
@@ -245,7 +288,7 @@ a **full-bleed** image; the general rule is in `DECISIONS.md`.
 
 ---
 
-## 11. Smaller items
+## 12. Smaller items
 
 - **IČO / DIČ** missing from the footer — owner to supply, placeholder meanwhile.
 - **`A Brno Bakery`** is an English string rendering in the Czech footer.
@@ -255,7 +298,7 @@ a **full-bleed** image; the general rule is in `DECISIONS.md`.
 
 ---
 
-## 12. Resolved in Phase 3 — all three the same way
+## 13. Resolved in Phase 3 — all three the same way
 
 Each was a case where the honest empty state makes a better demo than a
 plausible fill. None was solved with invented content.
