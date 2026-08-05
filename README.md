@@ -166,21 +166,23 @@ public/         logo.svg, favicon.svg, robots.txt, images/products/
 - **i18n** — cesta určuje jazyk (`/` = cs, `/en/` = en). Každý řetězec je
   v `src/data/i18n.ts` v obou jazycích; komponenty dostávají `locale` propem.
 - **Otevírací status** — `src/data/hours.ts` (`getStatus`) je čistá funkce,
-  které lze předat čas, takže je testovatelná (`hours.test.ts`). Stav se
-  vykreslí při buildu (kvůli SEO a prohlížečům bez JS) a hned po načtení se
-  v prohlížeči přepočítá, aby nezastaral. Denní doba i letní/zimní čas se řeší
+  které lze předat čas, takže je testovatelná (`hours.test.ts`). Ve statickém
+  HTML je vždy celý týden otevírací doby; štítek „otevřeno / zavřeno" doplní
+  až skript v prohlížeči a bez JavaScriptu chybí — statická stránka nemůže
+  vědět, kolik je hodin, takže to netvrdí. Denní doba i letní/zimní čas se řeší
   přes `Intl.DateTimeFormat`, žádný napevno zapsaný posun.
 - **SEO** — `schema.org/Bakery` JSON-LD pro každou pobočku, kanonické URL,
   `hreflang` cs/en/x-default, Open Graph a Twitter karty, sitemap.
 - **Přístupnost** — odkaz „Přejít na obsah", viditelné focus stavy,
   `prefers-reduced-motion` zastaví posun galerie, popisné `alt` texty.
-- **Nasazení** — push do `main` spustí `.github/workflows/deploy.yml`, který web
-  postaví a publikuje na GitHub Pages.
+- **Nasazení** — web běží na Vercelu:
+  <https://breadguy.vercel.app>. V repozitáři je jediný workflow,
+  `.github/workflows/ci.yml`, který na každém pull requestu spustí validaci
+  obsahu, testy a build. Nasazení samo neprovádí.
 - **Doména a podadresář** — build je hostitelsky nezávislý. `SITE_URL` určuje
-  doménu a `BASE_PATH` podadresář (GitHub Pages projekt běží na `/BreadGuy-web`),
-  obojí předává deploy workflow automaticky. Odkazy se skládají přes
-  `withBase()` v `src/lib/paths.ts`, takže po nasměrování `breadguy.cz` na
-  repozitář se nemusí měnit nic v kódu — stačí custom doména v nastavení Pages.
+  doménu a `BASE_PATH` podadresář (na Vercelu je prázdný, web běží v kořeni).
+  Odkazy se skládají přes `withBase()` v `src/lib/paths.ts`, takže po
+  nasměrování `breadguy.cz` na projekt se nemusí měnit nic v kódu.
 - **Obrázky** — fotky na stránce jsou WebP (o ~28 % menší než původní JPEG);
   náhled pro sdílení na sítích zůstává JPEG, protože ne všechny scrapery
   WebP zvládnou.
