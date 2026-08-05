@@ -231,3 +231,18 @@ Rendered in `specimen/index.html`. Tokens live in `tailwind.config.mjs`.
   It must not rank against the bakery's real listing. Publishing a sitemap
   beside a blanket disallow would hand crawlers the list of URLs they were just
   told not to fetch. Reversed only on the owner's written go-ahead.
+
+## Infrastructure
+
+- **One workflow: CI. The GitHub Pages workflow is deleted.**
+  `.github/workflows/deploy.yml` was written before a host was chosen and was
+  flagged as dead weight in the Phase 0 report: Pages was never switched on for
+  this repo, and the `Configure Pages` step failed on every push to `main` with
+  `Resource not accessible by integration` — the Actions token cannot enable
+  Pages, so `enablement: true` could not have worked. The site is served from
+  Vercel, so the workflow had nothing to publish even if it had run. A workflow
+  that fails on every push trains you to ignore a red X, which is worse than
+  having no workflow. `ci.yml` — validate, test, build — remains, and it is the
+  check that actually gates a merge.
+- **`BASE_PATH` stays.** It is host-agnostic, not Pages-specific: it is empty
+  on Vercel and would carry any future subpath deploy without a code change.
